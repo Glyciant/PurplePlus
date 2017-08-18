@@ -1,0 +1,13 @@
+<div class="row valign-wrapper">
+  {% for community in data %}
+    <div id="community-thumbnail-{{ community.name|url_encode|replace("%", "", "g")|replace("'", "", "g") }}" class="col l1 m2 s3 community-thumbnail tooltipped" data-position="bottom" data-delay="50" data-tooltip="{{ community.name }}" data-name="{{ community.name }}" data-id="{{ community.id }}" style="margin-left: 0;">
+      <div class="card" style="margin-bottom: 0;">
+        <div class="card-image black">
+          <img class="responsive-img" src="{% if community.image %}{{ community.image }}{% else %}/img/no_community.png{% endif %}">
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div id="community-streams" class="col s12 community-streams" style="display: none;"></div>

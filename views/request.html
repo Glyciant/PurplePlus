@@ -1,0 +1,368 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500;">{{ data.data.name }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col l3 offset-l1 m5 offset-m1 s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <h4 class="center">Request Information</h4>
+            <hr />
+            <table>
+              <tbody>
+                <tr>
+                  <td>Submitter:</td>
+                  <td>{{ profile.twitch_name }}</td>
+                </tr>
+                <tr>
+                  <td>Request ID:</td>
+                  <td>{{ data.timestamp }}</td>
+                </tr>
+                <tr>
+                  <td>Request Status:</td>
+                  <td id="request-status-wrapper">
+                    {% if data.status == "approved" %}
+                      <a class="btn waves-effect waves-green green darken-2 white-text" style="cursor: default;">Approved</a>
+                    {% elseif data.status == "rejected" %}
+                      <a class="btn waves-effect waves-red red darken-2 white-text" style="cursor: default;">Rejected</a>
+                    {% elseif data.status == "withdrawn" %}
+                      <a class="btn waves-effect waves-black black white-text" style="cursor: default;">Withdrawn</a>
+                    {% else %}
+                      <a class="btn waves-effect waves-orange orange darken-2 white-text" style="cursor: default;">Pending</a>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Submitted Date:</td>
+                  <td>{{ data.timestamp|date('d/m/Y') }}</td>
+                </tr>
+                <tr>
+                  <td>Request Type:</td>
+                  {% if data.type == "web" %}
+                    <td>Web Tool</td>
+                  {% elseif data.type == "desktop" %}
+                    <td>Desktop Tool</td>
+                  {% elseif data.type == "extension" %}
+                    <td>Browser Extension</td>
+                  {% elseif data.type == "video" %}
+                    <td>Video</td>
+                  {% elseif data.type == "ama" %}
+                    <td>AMA as a Business</td>
+                  {% else %}
+                    <td>Other</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <td>Legacy Request:</td>
+                  {% if data.legacy_id %}
+                    <td>Yes</td>
+                  {% else %}
+                    <td>No</td>
+                  {% endif %}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if profile.twitch_id == twitch.id %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row" style="margin: 0;">
+            <div class="col s12">
+              <h4 class="center">Manage Request</h4>
+              <hr />
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Contact Moderators:</td>
+                    <td class="center"><a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch" class="btn waves-effect waves-light custom darken-1 white-text" target="_blank">Modmail</a></td>
+                  </tr>
+                  {% if data.status == "pending" %}
+                    <tr id="request-withdraw-wrapper">
+                      <td>Withdraw Request:</td>
+                      <td class="center"><a href="#!" class="btn waves-effect waves-black black white-text" id="request-withdraw" data-id="{{ data.timestamp }}" data-twitch="{{ profile.twitch_id }}">Withdraw</a></td>
+                    </tr>
+                  {% elseif data.status == "withdrawn" %}
+                    <tr id="request-withdraw-wrapper">
+                      <td>Reopen Request:</td>
+                      <td class="center"><a href="#!" class="btn waves-effect waves-black deep-purple darken-2 white-text" id="request-reopen" data-id="{{ data.timestamp }}" data-twitch="{{ profile.twitch_id }}">Reopen</a></td>
+                    </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if type == "mod" %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row" style="margin: 0;">
+            <div class="col s12">
+              <h4 class="center">Admin Panel</h4>
+              <hr />
+              <table>
+                <tbody>
+                  <tr>
+                    <td>Vote:</td>
+                    <td class="center">
+                      <a href="#!" class="btn waves-effect waves-green green darken-2 white-text {% if data.legacy_id || vote == "up" %} disabled {% endif %}" style="padding: 0 15px; margin-right: 2px;" id="request-upvote" data-id="{{ data.timestamp }}" data-twitch="{{ profile.twitch_id }}"><i class="material-icons">thumb_up</i> <span id="request-yes-votes" style="bottom: 4px; left: 6px; position: relative;">{{ data.upvotes.length }}</span></a>
+                      <a href="#!" class="btn waves-effect waves-red red darken-2 white-text {% if data.legacy_id || vote == "down" %} disabled {% endif %}" style="padding: 0 15px; margin-left: 2px;" id="request-downvote" data-id="{{ data.timestamp }}" data-twitch="{{ profile.twitch_id }}"><i class="material-icons">thumb_down</i> <span id="request-no-votes" style="bottom: 4px; left: 6px; position: relative;">{{ data.downvotes.length }}</span></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Update Status:</td>
+                    <td class="center"><a href="#modal-request-update-status" class="btn waves-effect waves-light custom darken-1 white-text modal-trigger">Update</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+    {% if type == "mod" || type == "helper" || profile.twitch_id == twitch.id  %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row" style="margin: 0;">
+            <div class="col s12">
+              <h4 class="center">Add Comment</h4>
+              <hr />
+            </div>
+            <div class="input-field col s12">
+              <textarea id="request-new-comment" class="materialize-textarea"></textarea>
+              <label for="request-new-comment">Comment Text (Supports Markdown Formatting)</label>
+            </div>
+            {% if type == "mod" || type == "helper" %}
+              <div class="input-field col s6" style="margin: 0;">
+                <p>
+                  <input name="request-comment-type" type="radio" id="request-comment-type-public" checked />
+                  <label for="request-comment-type-public">Public</label>
+                </p>
+              </div>
+              <div class="input-field col s6" style="margin: 0;">
+                <p>
+                  <input name="request-comment-type" type="radio" id="request-comment-type-private" />
+                  <label for="request-comment-type-private">Private</label>
+                </p>
+              </div>
+            {% endif %}
+            <div class="input-field col s12">
+              <a href="#!" id="request-comment-submit" class="btn waves-effect waves-light custom darken-1 white-text right" data-id="{{ data.timestamp }}" data-twitch="{{ profile.twitch_id }}">Add</a></td>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+  <div class="col l7 m5 s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <h4 class="center">Submission</h4>
+            <hr />
+            {% if data.type == "video" %}
+              <h5>Video URL</h5>
+              <a href="{{ data.data.url }}">{{ data.data.url }}</a>
+              <br /><br />
+              <h5>Owner</h5>
+              <p>
+                {% if data.data.owner == "true" %}
+                  {{ profile.twitch_name }} is the owner of the video.
+                {% else %}
+                  {{ profile.twitch_name }} is not the owner of the video.
+                {% endif %}
+              </p>
+              <br />
+              <h5>Description</h5>
+              <p>{% marked %}{{ data.data.description }}{% endmarked %}</p>
+              <br />
+            {% elseif data.type == "ama" %}
+              <h5>Product Name</h5>
+              <p>{% marked %}{{ data.data.product }}{% endmarked %}</p>
+              <br />
+              <h5>Permission</h5>
+              <p>
+                {% if data.data.permission == "true" %}
+                  {{ profile.twitch_name }} does have permission to discuss the company and its products.
+                {% else %}
+                  {{ profile.twitch_name }} does not have permission to discuss the company and its products.
+                {% endif %}
+              </p>
+              <br />
+              <h5>Terms of Service</h5>
+              {% if data.data.tos === "true" %}
+                <a href="{{ data.data.tos_url }}">{{ data.data.tos_url }}</a>
+                <br /><br />
+              {% else %}
+                <p>None.</p>
+                <br />
+              {% endif %}
+              <h5>User Data Required</h5>
+              <p>{% marked %}{{ data.data.data }}{% endmarked %}</p>
+              <br />
+              <h5>AMA Date</h5>
+              <p>{{ data.data.date|date('d/m/Y') }}</p>
+              <br />
+              <h5>AMA Length</h5>
+              <p>{{ data.data.days }} Days</p>
+              <br />
+            {% elseif data.type !== "other" %}
+              <h5>Tool URL</h5>
+              <a href="{{ data.data.url }}">{{ data.data.url }}</a>
+              <br /><br />
+              <h5>Request Description</h5>
+              <p>{% marked %}{{ data.data.description }}{% endmarked %}</p>
+              <br />
+              <h5>User Data Required</h5>
+              <p>{% marked %}{{ data.data.data }}{% endmarked %}</p>
+              <br />
+              <h5>Twitch API Data Required</h5>
+              {% if data.data.api === "true" %}
+                <p>{% marked %}{{ data.data.api_data.store }}{% endmarked %}</p>
+                <br />
+                <h5>Twitch API Scopes Required</h5>
+                <p>{% marked %}{{ data.data.api_data.scopes }}{% endmarked %}</p>
+                <br />
+                <h5>Reasons for Required Twitch API Scopes</h5>
+                <p>{% marked %}{{ data.data.api_data.scopes_description }}{% endmarked %}</p>
+              {% else %}
+                <p>None.</p>
+              {% endif %}
+              <br />
+              <h5>Terms of Service</h5>
+              {% if data.data.tos === "true" %}
+                <a href="{{ data.data.tos_url }}">{{ data.data.tos_url }}</a>
+                <br /><br />
+              {% else %}
+                <p>None.</p>
+                <br />
+              {% endif %}
+              <h5>Source Code</h5>
+              {% if data.data.source === "true" %}
+                <a href="{{ data.data.source_url }}">{{ data.data.source_url }}</a>
+                <br /><br />
+              {% else %}
+                <p>None.</p>
+                <br />
+              {% endif %}
+              <h5>Post-Beta Changes</h5>
+              {% if data.data.beta === "true" %}
+                <p>{% marked %}{{ data.data.beta_changes }}{% endmarked %}</p>
+              {% else %}
+                <p>None.</p>
+              {% endif %}
+              <br />
+              {% if data.type == "extension" %}
+                <h5>Compatible Browsers</h5>
+                <div class="col s6">
+                  <p>
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-edge" {% if data.data.browsers.edge === "true" %} checked {% endif %} disabled />
+                    <label for="tool-browser-edge">Microsoft Edge</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-explorer" {% if data.data.browsers.explorer === "true" %} checked {% endif %} disabled />
+                    <label for="tool-browser-explorer">Internet Explorer</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-chrome" {% if data.data.browsers.chrome === "true" %} checked {% endif %} disabled />
+                    <label for="tool-browser-chrome">Google Chrome</label>
+                  </p>
+                </div>
+                <div class="col s6">
+                  <p>
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-firefox" {% if data.data.browsers.firefox === "true" %} checked {% endif %} disabled />
+                    <label for="tool-browser-firefox">Mozilla Firefox</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-opera" {% if data.data.browsers.opera === "true" %} checked {% endif %} disabled />
+                    <label for="tool-browser-opera">Opera</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-safari" {% if data.data.browsers.safari === "true" %} checked {% endif %} disabled />
+                    <label for="tool-browser-safari">Safari</label>
+                  </p>
+                </div>
+              {% endif %}
+            {% else %}
+              <h5>Request Description</h5>
+              <p>{% marked %}{{ data.data.description }}{% endmarked %}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if type == "mod" || type == "helper" || profile.twitch_id == twitch.id %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row" style="margin: 0;">
+            <div class="col s12">
+              <h4 class="center">Comments</h4>
+              <hr />
+              {% if data.comments.length === 0 %}
+                <p class="center"><em>No Comments Found</em></p>
+              {% else %}
+                <div id="request-comments-wrapper">
+                  {% for comment in data.comments %}
+                    {% if comment.type == "public" || type == "mod" || type == "helper" %}
+                      <div class="row">
+                        <div class="col s8">
+                          <h5>{{ comment.submitter }}</h5>
+                        </div>
+                        <div class="col s4">
+                          <h6 class="right"><strong>{{ comment.timestamp|date('d/m/Y') }} - {{ comment.type|title }}</strong></h6>
+                        </div>
+                        <div class="col s12">
+                          <p>{% marked %}{{ comment.comment }}{% endmarked %}</p>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div id="modal-request-update-status" class="modal">
+   <div class="modal-content">
+     <h4>Edit Request Status</h4>
+     <hr />
+     <div class="input-field col s12" id="request-new-status">
+       <select>
+         <option {% if data.status == "pending" %} selected {% endif %} value="pending">Pending</option>
+         <option {% if data.status == "approved" %} selected {% endif %} value="approved">Approved</option>
+         <option {% if data.status == "rejected" %} selected {% endif %} value="rejected">Rejected</option>
+       </select>
+       <label>Request Status</label>
+     </div>
+     <br /><br /><br />
+   </div>
+   <div class="modal-footer">
+     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="request-status-save" data-id="{{ data.timestamp }}" data-twitch="{{ profile.twitch_id }}">Save & Close</a>
+     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+   </div>
+ </div>
+
+<script src="/js/request.js"></script>
+
+{% include "./footer.html" %}

@@ -1,0 +1,58 @@
+{% include "./header.html" %}
+
+<div class="row custom lighten-1" style="height: 100%; margin: 0;">
+  <div class="col s12" style="height: 100%; padding: 0; display: none;">
+    <h2 class="custom lighten-1 white-text center" style="font-weight: 300; margin: 0; padding-top: 100px; padding-bottom: 75px;">Welcome to Purple+</h2>
+    <div id="carousel-wrapper" style="height: calc(100% - 310px);">
+      <div class="carousel carousel-slider center" style="height: 100%;">
+        <div class="carousel-item custom lighten-1 white-text" href="#!">
+          <img class="responsive-img" src="/img/index/spotlight.png" style="max-width: 700px; margin-bottom: 25px;" />
+          <h2>Discover What The Community Offers</h2>
+          <p class="white-text">The spotlight page shows six random streams from our community, each providing a different content type.</p>
+          <a href="/browse/spotlight" class="btn waves-effect custom darken-1 white-text">Show Spotlight Page</a>
+        </div>
+        <div class="carousel-item custom lighten-1 white-text" href="#!">
+          <img class="responsive-img" src="/img/index/streams.png" style="max-width: 700px; margin-bottom: 25px;" />
+          <h2>Browse Streams With Ease</h2>
+          <p class="white-text">The streams page allows you to discover new content by searching through a range of categories.</p>
+          <a href="/browse/streams" class="btn waves-effect custom darken-1 white-text">Show Streams Page</a>
+        </div>
+        <div class="carousel-item custom lighten-1 white-text" href="#!">
+          <img class="responsive-img" src="/img/index/profile.png" style="max-width: 700px; margin-bottom: 25px;" />
+          <h2>Promote Your Profile</h2>
+          <p class="white-text">The profile feature lets you show off you and your content to a larger audience, including third party communities and social media.</p>
+          <a href="/help/profiles" class="btn waves-effect custom darken-1 white-text">Show Profile Help Documents</a>
+        </div>
+        <div class="carousel-item custom lighten-1 white-text" href="#!">
+          <img class="responsive-img" src="/img/index/transactions.png" style="max-width: 700px; margin-bottom: 25px;" />
+          <h2>Be Rewarded For Your Efforts</h2>
+          <p class="white-text">Purple+ is integrated with the /r/Twitch Twoos system, allowing you and your profile to be discovered easier as you gain more Twoos.</p>
+          <a href="/help/twoos" class="btn waves-effect custom darken-1 white-text">Show Twoos Help Documents</a>
+        </div>
+        <div class="carousel-item custom lighten-1 white-text" href="#!">
+          <img class="responsive-img" src="/img/index/requests.png" style="max-width: 700px; margin-bottom: 25px;" />
+          <h2>Advertise Your Products</h2>
+          <p class="white-text">Promote your services using the advertisement requests feature built into your profile to attract new users.</p>
+          <a href="/help/requests" class="btn waves-effect custom darken-1 white-text">Show Advertisement Requests Help Documents</a>
+        </div>
+        <div class="carousel-item custom lighten-1 white-text" href="#!">
+          <img class="responsive-img" src="/img/index/search.png" style="max-width: 700px; margin-bottom: 25px;" />
+          <h2>Search For Your Friends & Favourite Broadcasters</h2>
+          <p class="white-text">The search page helps you to find the profiles of the people who interest you.</p>
+          <a href="/browse/search" class="btn waves-effect custom darken-1 white-text">Show Search Page</a>
+        </div>
+      </div>
+    </div>
+    <div class="center">
+      {% if twitch.id %}
+        <a href="/browse/spotlight" class="btn btn-large waves-effect white custom-text text-darken-1">Enter Site</a>
+      {% else %}
+        <a href="/auth/redirect/twitch?return=profile" class="btn btn-large waves-effect white custom-text text-darken-1">Login with Twitch</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="/js/index.js"></script>
+
+{% include "./footer.html" %}

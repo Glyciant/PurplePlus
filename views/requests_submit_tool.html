@@ -1,0 +1,132 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    {% if !bans.requests %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row" style="margin: 0;">
+            <div class="col s12">
+              {% if request_type == "web" %}
+                <h3 class="center">Submit Web Tool</h3>
+              {% elseif request_type == "desktop" %}
+                <h3 class="center">Submit Desktop Tool</h3>
+              {% else %}
+                <h3 class="center">Submit Browser Extension</h3>
+              {% endif %}
+              <hr />
+              <div class="col s12 input-field">
+                <h5>Q1: What is the name of your tool?</h5>
+                <input id="tool-name" type="text" placeholder="Example Tool">
+              </div>
+              <div class="col s12 input-field">
+                <h5>Q2: What is the URL of your tool?</h5>
+                <input id="tool-url" type="text" placeholder="http://example.com">
+              </div>
+              <div class="col s12 input-field">
+                <h5>Q3: Please give us a small description of your service.*</h5>
+                <textarea id="tool-description" class="materialize-textarea"></textarea>
+              </div>
+              <div class="col s12 input-field">
+                <h5>Q4: What user data will you require?*</h5>
+                <input id="tool-data" type="text" placeholder="Examples: email addresses, cookies, login data, etc.">
+              </div>
+              <div class="col s12 input-field" style="margin-bottom: 20px;">
+                <input type="checkbox" class="filled-in" id="tool-api" />
+                <label for="tool-api"><h5 style="margin-top: -2px;">Q5: Do you require data from the Twitch API?</h5></label>
+              </div>
+              <div class="col s12" id="tool-api-child" style="margin-top: 10px; display: none;">
+                <h5>Q5.1: What user data will you store from the Twitch API?*</h5>
+                <input id="tool-api-store" type="text">
+                <h5>Q5.2: What scopes will you use from the Twitch API?*</h5>
+                <input id="tool-api-scopes" type="text" placeholder="Examples: user_read, channel_read, etc.">
+                <h5>Q5.3: Please describe why you need each of the above scopes.*</h5>
+                <textarea id="tool-api-scopes-description" class="materialize-textarea"></textarea>
+              </div>
+              <div class="col s12 input-field" style="margin-bottom: 20px;">
+                <input type="checkbox" class="filled-in" id="tool-tos" />
+                <label for="tool-tos"><h5 style="margin-top: -2px;">Q6: Do you have a Terms of Service?</h5></label>
+              </div>
+              <div class="col s12" id="tool-tos-child" style="margin-top: 10px; display: none;">
+                <h5>Q6.1: Please provide a URL to your Terms of Service.</h5>
+                <input id="tool-tos-link" type="text" placeholder="http://example.com">
+              </div>
+              <div class="col s12 input-field" style="margin-bottom: 20px;">
+                <input type="checkbox" class="filled-in" id="tool-source" />
+                <label for="tool-source"><h5 style="margin-top: -2px;">Q7: Is your code open source, or available upon request?</h5></label>
+              </div>
+              <div class="col s12" id="tool-source-child" style="margin-top: 10px; display: none;">
+                <h5>Q7.1: Please provide a URL to where we can find the code.</h5>
+                <input id="tool-source-link" type="text" placeholder="http://example.com">
+              </div>
+              <div class="col s12 input-field" style="margin-bottom: 20px;">
+                <input type="checkbox" class="filled-in" id="tool-beta" />
+                <label for="tool-beta"><h5 style="margin-top: -2px;">Q8: If you are in beta, do you expect any updates to change the above answers?</h5></label>
+              </div>
+              <div class="col s12" id="tool-beta-child" style="margin-top: 10px; display: none;">
+                <h5>Q8.1: What do you expect to change when you leave beta?*</h5>
+                <textarea id="tool-beta-description" class="materialize-textarea"></textarea>
+              </div>
+              {% if request_type == "extension" %}
+                <div class="input-field col s12">
+                  <h5>Q9: Which browsers are compatible with your extension?</p>
+                  <div class="col s6">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="tool-browser-edge" />
+                      <label for="tool-browser-edge">Microsoft Edge</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="tool-browser-explorer" />
+                      <label for="tool-browser-explorer">Internet Explorer</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="tool-browser-chrome" />
+                      <label for="tool-browser-chrome">Google Chrome</label>
+                    </p>
+                  </div>
+                  <div class="col s6">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="tool-browser-firefox" />
+                      <label for="tool-browser-firefox">Mozilla Firefox</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="tool-browser-opera" />
+                      <label for="tool-browser-opera">Opera</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="tool-browser-safari" />
+                      <label for="tool-browser-safari">Safari</label>
+                    </p>
+                  </div>
+                </div>
+                <div class="col s12 input-field" style="margin: 30px 0 20px 0;">
+              {% else %}
+                <div class="col s12 input-field" style="margin-bottom: 20px;">
+              {% endif %}
+                <p>* Supports Markdown Formatting</p>
+                <a href="#!" class="btn waves-effect waves-light custom darken-1 white-text" style="width: 100%;" id="submit-request" data-reddit="{{ reddit.id }}" data-twitch="{{ twitch.id }}" data-type="{{ request_type }}" >Submit Request</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row center">
+            <div class="col s12 custom-text text-darken-1">
+              <h4>Banned</h4>
+            </div>
+            <div class="col s12 custom-text text-lighten-1">
+              <p>Sorry, but you appear to be banned from making advertisement requests. If you believe this is an error, please contact the /r/Twitch Moderators via <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch">modmail.</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script src="/js/requests_tool.js"></script>
+
+{% include "./footer.html" %}

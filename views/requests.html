@@ -1,0 +1,80 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500;">{{ data.twitch_name }}'{% if data.twitch_name.slice(-1) != "s" %}s{% endif %} Advertisement Requests</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s10 offset-s1" style="padding: 0;" id="requests-wrapper">
+    {% for request in data.requests %}
+      {% if request.status == "approved" || type == "mod" || type == "helper" || data.twitch_id == twitch.id %}
+        <div class="col l4 m6 s12">
+          <div class="card">
+            <div class="card-content">
+              <div class="row" style="margin: 0;">
+                <div class="col s12">
+                  <h5 class="center truncate">{{ request.data.name }}</h5>
+                </div>
+                <div class="col s6">
+                  <h6 class="center">{{ request.timestamp|date('d/m/Y') }}</h6>
+                </div>
+                <div class="col s6">
+                  {% if request.type == "web" %}
+                    <h6 class="center">Web Tool</h6>
+                  {% elseif request.type == "desktop" %}
+                    <h6 class="center">Desktop Tool</h6>
+                  {% elseif request.type == "extension" %}
+                    <h6 class="center">Browser Extension</h6>
+                  {% elseif request.type == "video" %}
+                    <h6 class="center">Video</h6>
+                  {% elseif request.type == "ama" %}
+                    <h6 class="center">AMA as a Business</h6>
+                  {% else %}
+                    <h6 class="center">Other</h6>
+                  {% endif %}
+                </div>
+                {% if type == "mod" || type == "helper" || data.twitch_id == twitch.id %}
+                  <div class="col s6">
+                    <h6 class="center">{{ request.comments.length }} Comments</h6>
+                  </div>
+                  <div class="col s6">
+                    <h6 class="center">{{ request.timestamp }}</h6>
+                  </div>
+                {% endif %}
+                <br />
+                <div class="col s6 center">
+                  {% if request.status == "approved" %}
+                    <a class="btn waves-effect waves-green green darken-2 white-text" style="cursor: default;">Approved</a>
+                  {% elseif request.status == "rejected" %}
+                    <a class="btn waves-effect waves-red red darken-2 white-text" style="cursor: default;">Rejected</a>
+                  {% elseif request.status == "withdrawn" %}
+                    <a class="btn waves-effect waves-black black white-text" style="cursor: default;">Withdrawn</a>
+                  {% else %}
+                    <a class="btn waves-effect waves-orange orange darken-2 white-text" style="cursor: default;">Pending</a>
+                  {% endif %}
+                </div>
+                <div class="col s6 center">
+                  <a href="/user/{{ data.twitch_username }}/requests/{{ request.timestamp }}" class="btn waves-effect waves-light custom darken-1 white-text">View</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<script src="/js/requests.js"></script>
+
+{% include "./footer.html" %}

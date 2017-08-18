@@ -1,0 +1,25 @@
+{% for nomination in data %}
+  <tr>
+    <td>{{ nomination.nomination_id }}</td>
+    <td>{{ nomination.nominator_name }}</td>
+    <td>
+      {% if nomination.user %}
+        {{ nomination.user }}
+      {% else %}
+        Removed
+      {% endif %}
+    </td>
+    <td><a href="{{ nomination.nomination_url }}" class="btn waves-effect waves-light custom darken-1 white-text" target="_blank">View</a></td>
+    <td id="nomination-{{ nomination.nomination_id }}-status-wrapper">
+      {% if nomination.status == "approved" %}
+        <a href="#modal-admin-nomination-{{ nomination.nomination_id }}" class="btn waves-effect waves-green green darken-2 white-text">Approved</a>
+      {% elseif nomination.status == "rejected" %}
+        <a href="#modal-admin-nomination-{{ nomination.nomination_id }}" class="btn waves-effect waves-red red darken-2 white-text">Rejected</a>
+      {% elseif !nomination.user %}
+        <a class="btn waves-effect waves-black black white-text">Removed</a>
+      {% else %}
+        <a class="btn waves-effect waves-orange orange darken-2 white-text" style="cursor: default;">Pending</a>
+      {% endif %}
+    </td>
+  </tr>
+{% endfor %}

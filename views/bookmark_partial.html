@@ -1,0 +1,34 @@
+{% for user in data %}
+  {% if loop.index0 % 4 == 0 %}
+    <div class="col s12" style="padding: 0; margin: 0;">
+  {% endif %}
+  {% if loop.index0 % 2 == 0 %}
+    <div class="col l6 m12 s12" style="padding: 0; margin: 0;">
+  {% endif %}
+  <div id="bookmark-wrapper" class="col l6 m6 s12">
+    <div id="bookmark-{{ user.twitch_id }}" class="card" style="min-height: 255px;">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12 center">
+            <a class="btn-floating waves-effect waves-light custom darken-1 tooltipped" id="unbookmark-profile" data-position="bottom" data-delay="50" data-tooltip="Delete Bookmark" data-id="{{ user.twitch_id }}" style="float: left;"><i class="material-icons">delete</i></a>
+            <a href="/user/{{ user.twitch_username }}" {% if user.stream.stream_type == "live" %}class="img-pulse live"{% elseif user.stream.stream_type == "vodcast" %}class="img-pulse video"{% elseif user.hosting %}class="img-pulse host"{% endif %} style="max-height: 75px; max-width: 75px; display: inline-block; position: relative; right: 17.5px;"><img {% if user.logo %} src="{{ user.logo }}" {% else %} src="/img/twitch.png" {% endif %} class="circle z-depth-2 responsive-img" style="max-height: 75px;"></a>
+            <h5 class="custom-text text-darken-1"><img src="/img/twitch.png" class="responsive-img" style="max-height: 20px; margin-right: 10px; position: relative; top: 2px;" />{{ user.twitch_name }}</h5>
+            {% if user.reddit_name %}<p class="custom-text text-darken-1"><img src="/img/reddit.png" class="responsive-img" style="max-height: 15px; margin-right: 10px; position: relative; top: 2px;" />{{ user.reddit_name }}</p>{% endif %}
+            {% if user.discord_id %}<p class="custom-text text-darken-1"><img src="/img/discord.png" class="responsive-img" style="max-height: 15px; margin-right: 10px; position: relative; top: 2px;" />{{ user.discord_name }}#{{ user.discord_tag }}</p>{% endif %}
+          </div>
+          {% if notes[user.twitch_id] %}
+            <div class="col s12 center" style="margin-top: 10px;">
+              <p class="truncate custom-text text-lighten-1">{{ notes[user.twitch_id] }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if loop.index0 % 2 == 1 || loop.last %}
+    </div>
+  {% endif %}
+  {% if loop.index0 % 4 == 3 || loop.last %}
+    </div>
+  {% endif %}
+{% endfor %}

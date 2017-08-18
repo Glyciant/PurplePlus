@@ -1,0 +1,73 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500;">Pending Profiles</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    {% if data[0] %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row" style="margin-bottom: 0;">
+            <table class="highlight">
+              <thead>
+                <th class="center">Date</th>
+                <th class="center">Legacy Status</th>
+                <th class="center">Twitch Username</th>
+                <th class="center">Reddit Username</th>
+                <th class="center">Profile</th>
+                <th class="center">Action</th>
+              </thead>
+              <tbody>
+                {% for profile in data %}
+                  <tr id="profile-{{ profile.twitch_id }}">
+                    <td class="center">{{ profile.profile.updated|date('d/m/Y') }}</td>
+                    <td class="center">
+                      {% if profile.legacy_intro == "approved" %}
+                        <a class="btn-floating waves-light green darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Approved"></a>
+                      {% elseif profile.legacy_intro == "rejected" %}
+                        <a class="btn-floating waves-light red darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Rejected"></a>
+                      {% elseif profile.legacy_intro == "pending" %}
+                        <a class="btn-floating waves-light orange darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Pending"></a>
+                      {% else %}
+                        <a class="btn-floating waves-light black tooltipped" data-position="bottom" data-delay="50" data-tooltip="None"></a>
+                      {% endif %}
+                    </td>
+                    <td class="center">{{ profile.twitch_name }}</td>
+                    <td class="center">{{ profile.reddit_name }}</td>
+                    <td class="center"><a href="/user/{{ profile.twitch_username }}/" class="btn waves-effect waves-light custom darken-1 white-text" target="_blank">View</a></td>
+                    <td class="center">
+                      <a href="#!" id="admin-approve" class="green-text tooltipped" data-id="{{ profile.twitch_id }}" data-username="{{ profile.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Approve"><i class="material-icons">done</i></a>
+                      <a href="#!" id="admin-reject" class="red-text tooltipped" data-id="{{ profile.twitch_id }}" data-username="{{ profile.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Reject: Lack of Content"><i class="material-icons">thumb_down</i></a>
+                      <a href="#!" id="admin-reject" class="red-text tooltipped" data-id="{{ profile.twitch_id }}" data-username="{{ profile.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Reject: Potentially Unsafe Links"><i class="material-icons">report_problem</i></a>
+                      <a href="#!" id="admin-reject" class="red-text tooltipped" data-id="{{ profile.twitch_id }}" data-username="{{ profile.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Reject: Offensive Content"><i class="material-icons">mic_off</i></a>
+                      <a href="#!" id="admin-reject" class="red-text tooltipped" data-id="{{ profile.twitch_id }}" data-username="{{ profile.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Reject: Other"><i class="material-icons">not_interested</i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      {% set message = "There are no pending profiles." %}
+      {% include "./missing_partial.html" %}
+    {% endif %}
+  </div>
+</div>
+
+<script src="/js/admin_profiles.js"></script>
+
+{% include "./footer.html" %}

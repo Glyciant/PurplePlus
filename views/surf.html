@@ -1,0 +1,44 @@
+{% include "./header.html" %}
+
+<div class="row" style="margin: 0; height: calc(100% - 50px);">
+  <div class="col l10 m10 s12" style="padding: 0; height: 100%;">
+    <div id="surf-automatic-message" class="col l10 m10 s12" style="position: absolute; top: 50px; padding: 0; display: none;">
+      <div class="card custom darken-1 white-text">
+        <div class="card-content" style="padding: 5px;">
+          <p style="margin: 0;">Automatically changing stream in <span id="surf-automatic-message-time">60</span> seconds. Click here to continue watching {{ display_name }}.</p>
+        </div>
+      </div>
+    </div>
+    <div id="video-wrapper" style="height: calc(100%);">
+      <iframe
+          src="https://player.twitch.tv/?channel='{{ user }}'"
+          height="100%"
+          width="100%"
+          frameborder="0"
+          scrolling="no"
+          allowfullscreen="true">
+      </iframe>
+      <div class="center" style="position: absolute; bottom: 5px; left: 33%;">
+        <a class="custom darken-1 white-text btn-floating tooltipped" style="margin: 0 5px; opacity: 0;" href="/user/{{user}}" target="_blank" data-position="top" data-delay="50" data-tooltip="View Profile"><i class="material-icons">description</i></a>
+        <a class="custom darken-1 white-text btn-floating tooltipped" style="margin: 0 5px; opacity: 0;" href="https://twitch.tv/{{ user }}" target="_blank" data-position="top" data-delay="50" data-tooltip="Watch on Twitch"><i class="material-icons">visibility</i></a>
+        <a class="custom darken-1 white-text btn-floating tooltipped" style="margin: 0 5px; opacity: 0;" href="https://twitter.com/intent/tweet?text=I%27m+watching+{% if twitter %}%40{{ twitter }}{% else %}{{ display_name }}{% endif %}+stream+{{ game }}+on+%40Twitch.+Come+and+join+me%21%0D%0A%0D%0Ahttps%3A%2F%2Ftwitch.tv%2F{{ user }}%0D%0A%0D%0A%28via+Purple%2B%29" target="_blank" data-position="top" data-delay="50" data-tooltip="Tweet Stream"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        <a class="custom darken-1 white-text btn-floating tooltipped" style="margin: 0 5px; opacity: 0;" href="/browse/surf" data-position="top" data-delay="50" data-tooltip="New Stream!"><i class="material-icons">shuffle</i></a>
+      </div>
+    </div>
+  </div>
+  <div class="col l2 m2 hide-on-small-only" style="padding: 0; height: 100%;">
+    <iframe
+      frameborder="0"
+      scrolling="no"
+      id="{{ user }}"
+      src="https://www.twitch.tv/{{ user }}/chat"
+      style="height: 100%, width: 100%"
+      height="100%"
+      width="100%">
+    </iframe>
+  </div>
+</div>
+
+<script src="/js/surf.js"></script>
+
+{% include "./footer.html" %}

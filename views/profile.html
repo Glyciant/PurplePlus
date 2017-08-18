@@ -1,0 +1,1376 @@
+{% include "./header.html" %}
+
+{% if data.profile %}
+
+  <div id="profile-wrapper">
+    {% include "./user_partial.html" %}
+  </div>
+
+{% else %}
+
+  <div class="row" id="no-profile">
+    <div class="col s10 offset-s1">
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Create Profile</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">wifi</i></h1>
+                <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">Reach more viewers</p>
+                <p class="light center custom-text text-lighten-1">Creating a profile allows your streams to appear across the site. Also, your profile will be sent to viewers who we think will be interested in your content.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">visibility</i></h1>
+                <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">Discover new streamers</p>
+                <p class="light center custom-text text-lighten-1">Registering as a viewer will grant you access to your own unique home page where you will be shown profiles whose content we think you will enjoy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">brush</i></h1>
+                <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">Find commissions</p>
+                <p class="light center custom-text text-lighten-1">Signing up as an artist, developer or moderator allows you to mark that you are looking for work. This will attract those who are looking for help.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">style</i></h1>
+                <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">Advertise your projects</p>
+                <p class="light center custom-text text-lighten-1">Advertisement requests from /r/Twitch are integrated into this site. A link to your approved requests will be displayed on your profile to expand their reach.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">star</i></h1>
+                <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">Be recognised</p>
+                <p class="light center custom-text text-lighten-1">The Twoos feature allows you to be recognised for your contributions. Users with more Twoos will be given higher priority on a leaderboard and on the streams page.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l4">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">group</i></h1>
+                <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">Collaborate</p>
+                <p class="light center custom-text text-lighten-1">Your approved profile will be shown to other people who provide similar services and content. You can use this site to create groups and work together to improve and grow.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col s12">
+          <div class="card">
+            <div class="card-content">
+              <div class="center">
+                <a id="create-profile" href="#!" class="btn-large waves-effect waves-light custom darken-1 white-text">Click here to get started!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+<div class="row" id="submit-profile-wrapper" style="display: none;">
+  <div class="col s10 offset-s1">
+    {% if !data.bans.profile %}
+      <div class="card">
+        <div class="card-content">
+          <div id="create-profile-header" style="display: none;">
+            <h3 class="center">Create Profile</h3>
+            <hr />
+          </div>
+          <div id="edit-profile-header" style="display: none;">
+            <h3 class="center">Edit Profile</h3>
+            <hr />
+          </div>
+          <div id="step-1" style="display: none;">
+            <h4 class="center">Step 1 - Overview</h4>
+            <p class="center">These questions are all required and appear on everyone's profile! Markdown is supported.</p>
+            <br />
+            <div class="row">
+              <div class="input-field col s12">
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if data.profile.overview.about.length %}{{ data.profile.overview.about.length }}{% elseif intro[0] && intro[0].intro_data.intro_about.length %}{{ intro[0].intro_data.intro_about.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
+                <textarea id="profile-about" class="materialize-textarea count">{% if data.profile.overview.about %}{{ data.profile.overview.about }}{% elseif intro[0] && intro[0].intro_data.intro_about %}{{ intro[0].intro_data.intro_about }}{% endif %}</textarea>
+                <label for="profile-about">About You - This is a brief summary of who you are and what you're about!</label>
+              </div>
+              <div class="input-field col s12">
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if data.profile.overview.goals.length %}{{ data.profile.overview.goals.length }}{% elseif intro[0] && intro[0].intro_data.intro_goals.length %}{{ intro[0].intro_data.intro_goals.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
+                <textarea id="profile-goals" class="materialize-textarea count">{% if data.profile.overview.goals %}{{ data.profile.overview.goals }}{% elseif intro[0] && intro[0].intro_data.intro_goals %}{{ intro[0].intro_data.intro_goals }}{% endif %}</textarea>
+                <label for="profile-goals">Your Goals - Why do you use Twitch? What do you hope to gain from using it?</label>
+              </div>
+              <div class="input-field col s12">
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if data.profile.overview.background.length %}{{ data.profile.overview.background.length }}{% elseif intro[0] && intro[0].intro_data.intro_background.length %}{{ intro[0].intro_data.intro_background.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
+                <textarea id="profile-background" class="materialize-textarea count">{% if data.profile.overview.background %}{{ data.profile.overview.background }}{% elseif intro[0] && intro[0].intro_data.intro_background %}{{ intro[0].intro_data.intro_background }}{% endif %}</textarea>
+                <label for="profile-background">Your Background - Tell us a little about yourself. What are your hobbies? What is your history?</label>
+              </div>
+            </div>
+            <div class="row">
+              <a href="#!" id="next-step-2" class="btn waves-effect waves-light custom darken-1 white-text right">Next</a>
+            </div>
+          </div>
+          <div id="step-2" style="display: none;">
+            <h4 class="center">Step 2 - Profile Type</h4>
+            <p class="center">What do you use Twitch for? Your answers to this question will decide the sections you complete in Step 3. You may choose as many as you wish, but must choose at least one.</p>
+            <br />
+            <div class="row">
+              <p>What are you on Twitch?</p><br />
+              <div class="col s12 m6 l3">
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming" {% if data.profile.types.streamer_gaming %}checked{% endif %} />
+                  <label for="profile-type-streamer-gaming">Gaming Streamer</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-creative" {% if data.profile.types.streamer_creative %}checked{% endif %} />
+                  <label for="profile-type-streamer-creative">Creative Streamer</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating" {% if data.profile.types.streamer_socialeating %}checked{% endif %} />
+                  <label for="profile-type-streamer-socialeating">Social Eating Streamer</label>
+                </p>
+              </div>
+              <div class="col s12 m6 l3">
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-irl" {% if data.profile.types.streamer_irl %}checked{% endif %} />
+                  <label for="profile-type-streamer-irl">IRL Streamer</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow" {% if data.profile.types.streamer_talkshow %}checked{% endif %} />
+                  <label for="profile-type-streamer-talkshow">Talk Show Streamer</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-music" {% if data.profile.types.streamer_music %}checked{% endif %} />
+                  <label for="profile-type-streamer-music">Music Streamer</label>
+                </p>
+              </div>
+              <div class="col s12 m6 l3">
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-artist" {% if data.profile.types.artist %}checked{% endif %} />
+                  <label for="profile-type-artist">Artist</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-developer" {% if data.profile.types.developer %}checked{% endif %} />
+                  <label for="profile-type-developer">Developer</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-communitymanager" {% if data.profile.types.communitymanager %}checked{% endif %} />
+                  <label for="profile-type-communitymanager">Community Manager</label>
+                </p>
+              </div>
+              <div class="col s12 m6 l3">
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-viewer" {% if data.profile.types.viewer %}checked{% endif %} />
+                  <label for="profile-type-viewer">Viewer</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-moderator" {% if data.profile.types.moderator %}checked{% endif %} />
+                  <label for="profile-type-moderator">Moderator</label>
+                </p>
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-type-other" {% if data.profile.types.other %}checked{% endif %} />
+                  <label for="profile-type-other">Other</label>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <a href="#!" id="back-step-1" class="btn waves-effect waves-light custom darken-1 white-text">Back</a>
+              <a href="#!" id="next-step-3" class="btn waves-effect waves-light custom darken-1 white-text right">Next</a>
+            </div>
+          </div>
+          <div id="step-3" style="display: none;">
+            <h4 class="center">Step 3 - About You</h4>
+            <p class="center">These sections are given to you based off your answer to the previous question. Markdown supported.</p>
+            <div id="profile-type-streamer-gaming-wrapper" style="display: none;">
+              <h5 class="center">Gaming Streamer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-gaming-goals" class="materialize-textarea">{{ data.profile.types.streamer_gaming.goals }}</textarea>
+                  <label for="profile-type-streamer-gaming-goals">Your Gaming Goals - What do you hope to achieve as a gamer on Twitch?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-gaming-schedule" class="materialize-textarea">{{ data.profile.types.streamer_gaming.schedule }}</textarea>
+                  <label for="profile-type-streamer-gaming-schedule">Your Gaming Schedule - When do you stream games? Make sure to include timezones!</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>Your Game Genres - Which game genres do you like to play?</p>
+                  <div class="col s12 m4 l4">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-action" {% if data.profile.types.streamer_gaming.genres.action %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-action">Action</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-adventure" {% if data.profile.types.streamer_gaming.genres.adventure %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-adventure">Adventure</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-horror" {% if data.profile.types.streamer_gaming.genres.horror %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-horror">Horror</label>
+                    </p>
+                  </div>
+                  <div class="col s12 m4 l4">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-roleplaying" {% if data.profile.types.streamer_gaming.genres.roleplaying %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-roleplaying">Role-Playing</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-simulation" {% if data.profile.types.streamer_gaming.genres.simulation %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-simulation">Simulation</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-strategy" {% if data.profile.types.streamer_gaming.genres.strategy %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-strategy">Strategy</label>
+                    </p>
+                  </div>
+                  <div class="col s12 m4 l4">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-survival" {% if data.profile.types.streamer_gaming.genres.survival %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-survival">Survivial</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-other" {% if data.profile.types.streamer_gaming.genres.other %}checked{% endif %} />
+                      <label for="profile-type-streamer-gaming-other">Other</label>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-collaborations" {% if data.profile.types.streamer_gaming.collaborations != "false" %}checked{% endif %} />
+                    <label for="profile-type-streamer-gaming-collaborations">Are you looking to collaborate with other gaming streamers?</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-charity" {% if data.profile.types.streamer_gaming.charity == "true" %}checked{% endif %} />
+                    <label for="profile-type-streamer-gaming-charity">Do you do gaming streams for charity?</label>
+                  </p>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-streamer-creative-wrapper" style="display: none;">
+              <h5 class="center">Creative Streamer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-creative-goals" class="materialize-textarea">{{ data.profile.types.streamer_creative.goals }}</textarea>
+                  <label for="profile-type-streamer-creative-goals">Your Creative Goals - What do you hope to achieve as a creative streamer on Twitch?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-creative-schedule" class="materialize-textarea">{{ data.profile.types.streamer_creative.schedule }}</textarea>
+                  <label for="profile-type-streamer-creative-schedule">Your Creative Schedule - When do you stream creative? Make sure to include timezones!</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>Your Creative Activites - What do you like to do in the creative directory?</p>
+                  <div class="col s12 m6 l6">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-cooking" {% if data.profile.types.streamer_creative.activities.cooking %}checked{% endif %} />
+                      <label for="profile-type-streamer-creative-cooking">Cooking</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-drawing" {% if data.profile.types.streamer_creative.activities.drawing %}checked{% endif %} />
+                      <label for="profile-type-streamer-creative-drawing">Drawing</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-painting" {% if data.profile.types.streamer_creative.activities.painting %}checked{% endif %} />
+                      <label for="profile-type-streamer-creative-painting">Painting</label>
+                    </p>
+                  </div>
+                  <div class="col s12 m6 l6">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-programming" {% if data.profile.types.streamer_creative.activities.programming %}checked{% endif %} />
+                      <label for="profile-type-streamer-creative-programming">Programming</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-editing" {% if data.profile.types.streamer_creative.activities.editing %}checked{% endif %} />
+                      <label for="profile-type-streamer-creative-editing">Video Editing</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-other" {% if data.profile.types.streamer_creative.activities.other %}checked{% endif %} />
+                      <label for="profile-type-streamer-creative-other">Other</label>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-collaborations" {% if data.profile.types.streamer_creative.collaborations != "false" %}checked{% endif %} />
+                    <label for="profile-type-streamer-creative-collaborations">Are you looking to collaborate with other creative streamers?</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-charity" {% if data.profile.types.streamer_creative.charity == "true" %}checked{% endif %} />
+                    <label for="profile-type-streamer-creative-charity">Do you do creative streams for charity?</label>
+                  </p>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-streamer-socialeating-wrapper" style="display: none;">
+              <h5 class="center">Social Eating Streamer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-socialeating-goals" class="materialize-textarea">{{ data.profile.types.streamer_socialeating.goals }}</textarea>
+                  <label for="profile-type-streamer-socialeating-goals">Your Social Eating Goals - What do you hope to achieve as a social eating streamer on Twitch?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-socialeating-schedule" class="materialize-textarea">{{ data.profile.types.streamer_socialeating.schedule }}</textarea>
+                  <label for="profile-type-streamer-socialeating-schedule">Your Social Eating Schedule - When do you stream social eating? Make sure to include timezones!</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating-collaborations" {% if data.profile.types.streamer_socialeating.collaborations != "false" %}checked{% endif %} />
+                    <label for="profile-type-streamer-socialeating-collaborations">Are you looking to collaborate with other social eating streamers?</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating-charity" {% if data.profile.types.streamer_socialeating.charity == "true" %}checked{% endif %} />
+                    <label for="profile-type-streamer-socialeating-charity">Do you do social eating streams for charity?</label>
+                  </p>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-streamer-irl-wrapper" style="display: none;">
+              <h5 class="center">IRL Streamer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-irl-goals" class="materialize-textarea">{{ data.profile.types.streamer_irl.goals }}</textarea>
+                  <label for="profile-type-streamer-irl-goals">Your IRL Stream's Goals - What do you hope to achieve as a IRL streamer on Twitch?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-irl-schedule" class="materialize-textarea">{{ data.profile.types.streamer_irl.schedule }}</textarea>
+                  <label for="profile-type-streamer-irl-schedule">Your IRL Stream's Schedule - When do you stream IRL? Make sure to include timezones!</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-irl-activities" class="materialize-textarea">{{ data.profile.types.streamer_irl.activities }}</textarea>
+                  <label for="profile-type-streamer-irl-activities">Your IRL Stream's Activities - What do you do on your IRL streams?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-irl-collaborations" {% if data.profile.types.streamer_irl.collaborations != "false" %}checked{% endif %} />
+                    <label for="profile-type-streamer-irl-collaborations">Are you looking to collaborate with other IRL streamers?</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-irl-charity" {% if data.profile.types.streamer_irl.charity == "true" %}checked{% endif %} />
+                    <label for="profile-type-streamer-irl-charity">Do you do IRL streams for charity?</label>
+                  </p>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-streamer-talkshow-wrapper" style="display: none;">
+              <h5 class="center">Talk Show Streamer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-talkshow-goals" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.goals }}</textarea>
+                  <label for="profile-type-streamer-talkshow-goals">Your Talk Show Hosting Goals - What do you hope to achieve as a talk show streamer on Twitch?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-talkshow-schedule" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.schedule }}</textarea>
+                  <label for="profile-type-streamer-talkshow-schedule">Your Talk Show's Schedule - When do you stream talk shows? Make sure to include timezones!</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-talkshow-discussions" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.discussions }}</textarea>
+                  <label for="profile-type-streamer-talkshow-discussions">Your Talk Show's Discussions - What do you discuss on your talk show streams?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-talkshow-guests" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.guests }}</textarea>
+                  <label for="profile-type-streamer-talkshow-guests">Your Talk Show's Guests - Do your talk shows feature anyone else? If so, who?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow-collaborations" {% if data.profile.types.streamer_talkshow.collaborations != "false" %}checked{% endif %} />
+                    <label for="profile-type-streamer-talkshow-collaborations">Are you looking to collaborate with other talk show streamers?</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow-charity" {% if data.profile.types.streamer_talkshow.charity == "true" %}checked{% endif %} />
+                    <label for="profile-type-streamer-talkshow-charity">Do you do talk show streams for charity?</label>
+                  </p>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-streamer-music-wrapper" style="display: none;">
+              <h5 class="center">Music Streamer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-music-goals" class="materialize-textarea">{{ data.profile.types.streamer_music.goals }}</textarea>
+                  <label for="profile-type-streamer-music-goals">Your Music Goals - What do you hope to achieve as a music streamer on Twitch?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-music-schedule" class="materialize-textarea">{{ data.profile.types.streamer_music.schedule }}</textarea>
+                  <label for="profile-type-streamer-music-schedule">Your Music Schedule - When do you stream music? Make sure to include timezones!</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-music-collaborations" {% if data.profile.types.streamer_music.collaborations != "false" %}checked{% endif %} />
+                    <label for="profile-type-streamer-music-collaborations">Are you looking to collaborate with other music streamers?</label>
+                  </p>
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-music-charity" {% if data.profile.types.streamer_music.charity == "true" %}checked{% endif %} />
+                    <label for="profile-type-streamer-music-charity">Do you do music streams for charity?</label>
+                  </p>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-artist-wrapper" style="display: none;">
+              <h5 class="center">Artist</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-artist-examples" class="materialize-textarea">{{ data.profile.types.artist.examples }}</textarea>
+                  <label for="profile-type-artist-examples">Art Portfolio - Please link some examples of your work.</label>
+                </div>
+                <div class="input-field col s12">
+                  <textarea id="profile-type-artist-attraction" class="materialize-textarea">{{ data.profile.types.artist.attraction }}</textarea>
+                  <label for="profile-type-artist-attraction">Why You Enjoy Art - Are you particularly talented at it? Do you find it relaxing?</label>
+                </div>
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-artist-commissions" {% if data.profile.types.artist.commissions %}checked{% endif %} />
+                    <label for="profile-type-artist-commissions">Do you usually accept commissions?</label>
+                  </p>
+                </div>
+                <div id="artist-commissions" {% if !data.profile.types.artist.commissions %}style="display: none;"{% endif %}>
+                  <div class="input-field col s12">
+                    <textarea id="profile-type-artist-commissions-services" class="materialize-textarea">{{ data.profile.types.artist.commissions.services }}</textarea>
+                    <label for="profile-type-artist-commissions-services">Your Commission Services - What do you offer?</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <textarea id="profile-type-artist-commissions-contact" class="materialize-textarea">{{ data.profile.types.artist.commissions.contact }}</textarea>
+                    <label for="profile-type-artist-commissions-contact">Your Contact Information for Commissions - How should people contact you about commissions?</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-artist-commissions-charge" {% if data.profile.types.artist.commissions.charge %}checked{% endif %}/>
+                      <label for="profile-type-artist-commissions-charge">Do you charge for your work?</label>
+                    </p>
+                  </div>
+                  <div id="artist-commissions-charge" {% if !data.profile.types.artist.commissions.charge %}style="display: none;"{% endif %}>
+                    <div class="input-field col s12">
+                      <textarea id="profile-type-artist-commissions-charge-rate" class="materialize-textarea">{{ data.profile.types.artist.commissions.charge }}</textarea>
+                      <label for="profile-type-artist-commissions-charge-rate">Your Charge Rate for Commissions - How much are your services?</label>
+                    </div>
+                  </div>
+                  <div class="input-field col s12">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-artist-commissions-accepting" {% if data.profile.types.artist.commissions.accepting %}checked{% endif %} />
+                      <label for="profile-type-artist-commissions-accepting">Do you currently accept commissions?</label>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-developer-wrapper" style="display: none;">
+              <h5 class="center">Developer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-developer-examples" class="materialize-textarea">{{ data.profile.types.developer.examples }}</textarea>
+                  <label for="profile-type-developer-examples">Developer Portfolio - Please link some examples of your work.</label>
+                </div>
+                <div class="input-field col s12">
+                  <textarea id="profile-type-developer-attraction" class="materialize-textarea">{{ data.profile.types.developer.attraction }}</textarea>
+                  <label for="profile-type-developer-attraction">Why You Enjoy Developing - Are you particularly talented at it? Do you find it relaxing?</label>
+                </div>
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-developer-commissions" {% if data.profile.types.developer.commissions %}checked{% endif %} />
+                    <label for="profile-type-developer-commissions">Do you usually accept commissions?</label>
+                  </p>
+                </div>
+                <div id="developer-commissions" {% if !data.profile.types.developer.commissions %}style="display: none;"{% endif %}>
+                  <div class="input-field col s12">
+                    <textarea id="profile-type-developer-commissions-services" class="materialize-textarea">{{ data.profile.types.developer.commissions.services }}</textarea>
+                    <label for="profile-type-developer-commissions-services">Your Commission Services - What do you offer?</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <textarea id="profile-type-developer-commissions-contact" class="materialize-textarea">{{ data.profile.types.developer.commissions.contact }}</textarea>
+                    <label for="profile-type-developer-commissions-contact">Your Contact Information for Commissions - How should people contact you about commissions?</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-developer-commissions-charge" {% if data.profile.types.developer.commissions.charge %}checked{% endif %} />
+                      <label for="profile-type-developer-commissions-charge">Do you charge for your work?</label>
+                    </p>
+                  </div>
+                  <div id="developer-commissions-charge" {% if !data.profile.types.developer.commissions.charge %}style="display: none;"{% endif %}>
+                    <div class="input-field col s12">
+                      <textarea id="profile-type-developer-commissions-charge-rate" class="materialize-textarea">{{ data.profile.types.developer.commissions.charge }}</textarea>
+                      <label for="profile-type-developer-commissions-charge-rate">Your Charge Rate for Commissions - How much are your services?</label>
+                    </div>
+                  </div>
+                  <div class="input-field col s12">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-developer-commissions-accepting" {% if data.profile.types.artist.commissions.accepting %}checked{% endif %} />
+                      <label for="profile-type-developer-commissions-accepting">Do you currently accept commissions?</label>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-communitymanager-wrapper" style="display: none;">
+              <h5 class="center">Community Manager</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-communitymanager-examples" class="materialize-textarea">{{ data.profile.types.communitymanager.examples }}</textarea>
+                  <label for="profile-type-communitymanager-examples">Community Manager Portfolio - Which communities do you manage?</label>
+                </div>
+                <div class="input-field col s12">
+                  <textarea id="profile-type-communitymanager-attraction" class="materialize-textarea">{{ data.profile.types.communitymanager.attraction }}</textarea>
+                  <label for="profile-type-communitymanager-attraction">Why You Enjoy Being a Community Manager - Why did you become a community manager? What is the best part of it for you?</label>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-moderator-wrapper" style="display: none;">
+              <h5 class="center">Moderator</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-moderator-experience" class="materialize-textarea">{{ data.profile.types.moderator.experience }}</textarea>
+                  <label for="profile-type-moderator-experience">Moderation Experience - What are your best memories of being a moderator? This could be anything from a kind viewer, to a bit of a war story!</label>
+                </div>
+                <div class="input-field col s12">
+                  <textarea id="profile-type-moderator-attraction" class="materialize-textarea">{{ data.profile.types.moderator.attraction }}</textarea>
+                  <label for="profile-type-moderator-attraction">Why You Enjoy Being a Moderator - Why do you moderate on Twitch?</label>
+                </div>
+                <div class="input-field col s12">
+                  <p>
+                    <input type="checkbox" class="filled-in" id="profile-type-moderator-requests" {% if data.profile.types.moderator.requests %}checked{% endif %}/>
+                    <label for="profile-type-moderator-requests">Can people request that you moderate their channel?</label>
+                  </p>
+                </div>
+                <div id="moderator-requests" {% if !data.profile.types.moderator.requests %}style="display: none;"{% endif %}>
+                  <div class="input-field col s12">
+                    <textarea id="profile-type-moderator-requirements" class="materialize-textarea">{{ data.profile.types.moderator.requests.requirements }}</textarea>
+                    <label for="profile-type-moderator-requirements">Your Request Requirements - What must the streamer or channel have for you to moderate it?</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <textarea id="profile-type-moderator-requests-contact" class="materialize-textarea">{{ data.profile.types.moderator.requests.contact }}</textarea>
+                    <label for="profile-type-moderator-requests-contact">Your Contact Information for Requests - How should people contact you about moderation requests?</label>
+                  </div>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-viewer-wrapper" style="display: none;">
+              <h5 class="center">Viewer</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-viewer-experience" class="materialize-textarea">{{ data.profile.types.viewer.experience }}</textarea>
+                  <label for="profile-type-viewer-experience">Best Viewing Experiences - What are your best memories of being a viewer?</label>
+                </div>
+                <div class="input-field col s12">
+                  <textarea id="profile-type-viewer-streamers" class="materialize-textarea">{{ data.profile.types.viewer.streamers }}</textarea>
+                  <label for="profile-type-viewer-streamers">Favourite Streamers - Who are your favourite streamers? Why do you like them? How long have you watched them?</label>
+                </div>
+                <div class="input-field col s12">
+                  <p>Your Preferred Streams - What types of streams are your favourite? You must choose at least one from this list.</p>
+                  <div class="col s12 m6 l3">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-action" {% if data.profile.types.viewer.streams.action %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-action">Action Games</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-adventure" {% if data.profile.types.viewer.streams.adventure %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-adventure">Adventure Games</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-roleplaying" {% if data.profile.types.viewer.streams.roleplaying %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-roleplaying">Role-Playing Games</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-simulation" {% if data.profile.types.viewer.streams.simulation %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-simulation">Simulation Games</label>
+                    </p>
+                  </div>
+                  <div class="col s12 m6 l3">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-horror" {% if data.profile.types.viewer.streams.horror %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-horror">Horror Games</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-strategy" {% if data.profile.types.viewer.streams.strategy %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-strategy">Strategy Games</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-survival" {% if data.profile.types.viewer.streams.survival %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-survival">Survival Games</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-cooking" {% if data.profile.types.viewer.streams.cooking %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-cooking">Cooking</label>
+                    </p>
+                  </div>
+                  <div class="col s12 m6 l3">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-drawing" {% if data.profile.types.viewer.streams.drawing %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-drawing">Drawing</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-painting" {% if data.profile.types.viewer.streams.painting %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-painting">Painting</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-programming" {% if data.profile.types.viewer.streams.programming %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-programming">Programming</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-editing" {% if data.profile.types.viewer.streams.editing %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-editing">Video Editing</label>
+                    </p>
+                  </div>
+                  <div class="col s12 m6 l3">
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-irl" {% if data.profile.types.viewer.streams.irl %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-irl">IRL</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-talkshow" {% if data.profile.types.viewer.streams.talkshow %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-talkshow">Talk Show</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-socialeating" {% if data.profile.types.viewer.streams.socialeating %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-socialeating">Social Eating</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-music" {% if data.profile.types.viewer.streams.music %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-music">Music</label>
+                    </p>
+                  </div>
+                </div>
+                <div class="input-field col s12">
+                  <input type="checkbox" class="filled-in" id="profile-type-viewer-family" {% if data.profile.types.viewer.family %}checked{% endif %} />
+                  <label for="profile-type-viewer-family">Do you prefer family friendly streams?</label>
+                </div>
+              </div>
+              <br />
+            </div>
+            <div id="profile-type-other-wrapper" style="display: none;">
+              <h5 class="center">Other Type</h5>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-other-description" class="materialize-textarea">{{ data.profile.types.other }}</textarea>
+                  <label for="profile-type-other-description">Sorry that your role didn't fit into another category. Please still tell us about yourself and your role though!</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <a href="#!" id="back-step-2" class="btn waves-effect waves-light custom darken-1 white-text">Back</a>
+              <a href="#!" id="next-step-4" class="btn waves-effect waves-light custom darken-1 white-text right">Next</a>
+            </div>
+          </div>
+          <div id="step-4" style="display: none;">
+            <div class="row">
+              <h4 class="center">Step 4 - Tags</h4>
+              <p>Adding tags to your profile allows people to discover it easier! Make sure to choose some that are particularly relevant to you. Press the enter key between each.</p>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <div class="chips chips-initial" id="profile-tags" data-tags="{{ data.profile.tags }}"></div>
+              </div>
+            </div>
+            <div class="row">
+              <a href="#!" id="back-step-3" class="btn waves-effect waves-light custom darken-1 white-text">Back</a>
+              <a href="#!" id="next-step-5" class="btn waves-effect waves-light custom darken-1 white-text right">Next</a>
+            </div>
+          </div>
+          <div id="step-5" style="display: none;">
+            <div class="row center">
+              <h4>Success!</h4>
+              <p>You've made it to the end of the creation process. When you click Submit, your profile will be sent to the site admins for approval.</p>
+            </div>
+            <div class="row">
+              <div class="col s12 m12 l4">
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-notifications-twitch" checked />
+                  <label for="profile-notifications-twitch">Send me a Twitch whisper when my profile is approved.</label>
+                </p>
+              </div>
+              <div class="col s12 m12 l4">
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-notifications-reddit" {% if reddit.id %} checked {% else %} disabled {% endif %} />
+                  <label for="profile-notifications-reddit">Send me a Reddit PM when my profile is approved.</label>
+                </p>
+              </div>
+              <div class="col s12 m12 l4">
+                <p>
+                  <input type="checkbox" class="filled-in" id="profile-notifications-discord" {% if discord.id %} checked {% else %} disabled {% endif %} />
+                  <label for="profile-notifications-discord">Send me a Discord DM when my profile is approved.</label>
+                </p>
+              </div>
+              <div class="input-field col s12" id="profile-flair-badge">
+                <select></select>
+                <label>Reddit Flair & Discord Role Type</label>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <a href="#!" id="back-step-4" class="btn waves-effect waves-light custom darken-1 white-text">Back</a>
+              <a href="#!" id="submit-profile" class="btn waves-effect waves-light custom darken-1 white-text right" data-id="{{ twitch.id }}">Submit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row center">
+            <div class="col s12 custom-text text-darken-1">
+              <h4>Banned</h4>
+            </div>
+            <div class="col s12 custom-text text-lighten-1">
+              <p>Sorry, but you appear to be banned from making profile submissions. If you believe this is an error, please contact the /r/Twitch Moderators via <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch">modmail.</a>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row" id="link-accounts-wrapper" style="display: none;">
+  <div class="col s10 offset-s1">
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-content">
+            <div class="center">
+              <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Link Accounts</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6 l4">
+        <ul class="collection with-header white container-shadow">
+          <li class="collection-header center"><h4>Twitch</h4><img src="/img/twitch.png" /></li>
+          <li class="collection-item">
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding: 5px;"><strong>Twitch ID:</strong></td>
+                  <td style="padding: 5px;">{{ twitch.id }}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px;"><strong>Twitch Name:</strong></td>
+                  <td style="padding: 5px;">{{ twitch.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+        </ul>
+      </div>
+      <div class="col s12 m6 l4">
+        <ul class="collection with-header white container-shadow">
+          <li class="collection-header center"><h4>Reddit</h4><img src="/img/reddit.png" /></li>
+          {% if reddit.id %}
+            <li class="collection-item">
+              <table>
+                <tbody>
+                  <tr>
+                    <td style="padding: 5px;"><strong>Reddit ID:</strong></td>
+                    <td style="padding: 5px;">{{ reddit.id }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px;"><strong>Reddit Name:</strong></td>
+                    <td style="padding: 5px;">{{ reddit.name }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            {% if twitch.id %}
+              <li class="collection-item"><a href="/auth/unlink/reddit/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Unlink Account</a></li>
+            {% endif %}
+          {% else %}
+            <li class="collection-item"><a href="/auth/redirect/reddit/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Link Account</a></li>
+          {% endif %}
+        </ul>
+      </div>
+      <div class="col s12 m6 offset-m3 l4">
+        <ul class="collection with-header white container-shadow">
+          <li class="collection-header center"><h4>Discord</h4><img src="/img/discord.png" /></li>
+          {% if discord.id %}
+            <li class="collection-item">
+              <table>
+                <tbody>
+                  <tr>
+                    <td style="padding: 5px;"><strong>Discord ID:</strong></td>
+                    <td style="padding: 5px;">{{ discord.id }}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 5px;"><strong>Discord Name:</strong></td>
+                    <td style="padding: 5px;">{{ discord.name }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
+            <li class="collection-item"><a href="/auth/unlink/discord/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Unlink Account</a></li>
+          {% else %}
+            <li class="collection-item"><a href="/auth/redirect/discord/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Link Account</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if data.reddit_id %}
+  <div class="row" id="twoos-transactions-wrapper" style="display: none;">
+    <div class="col s10 offset-s1">
+      <div class="row">
+        <div class="col s12">
+          <div class="card">
+            <div class="row">
+              <div class="col s12 center">
+                <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500; margin: 10px 0;">Twoos Transactions</p>
+              </div>
+            </div>
+            <ul class="tabs" style="overflow: hidden;">
+              <li class="tab col s12 m6 l6"><a href="#tab-transactions-summary">Tranactions Summary</a></li>
+              <li class="tab col m6 l6 hide-on-small-only"><a href="#tab-transactions-list">Transactions List</a></li>
+            </ul>
+          </div>
+        </div>
+        <div id="tab-transactions-summary" class="col s12" style="padding: 0;">
+          <div class="row">
+            <div class="col s12 m6 l4">
+              <div class="card">
+                <div class="card-content">
+                  <div class="center">
+                    <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">done</i></h1>
+                    <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">{{ twoos.nominations }} Twoos</p>
+                    <p class="light center custom-text text-lighten-1">Awarded for nominated submissions.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l4">
+              <div class="card">
+                <div class="card-content">
+                  <div class="center">
+                    <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">exposure_plus_1</i></h1>
+                    <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">{{ twoos.nominating }} Twoos</p>
+                    <p class="light center custom-text text-lighten-1">Awarded for nominating submissions.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l4">
+              <div class="card">
+                <div class="card-content">
+                  <div class="center">
+                    <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">wifi</i></h1>
+                    <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">{{ twoos.community }} Twoos</p>
+                    <p class="light center custom-text text-lighten-1">Awarded for streaming to the Twitch community.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l4">
+              <div class="card">
+                <div class="card-content">
+                  <div class="center">
+                    <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">group</i></h1>
+                    <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">{{ twoos.admins }} Twoos</p>
+                    <p class="light center custom-text text-lighten-1">Awarded by the site admins.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l4">
+              <div class="card">
+                <div class="card-content">
+                  <div class="center">
+                    <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">chat_bubble_outline</i></h1>
+                    <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">{{ twoos.discord }} Twoos</p>
+                    <p class="light center custom-text text-lighten-1">Awarded on the Discord server.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col s12 m6 l4">
+              <div class="card">
+                <div class="card-content">
+                  <div class="center">
+                    <h1 class="deep-purple-text text-darken-2" style="margin-top: 0;"><i class="material-icons" style="font-size: 7rem;">star</i></h1>
+                    <p class="custom-text text-darken-1" style="font-size: 1.7rem; font-weight: 500;">{{ twoos.other }} Twoos</p>
+                    <p class="light center custom-text text-lighten-1">Awarded for other reasons.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-transactions-list" class="col s12 hide-on-small-only">
+          <div class="card">
+            <div class="card-content">
+              <table>
+                <thead>
+                  <th class="center">Date (UTC)</th>
+                  <th class="center">Title</th>
+                  <th class="center">Old Value</th>
+                  <th class="center">New Value</th>
+                  <th class="center">Difference</th>
+                  <th class="center">More</th>
+                </thead>
+                <tbody>
+                  {% for transaction in transactions %}
+                    {% if transaction.length === 1 %}
+                      <tr>
+                        <td class="center">{{ transaction[0].timestamp|date('d/m/Y \(H:i\)') }}</td>
+                        <td class="center">{{ transaction[0].title }}</td>
+                        <td class="center">{{ transaction[0].old }}</td>
+                        <td class="center">{{ transaction[0].new }}</td>
+                        <td class="center">{% if transaction[0].difference > 0 %}+{% endif %}{{ transaction[0].difference }}</td>
+                        <td class="center"><a class="waves-effect waves-light btn custom darken-1" href="#modal-transaction-{{ transaction[0].timestamp }}">More</a></td>
+                      </tr>
+                    {% else %}
+                      <tr>
+                        <td class="center">{{ transaction[transaction.length - 1].timestamp|date('d/m/Y \(H:i') }} - {{ transaction[0].timestamp|date('H:i\)') }}</td>
+                        <td class="center">{{ transaction[0].title }}</td>
+                        <td class="center">{{ transaction[transaction.length - 1].old }}</td>
+                        <td class="center">{{ transaction[0].new }}</td>
+                        <td class="center">{% if parseFloat(transaction[0].new - transaction[transaction.length - 1].old).toFixed(2) %}+{% endif %}{{ parseFloat(transaction[0].new - transaction[transaction.length - 1].old).toFixed(2) }}</td>
+                        <td class="center"><a class="waves-effect waves-light btn custom darken-1" id="collapsible-transactions" data-id="{{ transaction[0].timestamp }}" data-length="{{ transaction.length }}">Show {{ transaction.length }}</a></td>
+                      </tr>
+                      {% for record in transaction %}
+                        <tr class="group-data-{{ transaction[0].timestamp }}" style="display: none; background-color: #f2f1f4;">
+                          <td class="center">{{ record.timestamp|date('d/m/Y \(H:i\)') }}</td>
+                          <td class="center">{{ record.title }}</td>
+                          <td class="center">{{ record.old }}</td>
+                          <td class="center">{{ record.new }}</td>
+                          <td class="center">{% if record.difference > 0 %}+{% endif %}{{ record.difference }}</td>
+                          <td class="center"><a class="waves-effect waves-light btn custom darken-1" href="#modal-transaction-{{ record.timestamp }}">More</a></td>
+                        </tr>
+                      {% endfor %}
+                    {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% for record in transactions %}
+    {% for transaction in record %}
+      <div id="modal-transaction-{{ transaction.timestamp }}" class="modal">
+        <div class="modal-content">
+          <h4>View Transaction Information</h4>
+          <hr />
+          <table>
+            <tbody>
+              <tr>
+                <td><strong>ID:</strong></td>
+                <td>{{ transaction.timestamp }}</td>
+              </tr>
+              <tr>
+                <td><strong>Date:</strong></td>
+                <td>{{ transaction.timestamp|date('d/m/Y \- H:i') }}</td>
+              </tr>
+              <tr>
+                <td><strong>Type:</strong></td>
+                <td>{{ transaction.type }}</td>
+              </tr>
+              <tr>
+                <td><strong>Title:</strong></td>
+                <td>{{ transaction.title }}</td>
+              </tr>
+              <tr>
+                <td><strong>Old:</strong></td>
+                <td>{{ transaction.old }}</td>
+              </tr>
+              <tr>
+                <td><strong>New:</strong></td>
+                <td>{{ transaction.new }}</td>
+              </tr>
+              <tr>
+                <td><strong>Difference:</strong></td>
+                <td>{% if transaction.difference > 0 %}+{% endif %}{{ transaction.difference }}</td>
+              </tr>
+              <tr>
+                <td><strong>Description:</strong></td>
+                {% if transaction.description %}
+                  <td>{{ transaction.description }}</td>
+                {% else %}
+                  <td>None</td>
+                {% endif %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endif %}
+
+<div class="fixed-action-btn hide-on-small-only" id="profile-settings-wrapper" {% if data.requests.length %} style="margin-bottom: 75px;" {% endif %}>
+  <a id="profile-settings" class="btn-floating btn-large custom darken-1"><i class="large material-icons">settings</i></a>
+  <ul>
+    <li><a class="btn-floating custom darken-1 tooltipped" id="link-accounts" data-position="left" data-delay="50" data-tooltip="Link Accounts"><i class="material-icons">link</i></a></li>
+    {% if data.profile %}
+      <li><a class="btn-floating custom darken-1 tooltipped" id="edit-profile" data-position="left" data-delay="50" data-tooltip="Edit Profile"><i class="material-icons">edit</i></a></li>
+      <li><a href="#modal-social-media" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Social Media"><i class="material-icons">person_add</i></a></li>
+      <li><a href="#modal-communities" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Communities"><i class="material-icons">message</i></a></li>
+      <li><a href="#modal-edit-appearance" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Appearance"><i class="material-icons">face</i></a></li>
+    {% endif %}
+    {% if data.reddit_id %}
+      <li><a class="btn-floating custom darken-1 tooltipped" id="twoos-transactions" data-position="left" data-delay="50" data-tooltip="View Twoos Transactions"><i class="material-icons">thumbs_up_down</i></a></li>
+      <li><a href="/requests/submit" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Submit Ad Request" target="_blank"><i class="material-icons">create_new_folder</i></a></li>
+    {% endif %}
+    {% if data.profile.status == "approved" %}
+      <li><a href="/user/{{ data.twitch_username }}" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View As Public" target="_blank"><i class="material-icons">pageview</i></a></li>
+    {% endif %}
+  </ul>
+</div>
+
+{% if tutorial %}
+  <div class="tap-target custom lighten-1 white-text" data-activates="profile-settings">
+    <div class="tap-target-content">
+      <h5 class="center">Settings Button</h5>
+      <p style="margin: 0;">All of your profile settings are here! You can add social media accounts and communities from this menu - as well as a clip to embed and more! It is also possible to edit your profile, change your /r/Twitch flair, submit advertisement requests and link accounts here too!</p>
+    </div>
+  </div>
+{% endif %}
+
+<div class="fixed-action-btn hide-on-small-only" id="profile-return-wrapper" style="display: none;">
+  <a class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Return to Profile" target="_blank"><i class="material-icons">done</i></a>
+</div>
+
+<div class="fixed-action-btn hide-on-small-only" id="profile-refresh-wrapper" style="display: none;">
+  <a class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Cancel Editing" target="_blank"><i class="material-icons">delete</i></a>
+</div>
+
+<div class="fixed-action-btn hide-on-small-only" id="profile-requests-wrapper">
+  {% if data.requests.length %}
+    <a href="/user/{{ data.twitch_username }}/requests" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View Ad Requests" target="_blank"><i class="material-icons">open_in_new</i></a>
+  {% endif %}
+</div>
+
+<div class="row hide-on-med-and-up">
+  <div class="col s10 offset-s1" id="profile-mobile-settings-wrapper">
+    <ul class="collapsible" data-collapsible="accordion">
+      <li>
+        <div class="collapsible-header custom-text text-darken-1 center"><strong style="font-size: 18px;">Show Settings</strong></div>
+        <div class="collapsible-body white center">
+          <div id="profile-mobile-settings">
+            <a class="btn custom darken-1 tooltipped" id="link-accounts" data-position="top" data-delay="50" data-tooltip="Link Accounts" style="margin: 2px;"><i class="material-icons">link</i></a>
+            {% if data.profile %}
+              <a class="btn custom darken-1 tooltipped" id="edit-profile" data-position="top" data-delay="50" data-tooltip="Edit Profile" style="margin: 2px;"><i class="material-icons">edit</i></a>
+              <a href="#modal-social-media" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Social Media" style="margin: 2px;"><i class="material-icons">person_add</i></a>
+              <a href="#modal-communities" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Communities" style="margin: 2px;"><i class="material-icons">message</i></a>
+              <a href="#modal-edit-appearance" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Appearance" style="margin: 2px;"><i class="material-icons">face</i></a>
+            {% endif %}
+            {% if data.reddit_id %}
+              <a class="btn custom darken-1 tooltipped" id="twoos-transactions" data-position="top" data-delay="50" data-tooltip="View Twoos Transactions" style="margin: 2px;"><i class="material-icons">thumbs_up_down</i></a>
+              <a href="/requests/submit" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Submit Ad Request" target="_blank" style="margin: 2px;"><i class="material-icons">create_new_folder</i></a>
+            {% endif %}
+            {% if data.profile == "approved" %}
+              <a href="/user/{{ data.twitch_username }}" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View As Public" target="_blank" style="margin: 2px;"><i class="material-icons">pageview</i></a>
+            {% endif %}
+          </div>
+          <div id="profile-return-wrapper" style="display: none;">
+            <a class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Return to Profile" target="_blank"><i class="material-icons">done</i></a>
+          </div>
+          <div id="profile-refresh-wrapper" style="display: none;">
+            <a class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Cancel Editing" target="_blank"><i class="material-icons">delete</i></a>
+          </div>
+          <div id="profile-requests-wrapper">
+            {% if data.requests.length %}
+              <a href="/user/{{ data.twitch_username }}/requests" class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View Ad Requests" target="_blank"><i class="material-icons">open_in_new</i></a>
+            {% endif %}
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="modal-social-media" class="modal modal-fixed-footer">
+ <div class="modal-content">
+   <h4>Social Media</h4>
+   <p>You can add some social media profiles to the left of your profile. These are not required.</p>
+   <hr />
+   <div class="row">
+     <div class="input-field col s12 m6 l6">
+       <p>
+         <input type="checkbox" class="filled-in" id="profile-show-reddit" {% if data.profile.social_media.reddit === "true" %} checked {% endif %} />
+         <label for="profile-show-reddit">Show Linked Reddit Account</label>
+       </p>
+     </div>
+     <div class="input-field col s12 m6 l6">
+       <p>
+         <input type="checkbox" class="filled-in" id="profile-show-discord" {% if data.profile.social_media.discord === "true" %} checked {% endif %} />
+         <label for="profile-show-discord">Show Linked Discord Account</label>
+       </p>
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-facebook" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.facebook }}">
+       <label for="profile-facebook">Facebook Display Name</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-twitter" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.twitter }}">
+       <label for="profile-twitter">Twitter</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-youtube" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.youtube }}">
+       <label for="profile-youtube">YouTube Display Name</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-instagram" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.instagram }}">
+       <label for="profile-instagram">Instagram</label>
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-snapchat" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.snapchat }}">
+       <label for="profile-snapchat">Snapchat</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-steam" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.steam }}">
+       <label for="profile-steam">Steam</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-deviantart" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.deviantart }}">
+       <label for="profile-deviantart">DeviantArt</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-soundcloud" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.soundcloud }}">
+       <label for="profile-soundcloud">Soundcloud</label>
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-github" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.github }}">
+       <label for="profile-github">GitHub</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-googleplus" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.googleplus }}">
+       <label for="profile-googleplus">Google+</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-linkedin" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.linkedin }}">
+       <label for="profile-linkedin">LinkedIn</label>
+     </div>
+     <div class="input-field col s6 m4 l3">
+       <input id="profile-tumblr" type="text" placeholder="Example: {{ data.twitch_name }}" value="{{ data.profile.social_media.tumblr }}">
+       <label for="profile-tumblr">Tumblr</label>
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="profile-facebook-url" type="text" placeholder="Example: https://www.facebook.com/{{ data.twitch_name }}" value="{{ data.profile.social_media.facebook_url }}">
+       <label for="profile-facebook-url">Facebook URL</label>
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="profile-youtube-url" type="text" placeholder="Example: https://www.youtube.com/user/{{ data.twitch_name }}" value="{{ data.profile.social_media.youtube_url }}">
+       <label for="profile-youtube-url">YouTube URL</label>
+     </div>
+   </div>
+ </div>
+ <div class="modal-footer">
+   <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="social-media-save" data-id="{{ twitch.id }}">Save & Close</a>
+   <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+ </div>
+</div>
+
+<div id="modal-communities" class="modal modal-fixed-footer">
+ <div class="modal-content">
+   <h4>Communities</h4>
+   <p>You can add some community groups profiles to the header of your profile. These are not required.</p>
+   <hr />
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="profile-communities-discord" type="text" value="{{ data.profile.communities.discord }}" placeholder="https://discord.gg/YourInvite">
+       <label for="profile-communities-discord">Discord Invite URL</label>
+     </div>
+     <div class="input-field col s12">
+       <input id="profile-communities-steam" type="text" value="{{ data.profile.communities.steam }}" placeholder="https://steamcommunity.com/groups/YourId">
+       <label for="profile-communities-steam">Steam Group URL</label>
+     </div>
+     <div class="input-field col s12">
+       <input id="profile-communities-subreddit" type="text" value="{{ data.profile.communities.subreddit }}" placeholder="https://reddit.com/r/YourSubreddit">
+       <label for="profile-communities-subreddit">Subreddit URL</label>
+     </div>
+     <div class="input-field col s12">
+       <input id="profile-communities-twitch" type="text" value="{{ data.profile.communities.twitch }}" placeholder="https://twitch.tv/communities/YourCommunity">
+       <label for="profile-communities-twitch">Twitch Community URL</label>
+     </div>
+     <div class="input-field col s12">
+       <input id="profile-communities-desktop" type="text" value="{{ data.profile.communities.desktop }}" placeholder="https://invite.twitch.tv/YourInvite">
+       <label for="profile-communities-desktop">Twitch Desktop Invite URL</label>
+     </div>
+   </div>
+ </div>
+ <div class="modal-footer">
+   <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="communities-save" data-id="{{ twitch.id }}">Save & Close</a>
+   <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+ </div>
+</div>
+
+ <div id="modal-edit-appearance" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>Edit Appearance</h4>
+    <p>You can change some of the colours and content used on your profile. You can also choose the /r/Twitch flair and Discord role assigned to you.</p>
+    <hr />
+    <div class="row">
+      <div class="input-field col s12 m6 l6">
+        <input id="profile-appearance-flair" type="text" value="{{ flair }}" {% if !data.reddit_id %} disabled {% endif %}>
+        <label for="profile-appearance-flair">Flair Text</label>
+      </div>
+      <div class="input-field col s12 m6 l6" id="profile-appearance-category">
+        {% if data.profile.status == "approved" %}
+          <select>
+            {% if data.profile.types.streamer_gaming && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "streamer_gaming" %} selected {% endif %} value="streamer_gaming">Gaming Streamer</option>
+            {% endif %}
+            {% if data.profile.types.streamer_creative && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "streamer_creative" %} selected {% endif %} value="streamer_creative">Creative Streamer</option>
+            {% endif %}
+            {% if data.profile.types.streamer_socialeating && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "streamer_socialeating" %} selected {% endif %} value="streamer_socialeating">Social Eating Streamer</option>
+            {% endif %}
+            {% if data.profile.types.streamer_irl && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "streamer_irl" %} selected {% endif %} value="streamer_irl">IRL Streamer</option>
+            {% endif %}
+            {% if data.profile.types.streamer_talkshow && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "streamer_talkshow" %} selected {% endif %} value="streamer_talkshow">Talk Show Streamer</option>
+            {% endif %}
+            {% if data.profile.types.streamer_music && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "streamer_music" %} selected {% endif %} value="streamer_music">Music Streamer</option>
+            {% endif %}
+            {% if data.profile.types.artist && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "artist" %} selected {% endif %} value="artist">Artist</option>
+            {% endif %}
+            {% if data.profile.types.developer && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "developer" %} selected {% endif %} value="developer">Developer</option>
+            {% endif %}
+            {% if data.profile.types.communitymanager && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "communitymanager" %} selected {% endif %} value="communitymanager">Community Manager</option>
+            {% endif %}
+            {% if data.profile.types.viewer && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "viewer" %} selected {% endif %} value="viewer">Viewer</option>
+            {% endif %}
+            {% if data.profile.types.moderator && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "moderator" %} selected {% endif %} value="moderator">Moderator</option>
+            {% endif %}
+            {% if data.profile.types.other && data.profile.status == "approved" %}
+              <option {% if data.profile.flair == "other" || data.profile.flair == "" %} selected {% endif %} value="other">Other</option>
+            {% endif %}
+          </select>
+          <label>Flair Badge</label>
+        {% else %}
+          <select class="disabled">
+            <option selected>You must have an approved profile to do this.</option>
+          </select>
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m6 l4" style="margin-top: 0;">
+          <p style="margin-top: 0;">
+            <input type="checkbox" class="filled-in" id="profile-appearance-videos" {% if data.profile.appearance.videos === "true" %} checked {% endif %} />
+            <label for="profile-appearance-videos">Show My Recent Videos</label>
+          </p>
+        </div>
+        <div class="input-field col s12 m6 l4" style="margin-top: 0;">
+          <p style="margin-top: 0;">
+            <input type="checkbox" class="filled-in" id="profile-appearance-events" {% if data.profile.appearance.events === "true" %} checked {% endif %} />
+            <label for="profile-appearance-events">Show My Upcoming Events</label>
+          </p>
+        </div>
+        <div class="input-field col s12 m6 offset-m3 l4" style="margin-top: 0;">
+          <p style="margin-top: 0;">
+            <input type="checkbox" class="filled-in" id="profile-appearance-teams" {% if data.profile.appearance.teams === "true" %} checked {% endif %} />
+            <label for="profile-appearance-teams">Show My Teams</label>
+          </p>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: 0;">
+        <div class="input-field col s12">
+          <input id="profile-appearance-clip" type="text" value="{{ data.profile.appearance.clip }}">
+          <label for="profile-appearance-clip">Featured Clip</label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="profile-appearance-save" data-id="{{ twitch.id }}">Save & Close</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<script src="/js/profile_accounts.js"></script>
+<script src="/js/profile_appearance.js"></script>
+<script src="/js/profile_communities.js"></script>
+<script src="/js/profile_social_media.js"></script>
+<script src="/js/profile_submit.js"></script>
+<script src="/js/profile_twoos.js"></script>
+
+{% include "./footer.html" %}

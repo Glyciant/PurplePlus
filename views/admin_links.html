@@ -1,0 +1,97 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500;">Manage Short Links<a href="#modal-edit-link" id="add-link" class="btn-floating custom darken-1 waves-effect waves-light right"><i class="material-icons">add</i></a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    {% if data[0] %}
+      <div class="card">
+        <div class="card-content">
+          <div class="row" style="margin-bottom: 0;">
+            <table class="highlight">
+              <thead>
+                <th class="center">Short Link</th>
+                <th class="center">Redirect</th>
+                <th class="center">Enabled</th>
+                <th class="center">Action</th>
+              </thead>
+              <tbody>
+                {% for link in data %}
+                  <tr>
+                    <td class="center">https://purple.plus/l/{{ link.short }}</td>
+                    <td class="center">{{ link.redirect }}</td>
+                    <td class="center">
+                      {% if link.enabled %}
+                        Yes
+                      {% else %}
+                        No
+                      {% endif %}
+                    </td>
+                    <td class="center">
+                      <a href="{{ link.redirect }}" class="btn waves-effect waves-light custom darken-1" target="_blank"><i class="material-icons">open_in_new</i></a>
+                      <a href="#modal-edit-link" id="edit-link" class="btn waves-effect waves-light orange darken-2" data-id="{{ link._id.toString() }}"><i class="material-icons">edit</i></a>
+                      <a href="#!" id="delete-link" class="btn waves-effect waves-light red darken-2" data-id="{{ link._id.toString() }}"><i class="material-icons">delete</i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      {% set message = "There are no short links." %}
+      {% include "./missing_partial.html" %}
+    {% endif %}
+  </div>
+</div>
+
+<div id="modal-edit-link" class="modal">
+  <div class="modal-content">
+    <h4 id="link-modal-title">Add Short Link</h4>
+    <hr />
+    <div class="row" style="margin: 0";>
+      <div class="col l8 m6 s12">
+        https://purple.plus/l/
+        <div class="input-field inline" style="width: calc(100% - 160px);">
+          <input id="edit-link-short" type="text" style>
+          <label for="edit-link-short">Short URL Ending</label>
+        </div>
+      </div>
+      <div class="col l4 m6 s12 input-field">
+        <div class="switch">
+          <label>
+            Disabled
+            <input id="edit-link-enabled" type="checkbox" checked>
+            <span class="lever"></span>
+            Enabled
+          </label>
+        </div>
+      </div>
+      <div class="col s12 input-field">
+        <input id="edit-link-redirect" type="text" style>
+        <label for="edit-link-redirect">URL Redirect</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" id="save-link" class="modal-action modal-close waves-effect waves-green btn-flat">Save & Close</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+
+<script src="/js/admin_links.js"></script>
+
+{% include "./footer.html" %}

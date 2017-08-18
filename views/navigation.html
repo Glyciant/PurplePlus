@@ -1,0 +1,112 @@
+<ul id="dropdown-about" class="dropdown-content">
+  <li><a href="/about/subreddit">About /r/Twitch</a></li>
+  <li><a href="/help/">Help Docs</a></li></li>
+  <li><a href="/about/admins">About Admins</a></li>
+  <li><a href="/about/privacy">Privacy Policy</a></li>
+  <li><a href="{{ github }}">GitHub</a></li>
+</ul>
+{% if loggedin %}
+  <ul id="dropdown-logout" class="dropdown-content">
+    <li><a href="/auth/logout">Logout</a></li>
+  </ul>
+{% if type == "mod" || type == "helper" %}
+  <ul id="dropdown-admin" class="dropdown-content">
+    {% if type == "mod" %}
+      <li><a href="/admin/accounts">Accounts</a></li>
+    {% endif %}
+    <li><a href="/admin/profiles">Profiles</a></li>
+    <li><a href="/admin/twoos">Twoos</a></li>
+    {% if type == "mod" %}
+      <li><a href="/admin/requests">Requests</a></li>
+      <li><a href="/admin/pusher">Pusher</a></li>
+    {% endif%}
+    <li><a href="/admin/discord">Discord</a></li>
+    {% if type == "mod" %}
+      <li><a href="/admin/links">Links</a></li>
+    {% endif%}
+    {% if admin %}
+      <li><a href="/admin/settings">Settings</a></li>
+    {% endif %}
+  </ul>
+{% endif %}
+{% endif %}
+<nav>
+  <div class="nav-wrapper custom darken-1">
+    <ul class="left hide-on-med-and-down">
+      <li><a href="/?show=true">Welcome</a></li>
+      {% if home %}
+        <li><a href="/browse/home">Home</a></li>
+      {% endif %}
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown-about">About<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a href="/browse/spotlight/">Spotlight</a></li>
+      <li><a href="/browse/streams">Streams</a></li>
+      <li><a href="/browse/search">Search</a></li>
+      <li><a href="/browse/query">Query</a></li>
+      <li><a href="/browse/surf">Stream Surf</a></li>
+      <li><a href="/browse/leaderboards">Leaderboards</a></li>
+      {% if twitch.id %}
+        <li><a href="/browse/bookmarks/">Bookmarks</a></li>
+      {% endif %}
+    </ul>
+    <ul class="right">
+      <li><a href="#!" class="tooltipped" id="nightmode" data-position="left" data-delay="50" data-tooltip="Toggle Night Mode"><i class="material-icons">invert_colors</i></a></li>
+    </ul>
+    <ul class="right hide-on-med-and-down">
+      {% if loggedin %}
+        {% if twitch.id %}
+          <li><a href="/profile/">Profile</a></li>
+        {% endif %}
+        {% if type == "mod" || type == "helper" %}
+          <li><a class="dropdown-button" href="#!" data-activates="dropdown-admin">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
+        {% endif %}
+        <li><a class="dropdown-button" href="#!" data-activates="dropdown-logout">{{ loggedin }}</a></li>
+      {% else %}
+        <li><a href="/auth/redirect/twitch">Login via Twitch</a></li>
+      {% endif %}
+    </ul>
+    <ul class="left">
+      <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+    </ul>
+    <ul class="side-nav" id="mobile-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/browse/spotlight">Spotlight</a></li>
+      <li><a href="/browse/streams">Streams</a></li>
+      <li><a href="/browse/search">Search</a></li>
+      <li><a href="/browse/query">Query</a></li>
+      <li><a href="/browse/surf">Stream Surf</a></li>
+      <li><a href="/browse/leaderboards">Leaderboards</a></li>
+      {% if twitch.id %}
+        <li><a href="/browse/bookmarks/">Bookmarks</a></li>
+      {% endif %}
+      <li><a href="/about/subreddit">About /r/Twitch</a></li>
+      <li><a href="/help/">Help Docs</a></li></li>
+      <li><a href="/about/admins">About Admins</a></li>
+      <li><a href="/about/privacy">Privacy Policy</a></li>
+      <li><a href="{{ github }}">GitHub</a></li>
+      {% if twitch.id %}
+        <li><a href="/profile/">Profile</a></li>
+        {% if type == "mod" || type == "helper" %}
+          {% if type == "mod" %}
+            <li><a href="/admin/accounts">Manage Accounts</a></li>
+          {% endif %}
+          <li><a href="/admin/profiles">Manage Profiles</a></li>
+          <li><a href="/admin/twoos">Manage Twoos</a></li>
+          {% if type == "mod" %}
+            <li><a href="/admin/requests">Manage Requests</a></li>
+            <li><a href="/admin/pusher">Pusher</a></li>
+          {% endif%}
+          <li><a href="/admin/discord">Manage Discord</a></li>
+          {% if type == "mod" %}
+            <li><a href="/admin/links">Links</a></li>
+          {% endif %}
+          {% if admin %}
+            <li><a href="/admin/settings">Site Settings</a></li>
+          {% endif %}
+        {% endif %}
+        <li><a href="/auth/logout">Logout</a></li>
+      {% else %}
+        <li><a href="/auth/redirect/twitch">Login via Twitch</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>

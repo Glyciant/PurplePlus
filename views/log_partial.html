@@ -1,0 +1,9 @@
+{% for message in data %}
+  <tr class='row valign-wrapper'>
+    <td class='col s2' style='padding: 15px 0 15px 0.75rem;' title='{{ message.timestamp }}'>{% if message.deleted %}<strike>{% endif %}{{ message.timestamp|date("d/m/Y H:i:s") }}</td>{% if message.deleted %}</strike>{% endif %}
+    <td class='col s1' style='padding: 15px 0 15px 0.75rem;' title={{ message.channel_id }}>{% if message.deleted %}<strike>{% endif %}#{{ message.channel_name }}{% if message.deleted %}</strike></td>{% endif %}
+    <td class='col s3' style='padding: 15px 0 15px 0.75rem;' title={{ message.discord_id }}>{% if message.deleted %}<strike>{% endif %}{{ message.discord_tag }}{% if message.deleted %}</strike></td>{% endif %}
+    <td class='col s1'>{% if message.edits[0] %}<a href='#modal-log-{{ message.channel_id }}-{{ message.message_id }}' class='btn-floating waves-effect waves-light custom darken-1 white-text tooltipped' data-position='bottom' data-delay='50' data-tooltip='View Edits'><i class='material-icons right'>mode_edit</i></a>{% endif %}</td>
+    <td class='col s5'>{% if message.deleted %}<strike>{% endif %}{{ message.message }}{% if message.deleted %}</strike></td>{% endif %}
+  </tr>
+{% endfor %}

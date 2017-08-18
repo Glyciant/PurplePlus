@@ -1,0 +1,143 @@
+{% include "./header.html" %}
+
+{% include "./user_partial.html" %}
+
+<div id="modal-note-profile" class="modal">
+  <div class="modal-content">
+    <h4>Edit Note for {{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} Profile</h4>
+    <div class="input-field">
+      <input id="profile-note" type="text" value="{{ note }}">
+      <label for="profile-note">Note</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="profile-edit-note" data-id="{{ api._id }}">Save & Close</a>
+  </div>
+</div>
+
+<div class="fixed-action-btn hide-on-small-only">
+  {% if data.requests.length %}
+    <a href="/user/{{ data.twitch_username }}/requests" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View Ad Requests" target="_blank" style="margin-bottom: 2.5px;"><i class="material-icons">open_in_new</i></a>
+  {% endif %}
+  <div id="vote-profile-wrapper">
+    {% if twitch.id && !voted %}
+      <a href="#!" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="upvote-profile" data-position="left" data-delay="50" data-tooltip="Upvote Profile" data-id="{{ api._id }}" style="margin: 2.5px 0;"><i class="material-icons">arrow_upward</i></a>
+    {% endif %}
+    {% if twitch.id && voted %}
+      <a href="#!" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="downvote-profile" data-position="left" data-delay="50" data-tooltip="Downvote Profile" data-id="{{ api._id }}" style="margin: 2.5px 0;"><i class="material-icons">arrow_downward</i></a>
+    {% endif %}
+  </div>
+  <div id="bookmark-profile-wrapper">
+    {% if twitch.id && !bookmarked %}
+      <a href="#!" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="bookmark-profile" data-position="left" data-delay="50" data-tooltip="Add Bookmark" data-id="{{ api._id }}" style="margin: 2.5px 0;"><i class="material-icons">star</i></a>
+    {% endif %}
+    {% if twitch.id && bookmarked %}
+      <a href="#!" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="unbookmark-profile" data-position="left" data-delay="50" data-tooltip="Delete Bookmark" data-id="{{ api._id }}" style="margin: 2.5px 0;"><i class="material-icons">delete</i></a>
+    {% endif %}
+  </div>
+  {% if twitch.id %}
+    <a href="#modal-note-profile" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" data-position="left" data-delay="50" data-tooltip="Edit Note" style="margin: 2.5px 0 5px 0;"><i class="material-icons">note_add</i></a>
+    <br />
+  {% endif %}
+  <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ data.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ data.twitch_username }})%20because%20I%20think%20it%20contains%20inappropriate%20content.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" data-position="left" data-delay="50" data-tooltip="Report Profile" target="_blank" style="margin: 2.5px 0 5px 0;"><i class="material-icons">flag</i></a>
+  <br />
+  {% if type == "mod" || type == "helper" %}
+    <a href="/user/{{ data.twitch_username }}/revisions" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View Revision History" target="_blank" style="margin: 2.5px 0 5px 0;"><i class="material-icons">recent_actors</i></a>
+    <br />
+  {% endif %}
+</div>
+
+<div class="row hide-on-med-and-up">
+  <div class="col s10 offset-s1 center">
+    {% if data.requests.length %}
+      <a href="/user/{{ data.twitch_username }}/requests" class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View Ad Requests" target="_blank" style="margin-bottom: 2.5px;"><i class="material-icons">open_in_new</i></a>
+    {% endif %}
+    <div id="vote-profile-wrapper" style="display: inline-block;">
+      {% if twitch.id && !voted %}
+        <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="upvote-profile" data-position="top" data-delay="50" data-tooltip="Upvote Profile" data-id="{{ api._id }}">
+          <i class="material-icons">arrow_upward</i>
+        </a>
+      {% endif %}
+      {% if twitch.id && voted %}
+        <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="downvote-profile" data-position="top" data-delay="50" data-tooltip="Downvote Profile" data-id="{{ api._id }}">
+          <i class="material-icons">arrow_downward</i>
+        </a>
+      {% endif %}
+    </div>
+    <div id="bookmark-profile-wrapper" style="display: inline-block;">
+      {% if twitch.id && !bookmarked %}
+        <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="bookmark-profile" data-position="top" data-delay="50" data-tooltip="Add Bookmark" data-id="{{ api._id }}" >
+          <i class="material-icons">star</i>
+        </a>
+      {% endif %}
+      {% if twitch.id && bookmarked %}
+        <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="unbookmark-profile" data-position="top" data-delay="50" data-tooltip="Delete Bookmark" data-id="{{ api._id }}">
+          <i class="material-icons">delete</i>
+        </a>
+      {% endif %}
+    </div>
+    {% if twitch.id %}
+    <a href="#modal-note-profile" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" data-position="top" data-delay="50" data-tooltip="Edit Note">
+      <i class="material-icons">note_add</i>
+    </a>
+    {% endif %}
+    <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ data.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ data.twitch_username }})%20because%20I%20think%20it%20contains%20inappropriate%20content.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" data-position="left" data-delay="50" data-tooltip="Report Profile" target="_blank"><i class="material-icons">flag</i></a>
+    {% if type == "mod" || type == "helper" %}
+      <a href="/user/{{ data.twitch_username }}/revisions" class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View Revision History" target="_blank"><i class="material-icons">recent_actors</i></a>
+    {% endif %}
+
+    <!-- {% if data.requests.length %}
+      <div class="col s3 center">
+        <a href="/user/{{ data.twitch_username }}/requests" class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View Ad Requests" target="_blank" style="margin-bottom: 2.5px;"><i class="material-icons">open_in_new</i></a>
+      </div>
+    {% endif %}
+    <div class="col s3 center">
+      <div id="vote-profile-wrapper">
+        {% if twitch.id && !voted %}
+          <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="upvote-profile" data-position="top" data-delay="50" data-tooltip="Upvote Profile" data-id="{{ api._id }}" style="margin: 2.5px 0;">
+            <i class="material-icons">arrow_upward</i>
+          </a>
+        {% endif %}
+        {% if twitch.id && voted %}
+          <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="downvote-profile" data-position="top" data-delay="50" data-tooltip="Downvote Profile" data-id="{{ api._id }}" style="margin: 2.5px 0;">
+            <i class="material-icons">arrow_downward</i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col s3 center">
+      <div id="bookmark-profile-wrapper">
+        {% if twitch.id && !bookmarked %}
+          <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="bookmark-profile" data-position="top" data-delay="50" data-tooltip="Add Bookmark" data-id="{{ api._id }}" style="margin: 2.5px 0;">
+            <i class="material-icons">star</i>
+          </a>
+        {% endif %}
+        {% if twitch.id && bookmarked %}
+          <a href="#!" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" id="unbookmark-profile" data-position="top" data-delay="50" data-tooltip="Delete Bookmark" data-id="{{ api._id }}" style="margin: 2.5px 0;">
+            <i class="material-icons">delete</i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col s3 center">
+      {% if twitch.id %}
+      <a href="#modal-note-profile" class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" data-position="top" data-delay="50" data-tooltip="Edit Note" style="margin-top: 2.5px;">
+        <i class="material-icons">note_add</i>
+      </a>
+      {% endif %}
+    </div>
+    <div class="col s3 center">
+      <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ data.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ data.twitch_username }})%20because%20I%20think%20it%20contains%20inappropriate%20content.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="btn waves-effect waves-light custom darken-1 tooltipped {% if twitch.id == api._id %} disabled {% endif %}" data-position="left" data-delay="50" data-tooltip="Report Profile" target="_blank"><i class="material-icons">flag</i></a>
+    </div>
+    <div class="col s3 center">
+      {% if type == "mod" || type == "helper" %}
+        <a href="/user/{{ data.twitch_username }}/revisions" class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View Revision History" target="_blank" style="margin-top: 2.5px;"><i class="material-icons">recent_actors</i></a>
+      {% endif %}
+    </div> -->
+  </div>
+</div>
+
+<script src="/js/user.js"></script>
+
+{% include "./footer.html" %}
