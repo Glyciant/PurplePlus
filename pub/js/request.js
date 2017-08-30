@@ -30,8 +30,10 @@ $(document).delegate("#request-comment-submit", "click", function() {
   }, function(data) {
     if (data.message == "success") {
       $("#request-new-comment").val("");
-      var d = new Date();
-      $("#request-comments-wrapper").append('<div class="row"><div class="col s8"><h5>' + data.submitter + '</h5></div><div class="col s4"><h6 class="right"><strong style="text-transform: capitalize;">' + d.getDate()  + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear() + ' - ' + type + '</strong></h6></div><div class="col s12"><p>' + comment + '</p></div></div>');
+      var d = new Date(),
+          converter = new showdown.Converter();
+      $("#request-no-comments").remove();
+      $("#request-comments-wrapper").append('<div class="row"><div class="col s8"><h5>' + data.submitter + '</h5></div><div class="col s4"><h6 class="right"><strong style="text-transform: capitalize;">' + d.getDate()  + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear() + ' - ' + type + '</strong></h6></div><div class="col s12"><p>' + converter.makeHtml(comment) + '</p></div></div>');
       Materialize.toast("The comment was submitted.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {

@@ -15,6 +15,17 @@ module.exports = function(client, bot) {
         });
       });
     },
+    getUserById: function(id) {
+      return new Promise(function(resolve, reject) {
+        restler.get('https://api.twitch.tv/kraken/users/' + id + '?client_id=' + config.twitch.auth.id, {
+          headers: {
+            'Accept': 'application/vnd.twitchtv.v5+json'
+          }
+        }).on('complete', function(data) {
+          resolve(data);
+        });
+      });
+    },
     getChannelById: function(id) {
       return new Promise(function(resolve, reject) {
         restler.get('https://api.twitch.tv/kraken/channels/' + id + '?client_id=' + config.twitch.auth.id, {
@@ -92,6 +103,17 @@ module.exports = function(client, bot) {
         });
       });
     },
+    getDirectoriesByQuery: function(query) {
+      return new Promise(function(resolve, reject) {
+        restler.get('https://api.twitch.tv/kraken/search/games/?query=' + query + '&client_id=' + config.twitch.auth.id, {
+          headers: {
+            'Accept': 'application/vnd.twitchtv.v5+json'
+          }
+        }).on('complete', function(data) {
+          resolve(data);
+        });
+      });
+    },
     getClipBySlug: function(slug) {
       return new Promise(function(resolve, reject) {
         restler.get('https://api.twitch.tv/kraken/clips/' + slug + '?client_id=' + config.twitch.auth.id, {
@@ -136,7 +158,7 @@ module.exports = function(client, bot) {
     },
     getRequests: function(id) {
       return new Promise(function(resolve, reject) {
-        restler.get('https://requests-preview.cactus.lol/api/requests/r/' + id + "?api_token=" + config.legacy.requests.token, {
+        restler.get('https://requests.twitchdb.tv/api/requests/r/' + id + "?api_token=" + config.legacy.requests.token, {
           "Accept": "application/json"
         }).on('complete', function(data) {
           resolve(data);
@@ -439,6 +461,39 @@ module.exports = function(client, bot) {
         });
       });
     },
+    post: (title, text) => {
+      return new Promise(function(resolve, reject) {
+        restler.post('https://www.reddit.com/api/v1/access_token', {
+          username: config.reddit.bot.id,
+          password: config.reddit.bot.secret,
+          data: {
+            grant_type: "password",
+            username: config.reddit.bot.username,
+            password: config.reddit.bot.password,
+          }
+        }).on("complete", function(data) {
+          var submit = {
+            api_type: "json",
+            text: text,
+            sr: "Twitch",
+            title: title,
+            kind: "self",
+            sendreplies: false
+          };
+          restler.post('https://oauth.reddit.com/api/submit', {
+            accessToken: data.access_token,
+            data: submit
+          }).on("complete", function(result) {
+            if (result.json.errors.length === 0) {
+  						resolve({ message: "success" });
+            }
+            else {
+  						resolve({ message: "unknown_error" });
+  					}
+          });
+        });
+      });
+    },
     comment: (post, comment) => {
       return new Promise(function(resolve, reject) {
         restler.post('https://www.reddit.com/api/v1/access_token', {
@@ -681,8 +736,8 @@ module.exports = function(client, bot) {
         if (user && user.discord_id) {
           var keys = Object.keys(config.discord.bot.roles),
               exists = [];
-          for (var i in keys) {
-            exists.push(config.discord.bot.roles[keys[i]]);
+          for (var key of keys) {
+            exists.push(config.discord.bot.roles[key]);
           }
           var guild = client.guilds.get(config.discord.bot.server),
     					member = guild.members.get(user.discord_id);
@@ -795,10 +850,10 @@ module.exports = function(client, bot) {
             }
             var existing = member.roles.map(function(x) { return x.id }),
                 match = [];
-            for (var i in existing) {
-              for (var j in roles) {
-                if (existing[i] == roles[j]) {
-                  match.push(roles[j]);
+            for (var exists of existing) {
+              for (var role of roles) {
+                if (exists == role) {
+                  match.push(role);
                 }
               }
             }
@@ -884,11 +939,27 @@ module.exports = function(client, bot) {
     }
   }
 
+  var slack = {
+    webhook: function(payload) {
+      return new Promise(function(resolve, reject) {
+        restler.post(config.slack.webhook, {
+          headers: {
+            "Content-type": "application/json"
+          },
+          data: JSON.stringify(payload)
+        }).on('complete', function(data) {
+          resolve(data);
+        });
+      });
+    }
+  }
+
   module.exports = {
     twitch: twitch,
     legacy: legacy,
     reddit: reddit,
-    discord: discord
+    discord: discord,
+    slack: slack
   };
 
   client.login(config.discord.bot.token);

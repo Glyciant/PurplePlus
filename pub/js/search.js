@@ -39,7 +39,7 @@ $(document).delegate(window, "scroll", function() {
 
 $(document).delegate("#search-preview-stream", "click", function() {
   var name = $(this).data("name");
-  $("#modal-stream .modal-content").html('<iframe src="http://player.twitch.tv/?channel=' + name + '"height="100%" width="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>');
+  $("#modal-stream .modal-content").html('<iframe src="https://player.twitch.tv/?channel=' + name + '"height="100%" width="100%" frameborder="0" scrolling="no" allowfullscreen="true"></iframe>');
   $("#modal-stream #preview-profile").prop("href", "/user/" + name);
 });
 

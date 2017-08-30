@@ -1,0 +1,45 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500;">Schedule Stream<a href="/schedule/stream/new" class="btn-floating custom darken-1 waves-effect waves-light right tooltipped" data-position="bottom" data-delay="50" data-tooltip="Cancel"><i class="material-icons">close</i></a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        {% if data[0] %}
+          <h5>Select a Twitch Event:</h5>
+          <div class="collection">
+            {% for event in data %}
+              <a href="#!" id="event" data-id="{{ event._id }}" data-channel="{{ event.channel_id }}" class="collection-item custom-text text-darken-1">{{ event.title }}</a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="row" style="margin: 0;">
+            <div class="col s12 center">
+              <h5 class="custom-text text-darken-1">There's nothing here.</h5>
+            </div>
+            <div class="col s12 center">
+              <p class="custom-text text-lighten-1">You have no Twitch Events.</p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/schedule_import.js"></script>
+
+{% include "./footer.html" %}

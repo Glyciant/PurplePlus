@@ -29,11 +29,10 @@ var express = require('express'),
 		discord = require("./modules/discord")(client);
 
 // Import Modules
-require('./modules/discord');
 require('./modules/streams');
 require('./modules/comments');
 require('./modules/posts');
-require('./modules/commissions');
+require('./modules/update');
 require('./modules/spotlights');
 
 app.engine('html', swig.renderFile);
@@ -68,6 +67,7 @@ app.locals = {
 
 app.get('*', function(req, res, next) {
 	res.locals.nightmode = req.session.nightmode;
+	res.locals.icons = req.session.icons;
 	if (req.session.loggedin) {
 		res.locals.loggedin = req.session.loggedin;
 		if (req.session.twitch) {
@@ -124,7 +124,9 @@ require('./routes')(app);
 
 app.post('/error/user', function(req, res) {
 	db.cache.getByRandom(1).then(function(data) {
-    res.send(data[0].stream);
+		if (data[0]) {
+			 res.send(data[0].stream);
+		}
   });
 });
 
@@ -142,20 +144,19 @@ app.post('/nightmode', function(req, res) {
 	res.send({ message: "success" });
 });
 
-app.get('/todo', function(req, res) {
-	res.send({
-		new: [
-			"Discord blacklist filters.",
-			"/r/Twitch spotlight posts.",
-			"Help documentation.",
-			"Automatically unset staff/admin/global moderator flairs when they change job.",
-		],
-		edits: [
-			"Change for(var x in y) to for(var a of b) for extra reliability."
-		],
-		bugs: [
-			"Boolean values in database are saved as strings."
-		]
+app.post('/icons', function(req, res) {
+	if (req.session.icons === true) {
+		delete req.session.icons;
+	}
+	else {
+		req.session.icons = true;
+	}
+	res.send({ message: "success" });
+});
+
+app.post('/emotes', function(req, res) {
+	fetcher.fetchTwitchEmotes().then(function() {
+    res.send(parser.parse(req.body.data));
 	});
 });
 

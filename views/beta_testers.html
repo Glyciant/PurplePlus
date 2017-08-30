@@ -1,0 +1,24 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500; margin: 10px 0;">Beta Testers</p>
+          <p class="custom-text text-lighten-1 center">Beta testers are users who gave lots of helpful feedback in the early stages of Purple+. Their support helped to make the site what it is today!</p>
+        </div>
+      </div>
+    </div>
+    {% if data[0] %}
+      {% include "./profile_partial.html" %}
+    {% else %}
+      <div class="col s12">
+        {% set message = "There are no beta testers." %}
+        {% include "./missing_partial.html" %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% include "./footer.html" %}

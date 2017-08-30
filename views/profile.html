@@ -120,18 +120,18 @@
             <br />
             <div class="row">
               <div class="input-field col s12">
-                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if data.profile.overview.about.length %}{{ data.profile.overview.about.length }}{% elseif intro[0] && intro[0].intro_data.intro_about.length %}{{ intro[0].intro_data.intro_about.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
-                <textarea id="profile-about" class="materialize-textarea count">{% if data.profile.overview.about %}{{ data.profile.overview.about }}{% elseif intro[0] && intro[0].intro_data.intro_about %}{{ intro[0].intro_data.intro_about }}{% endif %}</textarea>
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if existing.overview.introduction.length %}{{ existing.overview.introduction.length }}{% else %}0{% endif %}</span> characters entered. Maximum of 100 characters allowed.</span>
+                <input id="profile-introduction" class="count" type="text" value="{{ existing.overview.introduction }}">
+                <label for="profile-introduction">Introduction - A short bio to describe yourself.</label>
+              </div>
+              <div class="input-field col s12">
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if existing.overview.about.length %}{{ existing.overview.about.length }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_about.length %}{{ intro[0].intro_data.intro_about.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
+                <textarea id="profile-about" class="materialize-textarea count">{% if existing.overview.about %}{{ existing.overview.about }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_about %}{{ intro[0].intro_data.intro_about }}{% endif %}</textarea>
                 <label for="profile-about">About You - This is a brief summary of who you are and what you're about!</label>
               </div>
               <div class="input-field col s12">
-                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if data.profile.overview.goals.length %}{{ data.profile.overview.goals.length }}{% elseif intro[0] && intro[0].intro_data.intro_goals.length %}{{ intro[0].intro_data.intro_goals.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
-                <textarea id="profile-goals" class="materialize-textarea count">{% if data.profile.overview.goals %}{{ data.profile.overview.goals }}{% elseif intro[0] && intro[0].intro_data.intro_goals %}{{ intro[0].intro_data.intro_goals }}{% endif %}</textarea>
-                <label for="profile-goals">Your Goals - Why do you use Twitch? What do you hope to gain from using it?</label>
-              </div>
-              <div class="input-field col s12">
-                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if data.profile.overview.background.length %}{{ data.profile.overview.background.length }}{% elseif intro[0] && intro[0].intro_data.intro_background.length %}{{ intro[0].intro_data.intro_background.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
-                <textarea id="profile-background" class="materialize-textarea count">{% if data.profile.overview.background %}{{ data.profile.overview.background }}{% elseif intro[0] && intro[0].intro_data.intro_background %}{{ intro[0].intro_data.intro_background }}{% endif %}</textarea>
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if existing.overview.background.length %}{{ existing.overview.background.length }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_background.length %}{{ intro[0].intro_data.intro_background.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
+                <textarea id="profile-background" class="materialize-textarea count">{% if existing.overview.background %}{{ existing.overview.background }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_background %}{{ intro[0].intro_data.intro_background }}{% endif %}</textarea>
                 <label for="profile-background">Your Background - Tell us a little about yourself. What are your hobbies? What is your history?</label>
               </div>
             </div>
@@ -147,57 +147,57 @@
               <p>What are you on Twitch?</p><br />
               <div class="col s12 m6 l3">
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming" {% if data.profile.types.streamer_gaming %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming" {% if existing.types.streamer_gaming %}checked{% endif %} />
                   <label for="profile-type-streamer-gaming">Gaming Streamer</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-streamer-creative" {% if data.profile.types.streamer_creative %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-creative" {% if existing.types.streamer_creative %}checked{% endif %} />
                   <label for="profile-type-streamer-creative">Creative Streamer</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating" {% if data.profile.types.streamer_socialeating %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating" {% if existing.types.streamer_socialeating %}checked{% endif %} />
                   <label for="profile-type-streamer-socialeating">Social Eating Streamer</label>
                 </p>
               </div>
               <div class="col s12 m6 l3">
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-streamer-irl" {% if data.profile.types.streamer_irl %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-irl" {% if existing.types.streamer_irl %}checked{% endif %} />
                   <label for="profile-type-streamer-irl">IRL Streamer</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow" {% if data.profile.types.streamer_talkshow %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow" {% if existing.types.streamer_talkshow %}checked{% endif %} />
                   <label for="profile-type-streamer-talkshow">Talk Show Streamer</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-streamer-music" {% if data.profile.types.streamer_music %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-streamer-music" {% if existing.types.streamer_music %}checked{% endif %} />
                   <label for="profile-type-streamer-music">Music Streamer</label>
                 </p>
               </div>
               <div class="col s12 m6 l3">
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-artist" {% if data.profile.types.artist %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-artist" {% if existing.types.artist %}checked{% endif %} />
                   <label for="profile-type-artist">Artist</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-developer" {% if data.profile.types.developer %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-developer" {% if existing.types.developer %}checked{% endif %} />
                   <label for="profile-type-developer">Developer</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-communitymanager" {% if data.profile.types.communitymanager %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-communitymanager" {% if existing.types.communitymanager %}checked{% endif %} />
                   <label for="profile-type-communitymanager">Community Manager</label>
                 </p>
               </div>
               <div class="col s12 m6 l3">
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-viewer" {% if data.profile.types.viewer %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-viewer" {% if existing.types.viewer %}checked{% endif %} />
                   <label for="profile-type-viewer">Viewer</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-moderator" {% if data.profile.types.moderator %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-moderator" {% if existing.types.moderator %}checked{% endif %} />
                   <label for="profile-type-moderator">Moderator</label>
                 </p>
                 <p>
-                  <input type="checkbox" class="filled-in" id="profile-type-other" {% if data.profile.types.other %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-other" {% if existing.types.other %}checked{% endif %} />
                   <label for="profile-type-other">Other</label>
                 </p>
               </div>
@@ -214,54 +214,54 @@
               <h5 class="center">Gaming Streamer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-gaming-goals" class="materialize-textarea">{{ data.profile.types.streamer_gaming.goals }}</textarea>
+                  <textarea id="profile-type-streamer-gaming-goals" class="materialize-textarea">{{ existing.types.streamer_gaming.goals }}</textarea>
                   <label for="profile-type-streamer-gaming-goals">Your Gaming Goals - What do you hope to achieve as a gamer on Twitch?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-gaming-schedule" class="materialize-textarea">{{ data.profile.types.streamer_gaming.schedule }}</textarea>
-                  <label for="profile-type-streamer-gaming-schedule">Your Gaming Schedule - When do you stream games? Make sure to include timezones!</label>
+                  <textarea id="profile-type-streamer-gaming-favourites" class="materialize-textarea">{{ existing.types.streamer_gaming.favourites }}</textarea>
+                  <label for="profile-type-streamer-gaming-favourites">Your Favourite Games - What games are you currently streaming? What are the best games you've ever played or streamed?</label>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" id="profile-type-streamer-gaming-genres" style="padding-bottom: 30px;">
                 <div class="input-field col s12">
                   <p>Your Game Genres - Which game genres do you like to play?</p>
                   <div class="col s12 m4 l4">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-action" {% if data.profile.types.streamer_gaming.genres.action %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-action" {% if existing.types.streamer_gaming.genres.action %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-action">Action</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-adventure" {% if data.profile.types.streamer_gaming.genres.adventure %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-adventure" {% if existing.types.streamer_gaming.genres.adventure %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-adventure">Adventure</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-horror" {% if data.profile.types.streamer_gaming.genres.horror %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-horror" {% if existing.types.streamer_gaming.genres.horror %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-horror">Horror</label>
                     </p>
                   </div>
                   <div class="col s12 m4 l4">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-roleplaying" {% if data.profile.types.streamer_gaming.genres.roleplaying %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-roleplaying" {% if existing.types.streamer_gaming.genres.roleplaying %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-roleplaying">Role-Playing</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-simulation" {% if data.profile.types.streamer_gaming.genres.simulation %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-simulation" {% if existing.types.streamer_gaming.genres.simulation %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-simulation">Simulation</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-strategy" {% if data.profile.types.streamer_gaming.genres.strategy %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-strategy" {% if existing.types.streamer_gaming.genres.strategy %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-strategy">Strategy</label>
                     </p>
                   </div>
                   <div class="col s12 m4 l4">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-survival" {% if data.profile.types.streamer_gaming.genres.survival %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-survival" {% if existing.types.streamer_gaming.genres.survival %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-survival">Survivial</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-other" {% if data.profile.types.streamer_gaming.genres.other %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-other" {% if existing.types.streamer_gaming.genres.other %}checked{% endif %} />
                       <label for="profile-type-streamer-gaming-other">Other</label>
                     </p>
                   </div>
@@ -270,11 +270,11 @@
               <div class="row">
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-collaborations" {% if data.profile.types.streamer_gaming.collaborations != "false" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-collaborations" {% if existing.types.streamer_gaming.collaborations !== false %}checked{% endif %} />
                     <label for="profile-type-streamer-gaming-collaborations">Are you looking to collaborate with other gaming streamers?</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-charity" {% if data.profile.types.streamer_gaming.charity == "true" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-gaming-charity" {% if existing.types.streamer_gaming.charity %}checked{% endif %} />
                     <label for="profile-type-streamer-gaming-charity">Do you do gaming streams for charity?</label>
                   </p>
                 </div>
@@ -285,44 +285,44 @@
               <h5 class="center">Creative Streamer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-creative-goals" class="materialize-textarea">{{ data.profile.types.streamer_creative.goals }}</textarea>
+                  <textarea id="profile-type-streamer-creative-goals" class="materialize-textarea">{{ existing.types.streamer_creative.goals }}</textarea>
                   <label for="profile-type-streamer-creative-goals">Your Creative Goals - What do you hope to achieve as a creative streamer on Twitch?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-creative-schedule" class="materialize-textarea">{{ data.profile.types.streamer_creative.schedule }}</textarea>
-                  <label for="profile-type-streamer-creative-schedule">Your Creative Schedule - When do you stream creative? Make sure to include timezones!</label>
+                  <textarea id="profile-type-streamer-creative-creations" class="materialize-textarea">{{ existing.types.streamer_creative.creations }}</textarea>
+                  <label for="profile-type-streamer-creative-creations">Your Best Creations - What is the most impressive thing you have ever created on stream? What was your favourite project to work on?</label>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" id="profile-type-streamer-creative-activities" style="padding-bottom: 30px;">
                 <div class="input-field col s12">
                   <p>Your Creative Activites - What do you like to do in the creative directory?</p>
                   <div class="col s12 m6 l6">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-cooking" {% if data.profile.types.streamer_creative.activities.cooking %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-cooking" {% if existing.types.streamer_creative.activities.cooking %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-cooking">Cooking</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-drawing" {% if data.profile.types.streamer_creative.activities.drawing %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-drawing" {% if existing.types.streamer_creative.activities.drawing %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-drawing">Drawing</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-painting" {% if data.profile.types.streamer_creative.activities.painting %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-painting" {% if existing.types.streamer_creative.activities.painting %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-painting">Painting</label>
                     </p>
                   </div>
                   <div class="col s12 m6 l6">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-programming" {% if data.profile.types.streamer_creative.activities.programming %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-programming" {% if existing.types.streamer_creative.activities.programming %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-programming">Programming</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-editing" {% if data.profile.types.streamer_creative.activities.editing %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-editing" {% if existing.types.streamer_creative.activities.editing %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-editing">Video Editing</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-other" {% if data.profile.types.streamer_creative.activities.other %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-other" {% if existing.types.streamer_creative.activities.other %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-other">Other</label>
                     </p>
                   </div>
@@ -331,11 +331,11 @@
               <div class="row">
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-collaborations" {% if data.profile.types.streamer_creative.collaborations != "false" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-collaborations" {% if existing.types.streamer_creative.collaborations !== false %}checked{% endif %} />
                     <label for="profile-type-streamer-creative-collaborations">Are you looking to collaborate with other creative streamers?</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-charity" {% if data.profile.types.streamer_creative.charity == "true" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-charity" {% if existing.types.streamer_creative.charity %}checked{% endif %} />
                     <label for="profile-type-streamer-creative-charity">Do you do creative streams for charity?</label>
                   </p>
                 </div>
@@ -346,24 +346,30 @@
               <h5 class="center">Social Eating Streamer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-socialeating-goals" class="materialize-textarea">{{ data.profile.types.streamer_socialeating.goals }}</textarea>
+                  <textarea id="profile-type-streamer-socialeating-goals" class="materialize-textarea">{{ existing.types.streamer_socialeating.goals }}</textarea>
                   <label for="profile-type-streamer-socialeating-goals">Your Social Eating Goals - What do you hope to achieve as a social eating streamer on Twitch?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-socialeating-schedule" class="materialize-textarea">{{ data.profile.types.streamer_socialeating.schedule }}</textarea>
-                  <label for="profile-type-streamer-socialeating-schedule">Your Social Eating Schedule - When do you stream social eating? Make sure to include timezones!</label>
+                  <textarea id="profile-type-streamer-socialeating-meals" class="materialize-textarea">{{ existing.types.streamer_socialeating.meals }}</textarea>
+                  <label for="profile-type-streamer-socialeating-meals">Your Social Eating Meals - What do you like to eat on your social eating streams?</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <textarea id="profile-type-streamer-socialeating-discussions" class="materialize-textarea">{{ existing.types.streamer_socialeating.discussions }}</textarea>
+                  <label for="profile-type-streamer-socialeating-discussions">Your Social Eating Discussions - What do you like to discuss with viewers on your social eating streams?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating-collaborations" {% if data.profile.types.streamer_socialeating.collaborations != "false" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating-collaborations" {% if existing.types.streamer_socialeating.collaborations !== false %}checked{% endif %} />
                     <label for="profile-type-streamer-socialeating-collaborations">Are you looking to collaborate with other social eating streamers?</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating-charity" {% if data.profile.types.streamer_socialeating.charity == "true" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-socialeating-charity" {% if existing.types.streamer_socialeating.charity %}checked{% endif %} />
                     <label for="profile-type-streamer-socialeating-charity">Do you do social eating streams for charity?</label>
                   </p>
                 </div>
@@ -374,30 +380,24 @@
               <h5 class="center">IRL Streamer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-irl-goals" class="materialize-textarea">{{ data.profile.types.streamer_irl.goals }}</textarea>
+                  <textarea id="profile-type-streamer-irl-goals" class="materialize-textarea">{{ existing.types.streamer_irl.goals }}</textarea>
                   <label for="profile-type-streamer-irl-goals">Your IRL Stream's Goals - What do you hope to achieve as a IRL streamer on Twitch?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-irl-schedule" class="materialize-textarea">{{ data.profile.types.streamer_irl.schedule }}</textarea>
-                  <label for="profile-type-streamer-irl-schedule">Your IRL Stream's Schedule - When do you stream IRL? Make sure to include timezones!</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-irl-activities" class="materialize-textarea">{{ data.profile.types.streamer_irl.activities }}</textarea>
+                  <textarea id="profile-type-streamer-irl-activities" class="materialize-textarea">{{ existing.types.streamer_irl.activities }}</textarea>
                   <label for="profile-type-streamer-irl-activities">Your IRL Stream's Activities - What do you do on your IRL streams?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-irl-collaborations" {% if data.profile.types.streamer_irl.collaborations != "false" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-irl-collaborations" {% if existing.types.streamer_irl.collaborations !== false %}checked{% endif %} />
                     <label for="profile-type-streamer-irl-collaborations">Are you looking to collaborate with other IRL streamers?</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-irl-charity" {% if data.profile.types.streamer_irl.charity == "true" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-irl-charity" {% if existing.types.streamer_irl.charity %}checked{% endif %} />
                     <label for="profile-type-streamer-irl-charity">Do you do IRL streams for charity?</label>
                   </p>
                 </div>
@@ -408,36 +408,30 @@
               <h5 class="center">Talk Show Streamer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-talkshow-goals" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.goals }}</textarea>
+                  <textarea id="profile-type-streamer-talkshow-goals" class="materialize-textarea">{{ existing.types.streamer_talkshow.goals }}</textarea>
                   <label for="profile-type-streamer-talkshow-goals">Your Talk Show Hosting Goals - What do you hope to achieve as a talk show streamer on Twitch?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-talkshow-schedule" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.schedule }}</textarea>
-                  <label for="profile-type-streamer-talkshow-schedule">Your Talk Show's Schedule - When do you stream talk shows? Make sure to include timezones!</label>
-                </div>
-              </div>
-              <div class="row">
-                <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-talkshow-discussions" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.discussions }}</textarea>
+                  <textarea id="profile-type-streamer-talkshow-discussions" class="materialize-textarea">{{ existing.types.streamer_talkshow.discussions }}</textarea>
                   <label for="profile-type-streamer-talkshow-discussions">Your Talk Show's Discussions - What do you discuss on your talk show streams?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-talkshow-guests" class="materialize-textarea">{{ data.profile.types.streamer_talkshow.guests }}</textarea>
+                  <textarea id="profile-type-streamer-talkshow-guests" class="materialize-textarea">{{ existing.types.streamer_talkshow.guests }}</textarea>
                   <label for="profile-type-streamer-talkshow-guests">Your Talk Show's Guests - Do your talk shows feature anyone else? If so, who?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow-collaborations" {% if data.profile.types.streamer_talkshow.collaborations != "false" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow-collaborations" {% if existing.types.streamer_talkshow.collaborations !== false %}checked{% endif %} />
                     <label for="profile-type-streamer-talkshow-collaborations">Are you looking to collaborate with other talk show streamers?</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow-charity" {% if data.profile.types.streamer_talkshow.charity == "true" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-talkshow-charity" {% if existing.types.streamer_talkshow.charity %}checked{% endif %} />
                     <label for="profile-type-streamer-talkshow-charity">Do you do talk show streams for charity?</label>
                   </p>
                 </div>
@@ -448,24 +442,24 @@
               <h5 class="center">Music Streamer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-music-goals" class="materialize-textarea">{{ data.profile.types.streamer_music.goals }}</textarea>
+                  <textarea id="profile-type-streamer-music-goals" class="materialize-textarea">{{ existing.types.streamer_music.goals }}</textarea>
                   <label for="profile-type-streamer-music-goals">Your Music Goals - What do you hope to achieve as a music streamer on Twitch?</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-streamer-music-schedule" class="materialize-textarea">{{ data.profile.types.streamer_music.schedule }}</textarea>
-                  <label for="profile-type-streamer-music-schedule">Your Music Schedule - When do you stream music? Make sure to include timezones!</label>
+                  <textarea id="profile-type-streamer-music-music" class="materialize-textarea">{{ existing.types.streamer_music.music }}</textarea>
+                  <label for="profile-type-streamer-music-music">Your Music - What music do you like to make? How do you make it? Feel free to link some examples of your best work!</label>
                 </div>
               </div>
               <div class="row">
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-music-collaborations" {% if data.profile.types.streamer_music.collaborations != "false" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-music-collaborations" {% if existing.types.streamer_music.collaborations !== false %}checked{% endif %} />
                     <label for="profile-type-streamer-music-collaborations">Are you looking to collaborate with other music streamers?</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-streamer-music-charity" {% if data.profile.types.streamer_music.charity == "true" %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-streamer-music-charity" {% if existing.types.streamer_music.charity %}checked{% endif %} />
                     <label for="profile-type-streamer-music-charity">Do you do music streams for charity?</label>
                   </p>
                 </div>
@@ -476,43 +470,43 @@
               <h5 class="center">Artist</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-artist-examples" class="materialize-textarea">{{ data.profile.types.artist.examples }}</textarea>
+                  <textarea id="profile-type-artist-examples" class="materialize-textarea">{{ existing.types.artist.examples }}</textarea>
                   <label for="profile-type-artist-examples">Art Portfolio - Please link some examples of your work.</label>
                 </div>
                 <div class="input-field col s12">
-                  <textarea id="profile-type-artist-attraction" class="materialize-textarea">{{ data.profile.types.artist.attraction }}</textarea>
+                  <textarea id="profile-type-artist-attraction" class="materialize-textarea">{{ existing.types.artist.attraction }}</textarea>
                   <label for="profile-type-artist-attraction">Why You Enjoy Art - Are you particularly talented at it? Do you find it relaxing?</label>
                 </div>
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-artist-commissions" {% if data.profile.types.artist.commissions %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-artist-commissions" {% if existing.types.artist.commissions %}checked{% endif %} />
                     <label for="profile-type-artist-commissions">Do you usually accept commissions?</label>
                   </p>
                 </div>
-                <div id="artist-commissions" {% if !data.profile.types.artist.commissions %}style="display: none;"{% endif %}>
+                <div id="artist-commissions" {% if !existing.types.artist.commissions %}style="display: none;"{% endif %}>
                   <div class="input-field col s12">
-                    <textarea id="profile-type-artist-commissions-services" class="materialize-textarea">{{ data.profile.types.artist.commissions.services }}</textarea>
+                    <textarea id="profile-type-artist-commissions-services" class="materialize-textarea">{{ existing.types.artist.commissions.services }}</textarea>
                     <label for="profile-type-artist-commissions-services">Your Commission Services - What do you offer?</label>
                   </div>
                   <div class="input-field col s12">
-                    <textarea id="profile-type-artist-commissions-contact" class="materialize-textarea">{{ data.profile.types.artist.commissions.contact }}</textarea>
+                    <textarea id="profile-type-artist-commissions-contact" class="materialize-textarea">{{ existing.types.artist.commissions.contact }}</textarea>
                     <label for="profile-type-artist-commissions-contact">Your Contact Information for Commissions - How should people contact you about commissions?</label>
                   </div>
                   <div class="input-field col s12">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-artist-commissions-charge" {% if data.profile.types.artist.commissions.charge %}checked{% endif %}/>
+                      <input type="checkbox" class="filled-in" id="profile-type-artist-commissions-charge" {% if existing.types.artist.commissions.charge %}checked{% endif %}/>
                       <label for="profile-type-artist-commissions-charge">Do you charge for your work?</label>
                     </p>
                   </div>
-                  <div id="artist-commissions-charge" {% if !data.profile.types.artist.commissions.charge %}style="display: none;"{% endif %}>
+                  <div id="artist-commissions-charge" {% if !existing.types.artist.commissions.charge %}style="display: none;"{% endif %}>
                     <div class="input-field col s12">
-                      <textarea id="profile-type-artist-commissions-charge-rate" class="materialize-textarea">{{ data.profile.types.artist.commissions.charge }}</textarea>
+                      <textarea id="profile-type-artist-commissions-charge-rate" class="materialize-textarea">{{ existing.types.artist.commissions.charge }}</textarea>
                       <label for="profile-type-artist-commissions-charge-rate">Your Charge Rate for Commissions - How much are your services?</label>
                     </div>
                   </div>
                   <div class="input-field col s12">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-artist-commissions-accepting" {% if data.profile.types.artist.commissions.accepting %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-artist-commissions-accepting" {% if existing.types.artist.commissions.accepting %}checked{% endif %} />
                       <label for="profile-type-artist-commissions-accepting">Do you currently accept commissions?</label>
                     </p>
                   </div>
@@ -524,43 +518,43 @@
               <h5 class="center">Developer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-developer-examples" class="materialize-textarea">{{ data.profile.types.developer.examples }}</textarea>
+                  <textarea id="profile-type-developer-examples" class="materialize-textarea">{{ existing.types.developer.examples }}</textarea>
                   <label for="profile-type-developer-examples">Developer Portfolio - Please link some examples of your work.</label>
                 </div>
                 <div class="input-field col s12">
-                  <textarea id="profile-type-developer-attraction" class="materialize-textarea">{{ data.profile.types.developer.attraction }}</textarea>
+                  <textarea id="profile-type-developer-attraction" class="materialize-textarea">{{ existing.types.developer.attraction }}</textarea>
                   <label for="profile-type-developer-attraction">Why You Enjoy Developing - Are you particularly talented at it? Do you find it relaxing?</label>
                 </div>
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-developer-commissions" {% if data.profile.types.developer.commissions %}checked{% endif %} />
+                    <input type="checkbox" class="filled-in" id="profile-type-developer-commissions" {% if existing.types.developer.commissions %}checked{% endif %} />
                     <label for="profile-type-developer-commissions">Do you usually accept commissions?</label>
                   </p>
                 </div>
-                <div id="developer-commissions" {% if !data.profile.types.developer.commissions %}style="display: none;"{% endif %}>
+                <div id="developer-commissions" {% if !existing.types.developer.commissions %}style="display: none;"{% endif %}>
                   <div class="input-field col s12">
-                    <textarea id="profile-type-developer-commissions-services" class="materialize-textarea">{{ data.profile.types.developer.commissions.services }}</textarea>
+                    <textarea id="profile-type-developer-commissions-services" class="materialize-textarea">{{ existing.types.developer.commissions.services }}</textarea>
                     <label for="profile-type-developer-commissions-services">Your Commission Services - What do you offer?</label>
                   </div>
                   <div class="input-field col s12">
-                    <textarea id="profile-type-developer-commissions-contact" class="materialize-textarea">{{ data.profile.types.developer.commissions.contact }}</textarea>
+                    <textarea id="profile-type-developer-commissions-contact" class="materialize-textarea">{{ existing.types.developer.commissions.contact }}</textarea>
                     <label for="profile-type-developer-commissions-contact">Your Contact Information for Commissions - How should people contact you about commissions?</label>
                   </div>
                   <div class="input-field col s12">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-developer-commissions-charge" {% if data.profile.types.developer.commissions.charge %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-developer-commissions-charge" {% if existing.types.developer.commissions.charge %}checked{% endif %} />
                       <label for="profile-type-developer-commissions-charge">Do you charge for your work?</label>
                     </p>
                   </div>
-                  <div id="developer-commissions-charge" {% if !data.profile.types.developer.commissions.charge %}style="display: none;"{% endif %}>
+                  <div id="developer-commissions-charge" {% if !existing.types.developer.commissions.charge %}style="display: none;"{% endif %}>
                     <div class="input-field col s12">
-                      <textarea id="profile-type-developer-commissions-charge-rate" class="materialize-textarea">{{ data.profile.types.developer.commissions.charge }}</textarea>
+                      <textarea id="profile-type-developer-commissions-charge-rate" class="materialize-textarea">{{ existing.types.developer.commissions.charge }}</textarea>
                       <label for="profile-type-developer-commissions-charge-rate">Your Charge Rate for Commissions - How much are your services?</label>
                     </div>
                   </div>
                   <div class="input-field col s12">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-developer-commissions-accepting" {% if data.profile.types.artist.commissions.accepting %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-developer-commissions-accepting" {% if existing.types.artist.commissions.accepting %}checked{% endif %} />
                       <label for="profile-type-developer-commissions-accepting">Do you currently accept commissions?</label>
                     </p>
                   </div>
@@ -572,11 +566,11 @@
               <h5 class="center">Community Manager</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-communitymanager-examples" class="materialize-textarea">{{ data.profile.types.communitymanager.examples }}</textarea>
+                  <textarea id="profile-type-communitymanager-examples" class="materialize-textarea">{{ existing.types.communitymanager.examples }}</textarea>
                   <label for="profile-type-communitymanager-examples">Community Manager Portfolio - Which communities do you manage?</label>
                 </div>
                 <div class="input-field col s12">
-                  <textarea id="profile-type-communitymanager-attraction" class="materialize-textarea">{{ data.profile.types.communitymanager.attraction }}</textarea>
+                  <textarea id="profile-type-communitymanager-attraction" class="materialize-textarea">{{ existing.types.communitymanager.attraction }}</textarea>
                   <label for="profile-type-communitymanager-attraction">Why You Enjoy Being a Community Manager - Why did you become a community manager? What is the best part of it for you?</label>
                 </div>
               </div>
@@ -586,26 +580,26 @@
               <h5 class="center">Moderator</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-moderator-experience" class="materialize-textarea">{{ data.profile.types.moderator.experience }}</textarea>
+                  <textarea id="profile-type-moderator-experience" class="materialize-textarea">{{ existing.types.moderator.experience }}</textarea>
                   <label for="profile-type-moderator-experience">Moderation Experience - What are your best memories of being a moderator? This could be anything from a kind viewer, to a bit of a war story!</label>
                 </div>
                 <div class="input-field col s12">
-                  <textarea id="profile-type-moderator-attraction" class="materialize-textarea">{{ data.profile.types.moderator.attraction }}</textarea>
+                  <textarea id="profile-type-moderator-attraction" class="materialize-textarea">{{ existing.types.moderator.attraction }}</textarea>
                   <label for="profile-type-moderator-attraction">Why You Enjoy Being a Moderator - Why do you moderate on Twitch?</label>
                 </div>
                 <div class="input-field col s12">
                   <p>
-                    <input type="checkbox" class="filled-in" id="profile-type-moderator-requests" {% if data.profile.types.moderator.requests %}checked{% endif %}/>
+                    <input type="checkbox" class="filled-in" id="profile-type-moderator-requests" {% if existing.types.moderator.requests %}checked{% endif %}/>
                     <label for="profile-type-moderator-requests">Can people request that you moderate their channel?</label>
                   </p>
                 </div>
-                <div id="moderator-requests" {% if !data.profile.types.moderator.requests %}style="display: none;"{% endif %}>
+                <div id="moderator-requests" {% if !existing.types.moderator.requests %}style="display: none;"{% endif %}>
                   <div class="input-field col s12">
-                    <textarea id="profile-type-moderator-requirements" class="materialize-textarea">{{ data.profile.types.moderator.requests.requirements }}</textarea>
+                    <textarea id="profile-type-moderator-requirements" class="materialize-textarea">{{ existing.types.moderator.requests.requirements }}</textarea>
                     <label for="profile-type-moderator-requirements">Your Request Requirements - What must the streamer or channel have for you to moderate it?</label>
                   </div>
                   <div class="input-field col s12">
-                    <textarea id="profile-type-moderator-requests-contact" class="materialize-textarea">{{ data.profile.types.moderator.requests.contact }}</textarea>
+                    <textarea id="profile-type-moderator-requests-contact" class="materialize-textarea">{{ existing.types.moderator.requests.contact }}</textarea>
                     <label for="profile-type-moderator-requests-contact">Your Contact Information for Requests - How should people contact you about moderation requests?</label>
                   </div>
                 </div>
@@ -616,90 +610,90 @@
               <h5 class="center">Viewer</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-viewer-experience" class="materialize-textarea">{{ data.profile.types.viewer.experience }}</textarea>
+                  <textarea id="profile-type-viewer-experience" class="materialize-textarea">{{ existing.types.viewer.experience }}</textarea>
                   <label for="profile-type-viewer-experience">Best Viewing Experiences - What are your best memories of being a viewer?</label>
                 </div>
                 <div class="input-field col s12">
-                  <textarea id="profile-type-viewer-streamers" class="materialize-textarea">{{ data.profile.types.viewer.streamers }}</textarea>
+                  <textarea id="profile-type-viewer-streamers" class="materialize-textarea">{{ existing.types.viewer.streamers }}</textarea>
                   <label for="profile-type-viewer-streamers">Favourite Streamers - Who are your favourite streamers? Why do you like them? How long have you watched them?</label>
                 </div>
-                <div class="input-field col s12">
+                <div class="input-field col s12" id="profile-type-streamer-viewer-streams" style="padding-bottom: 30px;">
                   <p>Your Preferred Streams - What types of streams are your favourite? You must choose at least one from this list.</p>
                   <div class="col s12 m6 l3">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-action" {% if data.profile.types.viewer.streams.action %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-action" {% if existing.types.viewer.streams.action %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-action">Action Games</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-adventure" {% if data.profile.types.viewer.streams.adventure %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-adventure" {% if existing.types.viewer.streams.adventure %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-adventure">Adventure Games</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-roleplaying" {% if data.profile.types.viewer.streams.roleplaying %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-roleplaying" {% if existing.types.viewer.streams.roleplaying %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-roleplaying">Role-Playing Games</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-simulation" {% if data.profile.types.viewer.streams.simulation %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-simulation" {% if existing.types.viewer.streams.simulation %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-simulation">Simulation Games</label>
                     </p>
                   </div>
                   <div class="col s12 m6 l3">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-horror" {% if data.profile.types.viewer.streams.horror %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-horror" {% if existing.types.viewer.streams.horror %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-horror">Horror Games</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-strategy" {% if data.profile.types.viewer.streams.strategy %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-strategy" {% if existing.types.viewer.streams.strategy %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-strategy">Strategy Games</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-survival" {% if data.profile.types.viewer.streams.survival %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-survival" {% if existing.types.viewer.streams.survival %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-survival">Survival Games</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-cooking" {% if data.profile.types.viewer.streams.cooking %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-cooking" {% if existing.types.viewer.streams.cooking %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-cooking">Cooking</label>
                     </p>
                   </div>
                   <div class="col s12 m6 l3">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-drawing" {% if data.profile.types.viewer.streams.drawing %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-drawing" {% if existing.types.viewer.streams.drawing %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-drawing">Drawing</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-painting" {% if data.profile.types.viewer.streams.painting %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-painting" {% if existing.types.viewer.streams.painting %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-painting">Painting</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-programming" {% if data.profile.types.viewer.streams.programming %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-programming" {% if existing.types.viewer.streams.programming %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-programming">Programming</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-editing" {% if data.profile.types.viewer.streams.editing %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-editing" {% if existing.types.viewer.streams.editing %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-editing">Video Editing</label>
                     </p>
                   </div>
                   <div class="col s12 m6 l3">
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-irl" {% if data.profile.types.viewer.streams.irl %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-irl" {% if existing.types.viewer.streams.irl %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-irl">IRL</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-talkshow" {% if data.profile.types.viewer.streams.talkshow %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-talkshow" {% if existing.types.viewer.streams.talkshow %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-talkshow">Talk Show</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-socialeating" {% if data.profile.types.viewer.streams.socialeating %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-socialeating" {% if existing.types.viewer.streams.socialeating %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-socialeating">Social Eating</label>
                     </p>
                     <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-music" {% if data.profile.types.viewer.streams.music %}checked{% endif %} />
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-music" {% if existing.types.viewer.streams.music %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-music">Music</label>
                     </p>
                   </div>
                 </div>
                 <div class="input-field col s12">
-                  <input type="checkbox" class="filled-in" id="profile-type-viewer-family" {% if data.profile.types.viewer.family %}checked{% endif %} />
+                  <input type="checkbox" class="filled-in" id="profile-type-viewer-family" {% if existing.types.viewer.family %}checked{% endif %} />
                   <label for="profile-type-viewer-family">Do you prefer family friendly streams?</label>
                 </div>
               </div>
@@ -709,7 +703,7 @@
               <h5 class="center">Other Type</h5>
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="profile-type-other-description" class="materialize-textarea">{{ data.profile.types.other }}</textarea>
+                  <textarea id="profile-type-other-description" class="materialize-textarea">{{ existing.types.other }}</textarea>
                   <label for="profile-type-other-description">Sorry that your role didn't fit into another category. Please still tell us about yourself and your role though!</label>
                 </div>
               </div>
@@ -722,11 +716,11 @@
           <div id="step-4" style="display: none;">
             <div class="row">
               <h4 class="center">Step 4 - Tags</h4>
-              <p>Adding tags to your profile allows people to discover it easier! Make sure to choose some that are particularly relevant to you. Press the enter key between each.</p>
+              <p>Adding tags to your profile allows people to discover it easier! Make sure to choose some that are particularly relevant to you. You must press the enter key between each and enter between 3 and 15 tags.</p>
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <div class="chips chips-initial" id="profile-tags" data-tags="{{ data.profile.tags }}"></div>
+                <div class="chips chips-initial" id="profile-tags" data-tags="{{ existing.tags }}"></div>
               </div>
             </div>
             <div class="row">
@@ -766,7 +760,7 @@
             <br />
             <div class="row">
               <a href="#!" id="back-step-4" class="btn waves-effect waves-light custom darken-1 white-text">Back</a>
-              <a href="#!" id="submit-profile" class="btn waves-effect waves-light custom darken-1 white-text right" data-id="{{ twitch.id }}">Submit</a>
+              <a href="#!" id="submit-profile" class="btn waves-effect waves-light custom darken-1 white-text right" data-id="{{ twitch.id }}" {% if data.profile.status %} data-edit="true" {% endif %}>Submit</a>
             </div>
           </div>
         </div>
@@ -1067,31 +1061,45 @@
   {% endfor %}
 {% endif %}
 
-<div class="fixed-action-btn hide-on-small-only" id="profile-settings-wrapper" {% if data.requests.length %} style="margin-bottom: 75px;" {% endif %}>
+<div class="fixed-action-btn hide-on-small-only" id="profile-settings-wrapper">
   <a id="profile-settings" class="btn-floating btn-large custom darken-1"><i class="large material-icons">settings</i></a>
   <ul>
     <li><a class="btn-floating custom darken-1 tooltipped" id="link-accounts" data-position="left" data-delay="50" data-tooltip="Link Accounts"><i class="material-icons">link</i></a></li>
     {% if data.profile %}
       <li><a class="btn-floating custom darken-1 tooltipped" id="edit-profile" data-position="left" data-delay="50" data-tooltip="Edit Profile"><i class="material-icons">edit</i></a></li>
-      <li><a href="#modal-social-media" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Social Media"><i class="material-icons">person_add</i></a></li>
-      <li><a href="#modal-communities" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Communities"><i class="material-icons">message</i></a></li>
-      <li><a href="#modal-edit-appearance" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Appearance"><i class="material-icons">face</i></a></li>
-    {% endif %}
-    {% if data.reddit_id %}
-      <li><a class="btn-floating custom darken-1 tooltipped" id="twoos-transactions" data-position="left" data-delay="50" data-tooltip="View Twoos Transactions"><i class="material-icons">thumbs_up_down</i></a></li>
-      <li><a href="/requests/submit" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Submit Ad Request" target="_blank"><i class="material-icons">create_new_folder</i></a></li>
-    {% endif %}
-    {% if data.profile.status == "approved" %}
-      <li><a href="/user/{{ data.twitch_username }}" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View As Public" target="_blank"><i class="material-icons">pageview</i></a></li>
+      <li><a href="#modal-social-media" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Social Media"><i class="material-icons">forum</i></a></li>
+      <li><a href="#modal-communities" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Communities"><i class="material-icons">people</i></a></li>
+      <li><a href="#modal-edit-appearance" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Edit Appearance"><i class="material-icons">build</i></a></li>
     {% endif %}
   </ul>
 </div>
+
+{% if data.reddit_id || data.profile.status == "approved" %}
+  <div class="fixed-action-btn hide-on-small-only" id="profile-view-wrapper" style="margin-right: 65px;" >
+    <a id="profile-view" class="btn-floating btn-large custom darken-1"><i class="large material-icons">visibility</i></a>
+    <ul>
+      {% if data.reddit_id %}
+        <li><a class="btn-floating custom darken-1 tooltipped" id="twoos-transactions" data-position="left" data-delay="50" data-tooltip="View Twoos Transactions"><i class="material-icons">thumbs_up_down</i></a></li>
+        {% if data.requests.length %}
+          <li><a href="/user/{{ data.twitch_username }}/requests" class="btn-floating waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View Ad Requests" target="_blank"><i class="material-icons">description</i></a></li>
+        {% endif %}
+        <li><a href="/requests/submit" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Submit Ad Request" target="_blank"><i class="material-icons">add</i></a></li>
+      {% endif %}
+      {% if data.profile.status == "approved" %}
+        {% if data.profile.types.streamer_gaming || data.profile.types.streamer_creative || data.profile.types.streamer_irl || data.profile.types.streamer_socialeating || data.profile.types.streamer_talkshow || data.profile.types.streamer_music %}
+          <li><a href="/schedule" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Schedule Stream" target="_blank"><i class="material-icons">event_note</i></a></li>
+        {% endif %}
+        <li><a href="/user/{{ data.twitch_username }}" class="btn-floating custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View As Public" target="_blank"><i class="material-icons">public</i></a></li>
+      {% endif %}
+    </ul>
+  </div>
+{% endif %}
 
 {% if tutorial %}
   <div class="tap-target custom lighten-1 white-text" data-activates="profile-settings">
     <div class="tap-target-content">
       <h5 class="center">Settings Button</h5>
-      <p style="margin: 0;">All of your profile settings are here! You can add social media accounts and communities from this menu - as well as a clip to embed and more! It is also possible to edit your profile, change your /r/Twitch flair, submit advertisement requests and link accounts here too!</p>
+      <p style="margin: 0;">All of your profile settings are here! You can add social media accounts and communities from this menu - as well as a clip to embed and more! It is also possible to edit your profile, change your /r/Twitch flair, and link accounts here too!</p>
     </div>
   </div>
 {% endif %}
@@ -1104,12 +1112,6 @@
   <a class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="Cancel Editing" target="_blank"><i class="material-icons">delete</i></a>
 </div>
 
-<div class="fixed-action-btn hide-on-small-only" id="profile-requests-wrapper">
-  {% if data.requests.length %}
-    <a href="/user/{{ data.twitch_username }}/requests" class="btn-floating btn-large waves-effect waves-light custom darken-1 tooltipped" data-position="left" data-delay="50" data-tooltip="View Ad Requests" target="_blank"><i class="material-icons">open_in_new</i></a>
-  {% endif %}
-</div>
-
 <div class="row hide-on-med-and-up">
   <div class="col s10 offset-s1" id="profile-mobile-settings-wrapper">
     <ul class="collapsible" data-collapsible="accordion">
@@ -1120,16 +1122,16 @@
             <a class="btn custom darken-1 tooltipped" id="link-accounts" data-position="top" data-delay="50" data-tooltip="Link Accounts" style="margin: 2px;"><i class="material-icons">link</i></a>
             {% if data.profile %}
               <a class="btn custom darken-1 tooltipped" id="edit-profile" data-position="top" data-delay="50" data-tooltip="Edit Profile" style="margin: 2px;"><i class="material-icons">edit</i></a>
-              <a href="#modal-social-media" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Social Media" style="margin: 2px;"><i class="material-icons">person_add</i></a>
-              <a href="#modal-communities" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Communities" style="margin: 2px;"><i class="material-icons">message</i></a>
-              <a href="#modal-edit-appearance" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Appearance" style="margin: 2px;"><i class="material-icons">face</i></a>
+              <a href="#modal-social-media" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Social Media" style="margin: 2px;"><i class="material-icons">forum</i></a>
+              <a href="#modal-communities" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Communities" style="margin: 2px;"><i class="material-icons">people</i></a>
+              <a href="#modal-edit-appearance" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Edit Appearance" style="margin: 2px;"><i class="material-icons">build</i></a>
             {% endif %}
             {% if data.reddit_id %}
               <a class="btn custom darken-1 tooltipped" id="twoos-transactions" data-position="top" data-delay="50" data-tooltip="View Twoos Transactions" style="margin: 2px;"><i class="material-icons">thumbs_up_down</i></a>
-              <a href="/requests/submit" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Submit Ad Request" target="_blank" style="margin: 2px;"><i class="material-icons">create_new_folder</i></a>
+              <a href="/requests/submit" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="Submit Ad Request" target="_blank" style="margin: 2px;"><i class="material-icons">add</i></a>
             {% endif %}
             {% if data.profile == "approved" %}
-              <a href="/user/{{ data.twitch_username }}" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View As Public" target="_blank" style="margin: 2px;"><i class="material-icons">pageview</i></a>
+              <a href="/user/{{ data.twitch_username }}" class="btn custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View As Public" target="_blank" style="margin: 2px;"><i class="material-icons">public</i></a>
             {% endif %}
           </div>
           <div id="profile-return-wrapper" style="display: none;">
@@ -1140,7 +1142,7 @@
           </div>
           <div id="profile-requests-wrapper">
             {% if data.requests.length %}
-              <a href="/user/{{ data.twitch_username }}/requests" class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View Ad Requests" target="_blank"><i class="material-icons">open_in_new</i></a>
+              <a href="/user/{{ data.twitch_username }}/requests" class="btn waves-effect waves-light custom darken-1 tooltipped" data-position="top" data-delay="50" data-tooltip="View Ad Requests" target="_blank"><i class="material-icons">description</i></a>
             {% endif %}
           </div>
         </div>
@@ -1157,13 +1159,13 @@
    <div class="row">
      <div class="input-field col s12 m6 l6">
        <p>
-         <input type="checkbox" class="filled-in" id="profile-show-reddit" {% if data.profile.social_media.reddit === "true" %} checked {% endif %} />
+         <input type="checkbox" class="filled-in" id="profile-show-reddit" {% if data.profile.social_media.reddit %} checked {% endif %} />
          <label for="profile-show-reddit">Show Linked Reddit Account</label>
        </p>
      </div>
      <div class="input-field col s12 m6 l6">
        <p>
-         <input type="checkbox" class="filled-in" id="profile-show-discord" {% if data.profile.social_media.discord === "true" %} checked {% endif %} />
+         <input type="checkbox" class="filled-in" id="profile-show-discord" {% if data.profile.social_media.discord %} checked {% endif %} />
          <label for="profile-show-discord">Show Linked Discord Account</label>
        </p>
      </div>
@@ -1270,7 +1272,7 @@
    </div>
  </div>
  <div class="modal-footer">
-   <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="communities-save" data-id="{{ twitch.id }}">Save & Close</a>
+   <a href="#!" class="modal-action waves-effect waves-green btn-flat" id="communities-save" data-id="{{ twitch.id }}">Save & Close</a>
    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
  </div>
 </div>
@@ -1282,72 +1284,66 @@
     <hr />
     <div class="row">
       <div class="input-field col s12 m6 l6">
-        <input id="profile-appearance-flair" type="text" value="{{ flair }}" {% if !data.reddit_id %} disabled {% endif %}>
+        <input id="profile-appearance-flair" type="text" {% if data.reddit_id %} value="{{ flair }}" {% else %} disabled {% endif %}>
         <label for="profile-appearance-flair">Flair Text</label>
       </div>
       <div class="input-field col s12 m6 l6" id="profile-appearance-category">
-        {% if data.profile.status == "approved" %}
-          <select>
-            {% if data.profile.types.streamer_gaming && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "streamer_gaming" %} selected {% endif %} value="streamer_gaming">Gaming Streamer</option>
-            {% endif %}
-            {% if data.profile.types.streamer_creative && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "streamer_creative" %} selected {% endif %} value="streamer_creative">Creative Streamer</option>
-            {% endif %}
-            {% if data.profile.types.streamer_socialeating && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "streamer_socialeating" %} selected {% endif %} value="streamer_socialeating">Social Eating Streamer</option>
-            {% endif %}
-            {% if data.profile.types.streamer_irl && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "streamer_irl" %} selected {% endif %} value="streamer_irl">IRL Streamer</option>
-            {% endif %}
-            {% if data.profile.types.streamer_talkshow && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "streamer_talkshow" %} selected {% endif %} value="streamer_talkshow">Talk Show Streamer</option>
-            {% endif %}
-            {% if data.profile.types.streamer_music && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "streamer_music" %} selected {% endif %} value="streamer_music">Music Streamer</option>
-            {% endif %}
-            {% if data.profile.types.artist && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "artist" %} selected {% endif %} value="artist">Artist</option>
-            {% endif %}
-            {% if data.profile.types.developer && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "developer" %} selected {% endif %} value="developer">Developer</option>
-            {% endif %}
-            {% if data.profile.types.communitymanager && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "communitymanager" %} selected {% endif %} value="communitymanager">Community Manager</option>
-            {% endif %}
-            {% if data.profile.types.viewer && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "viewer" %} selected {% endif %} value="viewer">Viewer</option>
-            {% endif %}
-            {% if data.profile.types.moderator && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "moderator" %} selected {% endif %} value="moderator">Moderator</option>
-            {% endif %}
-            {% if data.profile.types.other && data.profile.status == "approved" %}
-              <option {% if data.profile.flair == "other" || data.profile.flair == "" %} selected {% endif %} value="other">Other</option>
-            {% endif %}
-          </select>
-          <label>Flair Badge</label>
-        {% else %}
-          <select class="disabled">
-            <option selected>You must have an approved profile to do this.</option>
-          </select>
-        {% endif %}
+        <select>
+          {% if data.profile.types.streamer_gaming" %}
+            <option {% if data.profile.flair == "streamer_gaming" %} selected {% endif %} value="streamer_gaming">Gaming Streamer</option>
+          {% endif %}
+          {% if data.profile.types.streamer_creative" %}
+            <option {% if data.profile.flair == "streamer_creative" %} selected {% endif %} value="streamer_creative">Creative Streamer</option>
+          {% endif %}
+          {% if data.profile.types.streamer_socialeating" %}
+            <option {% if data.profile.flair == "streamer_socialeating" %} selected {% endif %} value="streamer_socialeating">Social Eating Streamer</option>
+          {% endif %}
+          {% if data.profile.types.streamer_irl" %}
+            <option {% if data.profile.flair == "streamer_irl" %} selected {% endif %} value="streamer_irl">IRL Streamer</option>
+          {% endif %}
+          {% if data.profile.types.streamer_talkshow" %}
+            <option {% if data.profile.flair == "streamer_talkshow" %} selected {% endif %} value="streamer_talkshow">Talk Show Streamer</option>
+          {% endif %}
+          {% if data.profile.types.streamer_music" %}
+            <option {% if data.profile.flair == "streamer_music" %} selected {% endif %} value="streamer_music">Music Streamer</option>
+          {% endif %}
+          {% if data.profile.types.artist" %}
+            <option {% if data.profile.flair == "artist" %} selected {% endif %} value="artist">Artist</option>
+          {% endif %}
+          {% if data.profile.types.developer" %}
+            <option {% if data.profile.flair == "developer" %} selected {% endif %} value="developer">Developer</option>
+          {% endif %}
+          {% if data.profile.types.communitymanager" %}
+            <option {% if data.profile.flair == "communitymanager" %} selected {% endif %} value="communitymanager">Community Manager</option>
+          {% endif %}
+          {% if data.profile.types.viewer" %}
+            <option {% if data.profile.flair == "viewer" %} selected {% endif %} value="viewer">Viewer</option>
+          {% endif %}
+          {% if data.profile.types.moderator" %}
+            <option {% if data.profile.flair == "moderator" %} selected {% endif %} value="moderator">Moderator</option>
+          {% endif %}
+          {% if data.profile.types.other" %}
+            <option {% if data.profile.flair == "other" || data.profile.flair == "" %} selected {% endif %} value="other">Other</option>
+          {% endif %}
+        </select>
+        <label>Flair Badge</label>
       </div>
       <div class="row">
         <div class="input-field col s12 m6 l4" style="margin-top: 0;">
           <p style="margin-top: 0;">
-            <input type="checkbox" class="filled-in" id="profile-appearance-videos" {% if data.profile.appearance.videos === "true" %} checked {% endif %} />
+            <input type="checkbox" class="filled-in" id="profile-appearance-videos" {% if data.profile.appearance.videos %} checked {% endif %} />
             <label for="profile-appearance-videos">Show My Recent Videos</label>
           </p>
         </div>
         <div class="input-field col s12 m6 l4" style="margin-top: 0;">
           <p style="margin-top: 0;">
-            <input type="checkbox" class="filled-in" id="profile-appearance-events" {% if data.profile.appearance.events === "true" %} checked {% endif %} />
+            <input type="checkbox" class="filled-in" id="profile-appearance-events" {% if data.profile.appearance.events %} checked {% endif %} />
             <label for="profile-appearance-events">Show My Upcoming Events</label>
           </p>
         </div>
         <div class="input-field col s12 m6 offset-m3 l4" style="margin-top: 0;">
           <p style="margin-top: 0;">
-            <input type="checkbox" class="filled-in" id="profile-appearance-teams" {% if data.profile.appearance.teams === "true" %} checked {% endif %} />
+            <input type="checkbox" class="filled-in" id="profile-appearance-teams" {% if data.profile.appearance.teams %} checked {% endif %} />
             <label for="profile-appearance-teams">Show My Teams</label>
           </p>
         </div>

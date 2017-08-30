@@ -1,0 +1,863 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s2 offset-s1">
+    <div class="pinned" style="width: 15%;">
+      <div class="card">
+        <div class="card-content">
+          <h5 class="center" style="margin: 0;">Navigation</h5>
+          <ul class="section table-of-contents" style="margin: 0;">
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#users">Users</a></li>
+            <li><a href="#discord">Discord</a></li>
+            <li><a href="#queries">Queries</a></li>
+            <li><a href="#links">Links</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s8">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500;">Help Documentation: API</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s8 offset-s3">
+    <div class="card">
+      <div class="card-content">
+        <div id="introduction" class="section scrollspy">
+          <h4>Introduction</h4>
+          <p>The API is free to use and should cover all the information that you will need. You must only use the endpoints documented below. If you need data that is not available from documentated endpoints, please request an official endpoint via GitHub rather than using something undocumented.</p>
+          <br />
+          <p>The base URL is <code>https://purple.plus/api/</code> - though the full URL is shown for all endpoints below.</p>
+          <br />
+          <p>Please be respectful to the API and only make as many requests as you need to.</p>
+        </div>
+        <div id="users" class="section scrollspy">
+          <h4>Users</h4>
+          <h5>Get Users</h5>
+          <p>Gets basic information about users, in order of Twoos balance.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><code>offset</code></td>
+                  <td>Integer</td>
+                  <td>Value Must Be Greater Than and Including 1.</td>
+                  <td>Default: 0.</td>
+                  <td>The number of users to offset the list by.</td>
+                </tr>
+                <tr>
+                  <td><code>limit</code></td>
+                  <td>Integer</td>
+                  <td>Value Must Be Between 1 and 100.</td>
+                  <td>Default: 25.</td>
+                  <td>The number of users to return.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The users were successfully found and returned.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found",
+    "users": [
+      {
+        "twitch_id": "58839314",
+        "twitch": {
+        "id": "58839314",
+        "name": "Ethicmeta",
+        "username": "ethicmeta"
+        },
+        "reddit": {
+          "id": "u3fd1",
+          "name": "EthicMeta",
+          "username": "ethicmeta"
+        },
+        "discord": {
+          "id": "239568354791129088",
+          "name": "Ethic",
+          "discriminator": "4210"
+        },
+        "balance": 148.5,
+        "last_login": 1499597392506
+      },
+      {
+        "twitch_id": "21427184",
+        "twitch": {
+          "id": "21427184",
+          "name": "Zcotticus",
+          "username": "zcotticus"
+        },
+        "reddit": {
+          "id": "hp2pu",
+          "name": "Zcotticus",
+          "username": "zcotticus"
+        },
+        "discord": {
+          "id": "99655085218336768",
+          "name": "Zcotticus",
+          "discriminator": "2105"
+        },
+        "balance": 94.65,
+        "last_login": 1499597392506
+      }
+      ...
+    ]
+  },
+            </code></pre>
+          </p>
+          <h5>Get User</h5>
+          <p>Gets basic information about a user, including their linked accounts, Twoos balance and last login date.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users/:id</code></td>
+                  <td><code>:id</code> is the user's Twitch ID.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The user was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The user was not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for user with Twitch ID <code>121219640</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found",
+    "twitch_id": "121219640",
+    "twitch": {
+      "id": "121219640",
+      "name": "TwitchSubreddit",
+      "username": "twitchsubreddit"
+    },
+    "reddit": {
+      "id": "171e0s",
+      "name": "TwitchSubreddit",
+      "username": "twitchsubreddit"
+    },
+    "discord": {
+      "id": "319140751802105859",
+      "name": "Purple+",
+      "discriminator": "8815"
+    },
+    "balance": 87,
+    "last_login": 1504113369348
+  }
+            </code></pre>
+          </p>
+          <h5>Get User Types</h5>
+          <p>Gets the account types for the user. This includes the /r/Twitch subreddit, Twitch and Purple+.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users/:id/types</code></td>
+                  <td><code>:id</code> is the user's Twitch ID.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The user was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The user was not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for user with Twitch ID <code>121219640</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found",
+    "twitch_id": "121219640",
+    "site_type": "user",
+    "subreddit_type": "user",
+    "profile_type": "other"
+  }
+            </code></pre>
+          </p>
+          <h5>Get User Profile</h5>
+          <p>Gets the profile for the user. This includes their profile overview, types, social media, communities, etc.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users/:id/profile</code></td>
+                  <td><code>:id</code> is the user's Twitch ID.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The user was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>204</strong></td>
+                  <td>No Content</td>
+                  <td>The user was successfully found, but has no profile.</td>
+                </tr>
+                <tr>
+                  <td><strong>206</strong></td>
+                  <td>Partial Content</td>
+                  <td>The user was successfully found, but has a profile that is not approved.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The user was not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for user with Twitch ID <code>121219640</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found.",
+    "twitch_id": "121219640",
+    "approval_status": "approved",
+    "created_at": 1504112217973,
+    "updated_at": 1504112376502,
+    "overview": {
+      "introduction": "I'm a subreddit designed to bring the Twitch Community together through positive discussions!",
+      "about": "I was a banned subreddit, but was rescued and reformed in 2013. Since then, I have grown to have over 200,000 subscribers. I also have a companion site, Purple+, which handles advertisements for streams and third party services! :PogChamp:",
+      "background": "I currently hold tech support questions for the most part. However, I now also [allow clips to be posted](https://redd.it/6w0dud) in order to encourage positive content. I also am a place for hosting community events and AMAs! "
+    },
+    "types": {
+      "other": "Subreddits don't have a role on this site. :FeelsBadMan:"
+    },
+    "votes": 0,
+    "views": 0,
+    "tags": [
+      "",
+      "Twitch",
+      "Community",
+      "Clips",
+      "Tech Support",
+      "Discussions",
+      "Questions"
+    ],
+    "social_media": {
+      "reddit": true,
+      "discord": false,
+      "twitter": "TwitchSubreddit"
+    },
+    "communities": {
+      "discord": "https://discord.gg/0gHwecaLRAzrRYWi",
+      "subreddit": "https://reddit.com/r/Twitch",
+      "twitch": "https://twitch.tv/communities/twitchsubreddit"
+    },
+    "appearance": {
+      "clip": "",
+      "videos": true,
+      "events": true,
+      "teams": true
+    }
+  }
+            </code></pre>
+          </p>
+          <h5>Get User's Scheduled Streams</h5>
+          <p>Gets the scheduled streams for the user.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users/:id/schedule</code></td>
+                  <td><code>:id</code> is the user's Twitch ID.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The user was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>204</strong></td>
+                  <td>No Content</td>
+                  <td>The user was successfully found, but has no scheduled streams.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The user was not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for user with Twitch ID <code>121219640</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found.",
+    "streams": [
+      {
+        "id": "121219640_1504100640500",
+        "title": "Purple+ Development",
+        "description": "Join me as I finally complete the Purple+ project and test it for bugs!",
+        "start": 1504101600000,
+        "end": 1504107000000,
+        "directory": "Creative",
+        "type": "creative"
+      }
+    ]
+  }
+            </code></pre>
+          </p>
+          <h5>Get User's Scheduled Stream</h5>
+          <p>Gets a specific scheduled stream from the user.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users/:id/schedule/:stream</code></td>
+                  <td>
+                    <code>:id</code> is the user's Twitch ID.<br />
+                    <code>:stream</code> is the stream ID.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The user was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>204</strong></td>
+                  <td>No Content</td>
+                  <td>The user was successfully found, but has no scheduled streams.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The user or stream was not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for user with Twitch ID <code>121219640</code> and request with ID <code>121219640_1504100640500</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found.",
+    "id": "121219640_1504100640500",
+    "title": "Purple+ Development",
+    "description": "Join me as I finally complete the Purple+ project and test it for bugs!",
+    "start": 1504101600000,
+    "end": 1504107000000,
+    "directory": "Creative",
+    "type": "creative"
+  }
+            </code></pre>
+          </p>
+          <h5>Get User's Advertisement Requests</h5>
+          <p>Gets the approved advertisement requests from the user.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users/:id/requests</code></td>
+                  <td><code>:id</code> is the user's Twitch ID.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The user was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>204</strong></td>
+                  <td>No Content</td>
+                  <td>The user was successfully found, but has no approved advertisement requests.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The user was not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for user with Twitch ID <code>121219640</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found.",
+    "requests": [
+      {
+        "legacy": false,
+        "timestamp": 1504113232187,
+        "approval_status": "approved",
+        "type": "web",
+        "data": {
+          "name": "Purple+",
+          "url": "https://purple.plus",
+          "description": "Purple+ is the successor of TwitchDB, Twoos & /r/Twitch Ad Requests. The service is designed to promote everyone on Twitch - not just the streamers. Users create a profile, which will then be approved or rejected. If approved, they will be eligible to appear on the discovery features of the site!",
+          "data": "Only Twitch API Data",
+          "api": true,
+          "tos": false,
+          "source": true,
+          "beta": false,
+          "api_data": {
+            "store": "Only what is publicly available: IDs, usernames, logos, followers, etc.",
+            "scopes": "user_read",
+            "scopes_description": "To log in with the account. Email addresses are **not** stored or even read."
+          },
+          "source_url": "https://github.com/Glyciant/PurplePlus"
+        }
+      }
+    ]
+  }
+            </code></pre>
+          </p>
+          <h5>Get User's Advertisement Request</h5>
+          <p>Gets a specific advertisement request from the user.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/users/:id/requests/:request</code></td>
+                  <td>
+                    <code>:id</code> is the user's Twitch ID.<br />
+                    <code>:request</code> is the request ID.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The user was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>204</strong></td>
+                  <td>No Content</td>
+                  <td>The user was successfully found, but has no approved advertisement requests.</td>
+                </tr>
+                <tr>
+                  <td><strong>206</strong></td>
+                  <td>Partial Content</td>
+                  <td>The user was successfully found, but the requested advertisement request is not approved.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The user or request was not found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for user with Twitch ID <code>121219640</code> and request with ID <code>1504113232187</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found.",
+    "legacy": false,
+    "timestamp": 1504113232187,
+    "approval_status": "approved",
+    "type": "web",
+    "data": {
+      "name": "Purple+",
+      "url": "https://purple.plus",
+      "description": "Purple+ is the successor of TwitchDB, Twoos & /r/Twitch Ad Requests. The service is designed to promote everyone on Twitch - not just the streamers. Users create a profile, which will then be approved or rejected. If approved, they will be eligible to appear on the discovery features of the site!",
+      "data": "Only Twitch API Data",
+      "api": true,
+      "tos": false,
+      "source": true,
+      "beta": false,
+      "api_data": {
+        "store": "Only what is publicly available: IDs, usernames, logos, followers, etc.",
+        "scopes": "user_read",
+        "scopes_description": "To log in with the account. Email addresses are **not** stored or even read."
+      },
+      "source_url": "https://github.com/Glyciant/PurplePlus"
+    }
+  }
+            </code></pre>
+          </p>
+        </div>
+        <div id="discord" class="section scrollspy">
+          <h4>Discord</h4>
+          <h5>Get Commands</h5>
+          <p>Gets all commands available in the /r/Twitch Discord Server.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/discord/commands</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The commands were successfully found and returned.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found",
+    "commands": [
+      {
+        "name": "!twitter",
+        "response": "Follow us on Twitter! https://twitter.com/TwitchSubreddit",
+        "enabled": true,
+        "restricted": false
+      },
+      {
+        "name": "!blamesaai",
+        "response": "Blaming SaaiTV.",
+        "enabled": false,
+        "restricted": true,
+        "restrictions": {
+          "method": "one",
+          "mods": true,
+          "helpers": true,
+          "wiki": false,
+          "staff": false,
+          "admins": false,
+          "global_mods": false,
+          "contributors": false,
+          "profiles": false,
+          "twoos": true,
+          "twoos_value": 100
+        }
+      },
+      ...
+    ]
+  }
+            </code></pre>
+          </p>
+          <h5>Get Command</h5>
+          <p>Gets a specific command by its name.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/discord/commands/:name</code></td>
+                  <td><code>:name</code> is the command name.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The command was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The command does not exist.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for command with name <code>!twitter</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found",
+    "name": "!twitter",
+    "response": "Follow us on Twitter! https://twitter.com/TwitchSubreddit",
+    "enabled": true,
+    "restricted": false
+  }
+            </code></pre>
+          </p>
+        </div>
+        <div id="queries" class="section scrollspy">
+          <h4>Queries</h4>
+          <h5>Get Query</h5>
+          <p>Gets a query by its ID.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/queries/:id</code></td>
+                  <td><code>:id</code> is the query ID.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The query was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The query does not exist.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for query with ID <code>1503843851832</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found",
+    "query_id": 1503843851832,
+    "redirect": "https://purple.plus/browse/query?types=moderator&streamer_irl_collaborating=any&streamer_irl_charity=any&streamer_socialeating_collaborating=any&streamer_socialeating_charity=any&streamer_talkshow_collaborating=any&streamer_talkshow_charity=any&streamer_music_collaborating=any&streamer_music_charity=any&moderator_requests_accepts=any&overview_keywords=&moderator_keywords=&tags=&description=Moderators",
+    "uses": 1,
+    "last_use": 1503843851832
+  }
+            </code></pre>
+          </p>
+        </div>
+        <div id="links" class="section scrollspy">
+          <h4>Links</h4>
+          <h5>Get Link</h5>
+          <p>Gets a link by its short name.</p>
+          <p style="margin-top: 10px;">
+            <strong>URL</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>GET</strong></td>
+                  <td><code>https://purple.plus/api/links/:name</code></td>
+                  <td><code>:id</code> is the short name for the link.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Optional Parameters</strong><br />
+            None.
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Result Status Codes</strong><br />
+            <table>
+              <tbody>
+                <tr>
+                  <td><strong>200</strong></td>
+                  <td>Success</td>
+                  <td>The link was successfully found and returned.</td>
+                </tr>
+                <tr>
+                  <td><strong>404</strong></td>
+                  <td>Not Found</td>
+                  <td>The short link does not exist.</td>
+                </tr>
+              </tbody>
+            </table>
+          </p>
+          <p style="margin-top: 10px;">
+            <strong>Example Response</strong><br />
+            <em>Return data for query with ID <code>subreddit</code>.</em><br />
+            <pre><code>
+  {
+    "status": 200,
+    "message": "OK",
+    "description": "Match Found",
+    "short": "subreddit",
+    "redirect": "https://reddit.com/r/Twitch",
+    "enabled": true
+  }
+            </code></pre>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "./footer.html" %}

@@ -90,8 +90,12 @@ router.post("/submit", function(req, res, next) {
       db.users.getByTwitchId(req.body.id).then(function(data) {
         if (data) {
           data.admin = (req.body.admin == "true");
+          data.beta = (req.body.beta == "true");
           data.display.ama = (req.body.ama == "true");
           data.display.subreddit = req.body.subreddit;
+          if (!data.bans) {
+            data.bans = {};
+          }
           data.bans.profile = (req.body.bans.profile == "true");
           data.bans.nominations = (req.body.bans.nominations == "true");
           data.bans.requests = (req.body.bans.requests == "true");

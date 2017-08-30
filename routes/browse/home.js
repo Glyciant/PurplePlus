@@ -12,12 +12,12 @@ router.get("/", function(req, res, next) {
         res.render("home", { title: "Home" });
       }
       else {
-        res.redirect("/browse/streams");
+        res.redirect("/browse/spotlight");
       }
     });
   }
   else {
-    res.redirect("/browse/streams");
+    res.redirect("/browse/spotlight");
   }
 });
 
@@ -29,57 +29,57 @@ router.post("/viewing/profiles", function(req, res, next) {
             i = [];
 
         if (data.profile.types && data.profile.types.viewer) {
-          if (data.profile.types.viewer.streams.action == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.action": "true" });
+          if (data.profile.types.viewer.streams.action === true) {
+            i.push({ "profile.types.streamer_gaming.genres.action": true });
           }
-          if (data.profile.types.viewer.streams.adventure == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.adventure": "true" });
+          if (data.profile.types.viewer.streams.adventure === true) {
+            i.push({ "profile.types.streamer_gaming.genres.adventure": true });
           }
-          if (data.profile.types.viewer.streams.roleplaying == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.roleplaying": "true" });
+          if (data.profile.types.viewer.streams.roleplaying === true) {
+            i.push({ "profile.types.streamer_gaming.genres.roleplaying": true });
           }
-          if (data.profile.types.viewer.streams.simulation == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.simulation": "true" });
+          if (data.profile.types.viewer.streams.simulation === true) {
+            i.push({ "profile.types.streamer_gaming.genres.simulation": true });
           }
-          if (data.profile.types.viewer.streams.strategy == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.strategy": "true" });
+          if (data.profile.types.viewer.streams.strategy === true) {
+            i.push({ "profile.types.streamer_gaming.genres.strategy": true });
           }
-          if (data.profile.types.viewer.streams.survival == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.survival": "true" });
+          if (data.profile.types.viewer.streams.survival === true) {
+            i.push({ "profile.types.streamer_gaming.genres.survival": true });
           }
-          if (data.profile.types.viewer.streams.horror == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.horror": "true" });
+          if (data.profile.types.viewer.streams.horror === true) {
+            i.push({ "profile.types.streamer_gaming.genres.horror": true });
           }
-          if (data.profile.types.viewer.streams.cooking == "true") {
-            i.push({ "profile.types.streamer_creative.activities.cooking": "true" });
+          if (data.profile.types.viewer.streams.cooking === true) {
+            i.push({ "profile.types.streamer_creative.activities.cooking": true });
           }
-          if (data.profile.types.viewer.streams.drawing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.drawing": "true" });
+          if (data.profile.types.viewer.streams.drawing === true) {
+            i.push({ "profile.types.streamer_creative.activities.drawing": true });
           }
-          if (data.profile.types.viewer.streams.painting == "true") {
-            i.push({ "profile.types.streamer_creative.activities.painting": "true" });
+          if (data.profile.types.viewer.streams.painting === true) {
+            i.push({ "profile.types.streamer_creative.activities.painting": true });
           }
-          if (data.profile.types.viewer.streams.programming == "true") {
-            i.push({ "profile.types.streamer_creative.activities.programming": "true" });
+          if (data.profile.types.viewer.streams.programming === true) {
+            i.push({ "profile.types.streamer_creative.activities.programming": true });
           }
-          if (data.profile.types.viewer.streams.editing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.editing": "true" });
+          if (data.profile.types.viewer.streams.editing === true) {
+            i.push({ "profile.types.streamer_creative.activities.editing": true });
           }
-          if (data.profile.types.viewer.streams.irl == "true") {
+          if (data.profile.types.viewer.streams.irl === true) {
             i.push({ "profile.types.streamer_irl": { $exists: true } });
           }
-          if (data.profile.types.viewer.streams.socialeating == "true") {
+          if (data.profile.types.viewer.streams.socialeating === true) {
             i.push({ "profile.types.streamer_socialeating": { $exists: true } });
           }
-          if (data.profile.types.viewer.streams.talkshow == "true") {
+          if (data.profile.types.viewer.streams.talkshow === true) {
             i.push({ "profile.types.streamer_talkshow": { $exists: true } });
           }
-          if (data.profile.types.viewer.streams.music == "true") {
+          if (data.profile.types.viewer.streams.music === true) {
             i.push({ "profile.types.streamer_music": { $exists: true } });
           }
           if (i[0]) {
             viewing.push({ $or: i });
-            if (data.profile.types.viewer.family == "true") {
+            if (data.profile.types.viewer.family === true) {
               viewing.push({ mature: false });
             }
           }
@@ -124,57 +124,57 @@ router.post("/viewing/streams", function(req, res, next) {
             i = [];
 
         if (data.profile.types && data.profile.types.viewer) {
-          if (data.profile.types.viewer.streams.action == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.action": "true" });
+          if (data.profile.types.viewer.streams.action === true) {
+            i.push({ "profile.types.streamer_gaming.genres.action": true });
           }
-          if (data.profile.types.viewer.streams.adventure == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.adventure": "true" });
+          if (data.profile.types.viewer.streams.adventure === true) {
+            i.push({ "profile.types.streamer_gaming.genres.adventure": true });
           }
-          if (data.profile.types.viewer.streams.roleplaying == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.roleplaying": "true" });
+          if (data.profile.types.viewer.streams.roleplaying === true) {
+            i.push({ "profile.types.streamer_gaming.genres.roleplaying": true });
           }
-          if (data.profile.types.viewer.streams.simulation == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.simulation": "true" });
+          if (data.profile.types.viewer.streams.simulation === true) {
+            i.push({ "profile.types.streamer_gaming.genres.simulation": true });
           }
-          if (data.profile.types.viewer.streams.strategy == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.strategy": "true" });
+          if (data.profile.types.viewer.streams.strategy === true) {
+            i.push({ "profile.types.streamer_gaming.genres.strategy": true });
           }
-          if (data.profile.types.viewer.streams.survival == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.survival": "true" });
+          if (data.profile.types.viewer.streams.survival === true) {
+            i.push({ "profile.types.streamer_gaming.genres.survival": true });
           }
-          if (data.profile.types.viewer.streams.horror == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.horror": "true" });
+          if (data.profile.types.viewer.streams.horror === true) {
+            i.push({ "profile.types.streamer_gaming.genres.horror": true });
           }
-          if (data.profile.types.viewer.streams.cooking == "true") {
-            i.push({ "profile.types.streamer_creative.activities.cooking": "true" });
+          if (data.profile.types.viewer.streams.cooking === true) {
+            i.push({ "profile.types.streamer_creative.activities.cooking": true });
           }
-          if (data.profile.types.viewer.streams.drawing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.drawing": "true" });
+          if (data.profile.types.viewer.streams.drawing === true) {
+            i.push({ "profile.types.streamer_creative.activities.drawing": true });
           }
-          if (data.profile.types.viewer.streams.painting == "true") {
-            i.push({ "profile.types.streamer_creative.activities.painting": "true" });
+          if (data.profile.types.viewer.streams.painting === true) {
+            i.push({ "profile.types.streamer_creative.activities.painting": true });
           }
-          if (data.profile.types.viewer.streams.programming == "true") {
-            i.push({ "profile.types.streamer_creative.activities.programming": "true" });
+          if (data.profile.types.viewer.streams.programming === true) {
+            i.push({ "profile.types.streamer_creative.activities.programming": true });
           }
-          if (data.profile.types.viewer.streams.editing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.editing": "true" });
+          if (data.profile.types.viewer.streams.editing === true) {
+            i.push({ "profile.types.streamer_creative.activities.editing": true });
           }
-          if (data.profile.types.viewer.streams.irl == "true") {
+          if (data.profile.types.viewer.streams.irl === true) {
             i.push({ "profile.types.streamer_irl": { $exists: true } });
           }
-          if (data.profile.types.viewer.streams.socialeating == "true") {
+          if (data.profile.types.viewer.streams.socialeating === true) {
             i.push({ "profile.types.streamer_socialeating": { $exists: true } });
           }
-          if (data.profile.types.viewer.streams.talkshow == "true") {
+          if (data.profile.types.viewer.streams.talkshow === true) {
             i.push({ "profile.types.streamer_talkshow": { $exists: true } });
           }
-          if (data.profile.types.viewer.streams.music == "true") {
+          if (data.profile.types.viewer.streams.music === true) {
             i.push({ "profile.types.streamer_music": { $exists: true } });
           }
           if (i[0]) {
             viewing.push({ $or: i });
-            if (data.profile.types.viewer.family == "true") {
+            if (data.profile.types.viewer.family === true) {
               viewing.push({ mature: false });
             }
           }
@@ -219,50 +219,50 @@ router.post("/collaborations/profiles", function(req, res, next) {
             followers = data.followers,
             i = [];
         if (data.profile.types && data.profile.types.streamer_gaming) {
-          if (data.profile.types.streamer_gaming.genres.action == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.action": "true" });
+          if (data.profile.types.streamer_gaming.genres.action === true) {
+            i.push({ "profile.types.streamer_gaming.genres.action": true });
           }
-          if (data.profile.types.streamer_gaming.genres.adventure == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.adventure": "true" });
+          if (data.profile.types.streamer_gaming.genres.adventure === true) {
+            i.push({ "profile.types.streamer_gaming.genres.adventure": true });
           }
-          if (data.profile.types.streamer_gaming.genres.roleplaying == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.roleplaying": "true" });
+          if (data.profile.types.streamer_gaming.genres.roleplaying === true) {
+            i.push({ "profile.types.streamer_gaming.genres.roleplaying": true });
           }
-          if (data.profile.types.streamer_gaming.genres.simulation == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.simulation": "true" });
+          if (data.profile.types.streamer_gaming.genres.simulation === true) {
+            i.push({ "profile.types.streamer_gaming.genres.simulation": true });
           }
-          if (data.profile.types.streamer_gaming.genres.strategy == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.strategy": "true" });
+          if (data.profile.types.streamer_gaming.genres.strategy === true) {
+            i.push({ "profile.types.streamer_gaming.genres.strategy": true });
           }
-          if (data.profile.types.streamer_gaming.genres.survival == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.survival": "true" });
+          if (data.profile.types.streamer_gaming.genres.survival === true) {
+            i.push({ "profile.types.streamer_gaming.genres.survival": true });
           }
-          if (data.profile.types.streamer_gaming.genres.horror == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.horror": "true" });
+          if (data.profile.types.streamer_gaming.genres.horror === true) {
+            i.push({ "profile.types.streamer_gaming.genres.horror": true });
           }
-          if (data.profile.types.streamer_gaming.genres.other == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.other": "true" });
+          if (data.profile.types.streamer_gaming.genres.other === true) {
+            i.push({ "profile.types.streamer_gaming.genres.other": true });
           }
         }
 
         if (data.profile.types && data.profile.types.streamer_creative) {
-          if (data.profile.types.streamer_creative.activities.cooking == "true") {
-            i.push({ "profile.types.streamer_creative.activities.cooking": "true" });
+          if (data.profile.types.streamer_creative.activities.cooking === true) {
+            i.push({ "profile.types.streamer_creative.activities.cooking": true });
           }
-          if (data.profile.types.streamer_creative.activities.drawing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.drawing": "true" });
+          if (data.profile.types.streamer_creative.activities.drawing === true) {
+            i.push({ "profile.types.streamer_creative.activities.drawing": true });
           }
-          if (data.profile.types.streamer_creative.activities.painting == "true") {
-            i.push({ "profile.types.streamer_creative.activities.painting": "true" });
+          if (data.profile.types.streamer_creative.activities.painting === true) {
+            i.push({ "profile.types.streamer_creative.activities.painting": true });
           }
-          if (data.profile.types.streamer_creative.activities.programming == "true") {
-            i.push({ "profile.types.streamer_creative.activities.programming": "true" });
+          if (data.profile.types.streamer_creative.activities.programming === true) {
+            i.push({ "profile.types.streamer_creative.activities.programming": true });
           }
-          if (data.profile.types.streamer_creative.activities.editing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.editing": "true" });
+          if (data.profile.types.streamer_creative.activities.editing === true) {
+            i.push({ "profile.types.streamer_creative.activities.editing": true });
           }
-          if (data.profile.types.streamer_creative.activities.other == "true") {
-            i.push({ "profile.types.streamer_creative.activities.other": "true" });
+          if (data.profile.types.streamer_creative.activities.other === true) {
+            i.push({ "profile.types.streamer_creative.activities.other": true });
           }
         }
 
@@ -328,50 +328,50 @@ router.post("/collaborations/streams", function(req, res, next) {
             followers = data.followers,
             i = [];
         if (data.profile.types && data.profile.types.streamer_gaming) {
-          if (data.profile.types.streamer_gaming.genres.action == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.action": "true" });
+          if (data.profile.types.streamer_gaming.genres.action === true) {
+            i.push({ "profile.types.streamer_gaming.genres.action": true });
           }
-          if (data.profile.types.streamer_gaming.genres.adventure == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.adventure": "true" });
+          if (data.profile.types.streamer_gaming.genres.adventure === true) {
+            i.push({ "profile.types.streamer_gaming.genres.adventure": true });
           }
-          if (data.profile.types.streamer_gaming.genres.roleplaying == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.roleplaying": "true" });
+          if (data.profile.types.streamer_gaming.genres.roleplaying === true) {
+            i.push({ "profile.types.streamer_gaming.genres.roleplaying": true });
           }
-          if (data.profile.types.streamer_gaming.genres.simulation == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.simulation": "true" });
+          if (data.profile.types.streamer_gaming.genres.simulation === true) {
+            i.push({ "profile.types.streamer_gaming.genres.simulation": true });
           }
-          if (data.profile.types.streamer_gaming.genres.strategy == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.strategy": "true" });
+          if (data.profile.types.streamer_gaming.genres.strategy === true) {
+            i.push({ "profile.types.streamer_gaming.genres.strategy": true });
           }
-          if (data.profile.types.streamer_gaming.genres.survival == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.survival": "true" });
+          if (data.profile.types.streamer_gaming.genres.survival === true) {
+            i.push({ "profile.types.streamer_gaming.genres.survival": true });
           }
-          if (data.profile.types.streamer_gaming.genres.horror == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.horror": "true" });
+          if (data.profile.types.streamer_gaming.genres.horror === true) {
+            i.push({ "profile.types.streamer_gaming.genres.horror": true });
           }
-          if (data.profile.types.streamer_gaming.genres.other == "true") {
-            i.push({ "profile.types.streamer_gaming.genres.other": "true" });
+          if (data.profile.types.streamer_gaming.genres.other === true) {
+            i.push({ "profile.types.streamer_gaming.genres.other": true });
           }
         }
 
         if (data.profile.types && data.profile.types.streamer_creative) {
-          if (data.profile.types.streamer_creative.activities.cooking == "true") {
-            i.push({ "profile.types.streamer_creative.activities.cooking": "true" });
+          if (data.profile.types.streamer_creative.activities.cooking === true) {
+            i.push({ "profile.types.streamer_creative.activities.cooking": true });
           }
-          if (data.profile.types.streamer_creative.activities.drawing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.drawing": "true" });
+          if (data.profile.types.streamer_creative.activities.drawing === true) {
+            i.push({ "profile.types.streamer_creative.activities.drawing": true });
           }
-          if (data.profile.types.streamer_creative.activities.painting == "true") {
-            i.push({ "profile.types.streamer_creative.activities.painting": "true" });
+          if (data.profile.types.streamer_creative.activities.painting === true) {
+            i.push({ "profile.types.streamer_creative.activities.painting": true });
           }
-          if (data.profile.types.streamer_creative.activities.programming == "true") {
-            i.push({ "profile.types.streamer_creative.activities.programming": "true" });
+          if (data.profile.types.streamer_creative.activities.programming === true) {
+            i.push({ "profile.types.streamer_creative.activities.programming": true });
           }
-          if (data.profile.types.streamer_creative.activities.editing == "true") {
-            i.push({ "profile.types.streamer_creative.activities.editing": "true" });
+          if (data.profile.types.streamer_creative.activities.editing === true) {
+            i.push({ "profile.types.streamer_creative.activities.editing": true });
           }
-          if (data.profile.types.streamer_creative.activities.other == "true") {
-            i.push({ "profile.types.streamer_creative.activities.other": "true" });
+          if (data.profile.types.streamer_creative.activities.other === true) {
+            i.push({ "profile.types.streamer_creative.activities.other": true });
           }
         }
 

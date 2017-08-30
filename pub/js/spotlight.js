@@ -70,7 +70,7 @@ $(document).ready(function() {
   $("#spotlight-player-wrapper").html('<iframe src="https://player.twitch.tv/?channel=\'' + username + '\'"height="100%"width="100%"frameborder="0"scrolling="no"allowfullscreen="true"></iframe>');
   $("#spotlight-stream-profile").prop("href", "/user/" + username);
   $("#spotlight-stream-channel").prop("href", "https://twitch.tv/" + username);
-  $("#spotlight-stream-player").prop("href", "http://player.twitch.tv/?volume=1&channel=" + username);
+  $("#spotlight-stream-player").prop("href", "https://player.twitch.tv/?volume=1&channel=" + username);
   $("#spotlight-stream-chat").prop("href", "https://twitch.tv/" + username + "/chat");
   if (twitter) {
     $("#spotlight-stream-tweet").prop("href", "https://twitter.com/intent/tweet?text=I%27m+watching+%40" + twitter + "+stream+" + directory + "+on+%40Twitch.+Come+and+join+me%21%0D%0A%0D%0Ahttps%3A%2F%2Ftwitch.tv%2F" + username + "%0D%0A%0D%0A%28via+Purple%2B%29");
@@ -132,7 +132,7 @@ $(document).delegate("#random-stream", "click", function() {
       $("#spotlight-player-wrapper").html('<iframe src="https://player.twitch.tv/?channel=\'' + selection.data("username") + '\'"height="100%"width="100%"frameborder="0"scrolling="no"allowfullscreen="true"></iframe>');
       $("#spotlight-stream-profile").prop("href", "/user/" + selection.data("username"));
       $("#spotlight-stream-channel").prop("href", "https://twitch.tv/" + selection.data("username"));
-      $("#spotlight-stream-player").prop("href", "http://player.twitch.tv/?volume=1&channel=" + selection.data("username"));
+      $("#spotlight-stream-player").prop("href", "https://player.twitch.tv/?volume=1&channel=" + selection.data("username"));
       $("#spotlight-stream-chat").prop("href", "https://twitch.tv/" + selection.data("username") + "/chat");
       if (selection.data("twitter")) {
         $("#spotlight-stream-tweet").prop("href", "https://twitter.com/intent/tweet?text=I%27m+watching+%40" + selection.data("twitter") + "+stream+" + selection.data("directory") + "+on+%40Twitch.+Come+and+join+me%21%0D%0A%0D%0Ahttps%3A%2F%2Ftwitch.tv%2F" + selection.data("username") + "%0D%0A%0D%0A%28via+Purple%2B%29");
@@ -157,7 +157,7 @@ $(document).delegate("#spotlight-preview", "click", function() {
   $("#spotlight-player-wrapper").html('<iframe src="https://player.twitch.tv/?channel=\'' + selection.data("username") + '\'"height="100%"width="100%"frameborder="0"scrolling="no"allowfullscreen="true"></iframe>');
   $("#spotlight-stream-profile").prop("href", "/user/" + selection.data("username"));
   $("#spotlight-stream-channel").prop("href", "https://twitch.tv/" + selection.data("username"));
-  $("#spotlight-stream-player").prop("href", "http://player.twitch.tv/?volume=1&channel=" + selection.data("username"));
+  $("#spotlight-stream-player").prop("href", "https://player.twitch.tv/?volume=1&channel=" + selection.data("username"));
   $("#spotlight-stream-chat").prop("href", "https://twitch.tv/" + selection.data("username") + "/chat");
   if (selection.data("twitter")) {
     $("#spotlight-stream-tweet").prop("href", "https://twitter.com/intent/tweet?text=I%27m+watching+%40" + selection.data("twitter") + "+stream+" + selection.data("directory") + "+on+%40Twitch.+Come+and+join+me%21%0D%0A%0D%0Ahttps%3A%2F%2Ftwitch.tv%2F" + selection.data("username") + "%0D%0A%0D%0A%28via+Purple%2B%29");

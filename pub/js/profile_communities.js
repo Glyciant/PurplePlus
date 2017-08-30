@@ -23,10 +23,11 @@ $(document).delegate("#communities-save", "click", function() {
     communities: communities
   }, function(data) {
     if (data.message == "success") {
-      Materialize.toast("Your community groups were updated.", 4000, "rounded");
+      $('#modal-communities').modal('close');
+      location.reload();
     }
     else if (data.message == "invalid") {
-      Materialize.toast("You have entered an invalid URL.", 4000, "rounded");
+      Materialize.toast("You have entered an invalid " + data.data + " URL.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
       Materialize.toast("You do not have permission to do that.", 4000, "rounded");

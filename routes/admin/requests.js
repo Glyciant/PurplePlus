@@ -33,18 +33,18 @@ router.post("/get", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.requests) {
-          if (req.body.title && data.requests[i].data.name.indexOf(req.body.title) === -1) {
+        for (var request of data.requests) {
+          if (req.body.title && request.data.name.indexOf(req.body.title) === -1) {
             continue;
           }
-          if (req.body.type && req.body.type != data.requests[i].type) {
+          if (req.body.type && req.body.type != request.type) {
             continue;
           }
-          if (req.body.status && req.body.status != data.requests[i].status) {
+          if (req.body.status && req.body.status != request.status) {
             continue;
           }
-          data.requests[i].user = data.twitch_username;
-          result.push(data.requests[i]);
+          request.user = data.twitch_username;
+          result.push(request);
         }
         if (result.length > 0) {
           res.render("request_partial", { data: result });
@@ -62,18 +62,18 @@ router.post("/get", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.requests) {
-          if (req.body.title && data.requests[i].data.name.indexOf(req.body.title) === -1) {
+        for (var request of data.requests) {
+          if (req.body.title && request.data.name.indexOf(req.body.title) === -1) {
             continue;
           }
-          if (req.body.type && req.body.type != data.requests[i].type) {
+          if (req.body.type && req.body.type != request.type) {
             continue;
           }
-          if (req.body.status && req.body.status != data.requests[i].status) {
+          if (req.body.status && req.body.status != request.status) {
             continue;
           }
-          data.requests[i].user = data.twitch_username;
-          result.push(data.requests[i]);
+          request.user = data.twitch_username;
+          result.push(request);
         }
         if (result.length > 0) {
           res.render("request_partial", { data: result });
@@ -91,19 +91,19 @@ router.post("/get", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data) {
-          for (var j in data[i].requests) {
-            if (req.body.title && data[i].requests[j].data.name.indexOf(req.body.title) === -1) {
+        for (var user of data) {
+          for (var request of user.requests) {
+            if (req.body.title && request.data.name.indexOf(req.body.title) === -1) {
               continue;
             }
-            if (req.body.type && req.body.type != data[i].requests[j].type) {
+            if (req.body.type && req.body.type != request.type) {
               continue;
             }
-            if (req.body.status && req.body.status != data[i].requests[j].status) {
+            if (req.body.status && req.body.status != request.status) {
               continue;
             }
-            data.requests[i].user = data.twitch_username;
-            result.push(data[i].requests[j]);
+            request.user = data.twitch_username;
+            result.push(request);
           }
         }
         if (result.length > 0) {
@@ -126,9 +126,9 @@ router.post("/status/update", function(req, res, next) {
   if (req.session.type == "mod") {
     if (req.body.status == "pending" || req.body.status == "approved" || req.body.status == "rejected") {
       db.users.getByTwitchId(req.body.twitch).then(function(data) {
-        for (var i in data.requests) {
-          if (data.requests[i].timestamp.toString() == req.body.id.toString()) {
-            data.requests[i].status = req.body.status;
+        for (var request of data.requests) {
+          if (request.timestamp.toString() == req.body.id.toString()) {
+            request.status = req.body.status;
             db.users.editByTwitchId(data.twitch_id, data).then(function() {
               res.send({ message: "success" });
             });
@@ -151,16 +151,16 @@ router.post("/vote/approve", function(req, res, next) {
   if (req.session.type == "mod") {
     if (req.session.twitch) {
       db.users.getByTwitchId(req.body.twitch).then(function(data) {
-        for (var i in data.requests) {
-          if (data.requests[i].timestamp.toString() == req.body.id.toString()) {
-            if (!data.requests[i].legacy_id) {
-              if (data.requests[i].upvotes.indexOf(req.session.twitch.id) === -1) {
-                if (data.requests[i].downvotes.indexOf(req.session.twitch.id) > -1) {
-                  data.requests[i].downvotes.splice(data.requests[i].downvotes.indexOf(req.session.twitch.id), 1);
+        for (var request of data.requests) {
+          if (request.timestamp.toString() == req.body.id.toString()) {
+            if (!request.legacy_id) {
+              if (request.upvotes.indexOf(req.session.twitch.id) === -1) {
+                if (request.downvotes.indexOf(req.session.twitch.id) > -1) {
+                  request.downvotes.splice(request.downvotes.indexOf(req.session.twitch.id), 1);
                 }
-                data.requests[i].upvotes.push(req.session.twitch.id);
+                request.upvotes.push(req.session.twitch.id);
                 db.users.editByTwitchId(data.twitch_id, data).then(function() {
-                  res.send({ message: "success", upvotes: data.requests[i].upvotes.length, downvotes: data.requests[i].downvotes.length });
+                  res.send({ message: "success", upvotes: request.upvotes.length, downvotes: request.downvotes.length });
                 });
                 break;
               }
@@ -188,16 +188,16 @@ router.post("/vote/reject", function(req, res, next) {
   if (req.session.type == "mod") {
     if (req.session.twitch) {
       db.users.getByTwitchId(req.body.twitch).then(function(data) {
-        for (var i in data.requests) {
-          if (data.requests[i].timestamp.toString() == req.body.id.toString()) {
-            if (!data.requests[i].legacy_id) {
-              if (data.requests[i].downvotes.indexOf(req.session.twitch.id) === -1) {
-                if (data.requests[i].upvotes.indexOf(req.session.twitch.id) > -1) {
-                  data.requests[i].upvotes.splice(data.requests[i].upvotes.indexOf(req.session.twitch.id), 1);
+        for (var request of data.requests) {
+          if (request.timestamp.toString() == req.body.id.toString()) {
+            if (!request.legacy_id) {
+              if (request.downvotes.indexOf(req.session.twitch.id) === -1) {
+                if (request.upvotes.indexOf(req.session.twitch.id) > -1) {
+                  request.upvotes.splice(request.upvotes.indexOf(req.session.twitch.id), 1);
                 }
-                data.requests[i].downvotes.push(req.session.twitch.id);
+                request.downvotes.push(req.session.twitch.id);
                 db.users.editByTwitchId(data.twitch_id, data).then(function() {
-                  res.send({ message: "success", upvotes: data.requests[i].upvotes.length, downvotes: data.requests[i].downvotes.length });
+                  res.send({ message: "success", upvotes: request.upvotes.length, downvotes: request.downvotes.length });
                 });
                 break;
               }

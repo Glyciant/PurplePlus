@@ -2,102 +2,102 @@ $(document).ready(function() {
   $('.chips').material_chip();
 
   var i = $("#query-attributes-overview-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-overview-keywords').material_chip({ data: j });
+  $('#query-attributes-overview-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-streamer-gaming-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-streamer-gaming-keywords').material_chip({ data: j });
+  $('#query-attributes-streamer-gaming-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-streamer-creative-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-streamer-creative-keywords').material_chip({ data: j });
+  $('#query-attributes-streamer-creative-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-streamer-irl-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-streamer-irl-keywords').material_chip({ data: j });
+  $('#query-attributes-streamer-irl-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-streamer-socialeating-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-streamer-socialeating-keywords').material_chip({ data: j });
+  $('#query-attributes-streamer-socialeating-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-streamer-talkshow-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-streamer-talkshow-keywords').material_chip({ data: j });
+  $('#query-attributes-streamer-talkshow-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-streamer-music-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-streamer-music-keywords').material_chip({ data: j });
+  $('#query-attributes-streamer-music-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-artist-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-artist-keywords').material_chip({ data: j });
+  $('#query-attributes-artist-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-developer-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-developer-keywords').material_chip({ data: j });
+  $('#query-attributes-developer-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-communitymanager-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-communitymanager-keywords').material_chip({ data: j });
+  $('#query-attributes-communitymanager-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-moderator-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-moderator-keywords').material_chip({ data: j });
+  $('#query-attributes-moderator-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-viewer-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-viewer-keywords').material_chip({ data: j });
+  $('#query-attributes-viewer-keywords').material_chip({ data: k });
 
   var i = $("#query-attributes-other-keywords").data("keywords").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-attributes-other-keywords').material_chip({ data: j });
+  $('#query-attributes-other-keywords').material_chip({ data: k });
 
   var i = $("#query-tags").data("tags").split(","),
-      j = [];
-  for (var k in i) {
-    j.push({ tag: i[k] });
+      k = [];
+  for (var word of i) {
+    k.push({ tag: word });
   }
-  $('#query-tags').material_chip({ data: j });
+  $('#query-tags').material_chip({ data: k });
 
   if ($("#query-type-streamer-gaming").prop("checked") === true && $("#query-type-streamer-creative").prop("checked") === true && $("#query-type-streamer-irl").prop("checked") === true && $("#query-type-streamer-socialeating").prop("checked") === true && $("#query-type-streamer-talkshow").prop("checked") === true && $("#query-type-streamer-music").prop("checked") === true && $("#query-type-artist").prop("checked") === true && $("#query-type-developer").prop("checked") === true && $("#query-type-communitymanager").prop("checked") === true && $("#query-type-moderator").prop("checked") === true && $("#query-type-viewer").prop("checked") === true && $("#query-type-other").prop("checked") === true) {
     $("#query-type-select-all").prop("checked", true);
@@ -516,6 +516,25 @@ $(document).delegate("#query-submit", "click", function() {
       attributes.streamer_gaming.genres.method = "all";
     }
 
+    if ($("#query-streamer-gaming-collaborating-yes").is(":checked") === true) {
+      attributes.streamer_gaming.collaborating = "yes";
+    }
+    else if ($("#query-streamer-gaming-collaborating-no").is(":checked") === true) {
+      attributes.streamer_gaming.collaborating = "no";
+    }
+    else {
+      attributes.streamer_gaming.collaborating = "any";
+    }
+    if ($("#query-streamer-gaming-charity-yes").is(":checked") === true) {
+      attributes.streamer_gaming.charity = "yes";
+    }
+    else if ($("#query-streamer-gaming-charity-no").is(":checked") === true) {
+      attributes.streamer_gaming.charity = "no";
+    }
+    else {
+      attributes.streamer_gaming.charity = "any";
+    }
+
     attributes.streamer_gaming.keywords = [];
     for (var tag of $("#query-attributes-streamer-gaming-keywords").material_chip('data')) {
       attributes.streamer_gaming.keywords.push(tag.tag);
@@ -575,6 +594,25 @@ $(document).delegate("#query-submit", "click", function() {
       attributes.streamer_creative.activities.method = "all";
     }
 
+    if ($("#query-streamer-creative-collaborating-yes").is(":checked") === true) {
+      attributes.streamer_creative.collaborating = "yes";
+    }
+    else if ($("#query-streamer-creative-collaborating-no").is(":checked") === true) {
+      attributes.streamer_creative.collaborating = "no";
+    }
+    else {
+      attributes.streamer_creative.collaborating = "any";
+    }
+    if ($("#query-streamer-creative-charity-yes").is(":checked") === true) {
+      attributes.streamer_creative.charity = "yes";
+    }
+    else if ($("#query-streamer-creative-charity-no").is(":checked") === true) {
+      attributes.streamer_creative.charity = "no";
+    }
+    else {
+      attributes.streamer_creative.charity = "any";
+    }
+
     attributes.streamer_creative.keywords = [];
     for (var tag of $("#query-attributes-streamer-creative-keywords").material_chip('data')) {
       attributes.streamer_creative.keywords.push(tag.tag);
@@ -586,32 +624,108 @@ $(document).delegate("#query-submit", "click", function() {
     }
   }
 
+  attributes.streamer_irl = {};
+  if ($("#query-streamer-irl-collaborating-yes").is(":checked") === true) {
+    attributes.streamer_irl.collaborating = "yes";
+  }
+  else if ($("#query-streamer-irl-collaborating-no").is(":checked") === true) {
+    attributes.streamer_irl.collaborating = "no";
+  }
+  else {
+    attributes.streamer_irl.collaborating = "any";
+  }
+  if ($("#query-streamer-irl-charity-yes").is(":checked") === true) {
+    attributes.streamer_irl.charity = "yes";
+  }
+  else if ($("#query-streamer-irl-charity-no").is(":checked") === true) {
+    attributes.streamer_irl.charity = "no";
+  }
+  else {
+    attributes.streamer_irl.charity = "any";
+  }
+
   if ($("#query-type-streamer-irl").is(":checked") === true) {
-    attributes.streamer_irl = {};
     attributes.streamer_irl.keywords = [];
     for (var tag of $("#query-attributes-streamer-irl-keywords").material_chip('data')) {
       attributes.streamer_irl.keywords.push(tag.tag);
     }
   }
 
+  attributes.streamer_socialeating = {};
+  if ($("#query-streamer-socialeating-collaborating-yes").is(":checked") === true) {
+    attributes.streamer_socialeating.collaborating = "yes";
+  }
+  else if ($("#query-streamer-socialeating-collaborating-no").is(":checked") === true) {
+    attributes.streamer_socialeating.collaborating = "no";
+  }
+  else {
+    attributes.streamer_socialeating.collaborating = "any";
+  }
+  if ($("#query-streamer-socialeating-charity-yes").is(":checked") === true) {
+    attributes.streamer_socialeating.charity = "yes";
+  }
+  else if ($("#query-streamer-socialeating-charity-no").is(":checked") === true) {
+    attributes.streamer_socialeating.charity = "no";
+  }
+  else {
+    attributes.streamer_socialeating.charity = "any";
+  }
+
   if ($("#query-type-streamer-socialeating").is(":checked") === true) {
-    attributes.streamer_socialeating = {};
     attributes.streamer_socialeating.keywords = [];
     for (var tag of $("#query-attributes-streamer-socialeating-keywords").material_chip('data')) {
       attributes.streamer_socialeating.keywords.push(tag.tag);
     }
   }
 
+  attributes.streamer_talkshow = {};
+  if ($("#query-streamer-talkshow-collaborating-yes").is(":checked") === true) {
+    attributes.streamer_talkshow.collaborating = "yes";
+  }
+  else if ($("#query-streamer-talkshow-collaborating-no").is(":checked") === true) {
+    attributes.streamer_talkshow.collaborating = "no";
+  }
+  else {
+    attributes.streamer_talkshow.collaborating = "any";
+  }
+  if ($("#query-streamer-talkshow-charity-yes").is(":checked") === true) {
+    attributes.streamer_talkshow.charity = "yes";
+  }
+  else if ($("#query-streamer-talkshow-charity-no").is(":checked") === true) {
+    attributes.streamer_talkshow.charity = "no";
+  }
+  else {
+    attributes.streamer_talkshow.charity = "any";
+  }
+
   if ($("#query-type-streamer-talkshow").is(":checked") === true) {
-    attributes.streamer_talkshow = {};
     attributes.streamer_talkshow.keywords = [];
     for (var tag of $("#query-attributes-streamer-talkshow-keywords").material_chip('data')) {
       attributes.streamer_talkshow.keywords.push(tag.tag);
     }
   }
 
+  attributes.streamer_music = {};
+  if ($("#query-streamer-music-collaborating-yes").is(":checked") === true) {
+    attributes.streamer_music.collaborating = "yes";
+  }
+  else if ($("#query-streamer-music-collaborating-no").is(":checked") === true) {
+    attributes.streamer_music.collaborating = "no";
+  }
+  else {
+    attributes.streamer_music.collaborating = "any";
+  }
+  if ($("#query-streamer-music-charity-yes").is(":checked") === true) {
+    attributes.streamer_music.charity = "yes";
+  }
+  else if ($("#query-streamer-music-charity-no").is(":checked") === true) {
+    attributes.streamer_music.charity = "no";
+  }
+  else {
+    attributes.streamer_music.charity = "any";
+  }
+
   if ($("#query-type-streamer-music").is(":checked") === true) {
-    attributes.streamer_music = {};
     attributes.streamer_music.keywords = [];
     for (var tag of $("#query-attributes-streamer-music-keywords").material_chip('data')) {
       attributes.streamer_music.keywords.push(tag.tag);

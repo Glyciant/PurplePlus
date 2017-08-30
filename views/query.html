@@ -194,6 +194,41 @@
               </div>
             </div>
             <div class="row">
+              <div class="col s12" style="margin-bottom: 5px;">
+                <strong>Gaming Streamer - Other Attributes</strong>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Looking to Collaborate:</p>
+                <p>
+                  <input name="query-streamer-gaming-collaborating" type="radio" id="query-streamer-gaming-collaborating-any" {% if data.streamer_gaming_collaborating != "yes" && data.streamer_gaming_collaborating != "no" %} checked {% endif %} />
+                  <label for="query-streamer-gaming-collaborating-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-gaming-collaborating" type="radio" id="query-streamer-gaming-collaborating-yes" {% if data.streamer_gaming_collaborating == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-gaming-collaborating-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-gaming-collaborating" type="radio" id="query-streamer-gaming-collaborating-no" {% if data.streamer_gaming_collaborating == "no" %} checked {% endif %} />
+                  <label for="query-streamer-gaming-collaborating-no">No</label>
+                </p>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Does Charity Streams:</p>
+                <p>
+                  <input name="query-streamer-gaming-charity" type="radio" id="query-streamer-gaming-charity-any" {% if data.streamer_gaming_charity != "yes" && data.streamer_gaming_charity != "no" %} checked {% endif %} />
+                  <label for="query-streamer-gaming-charity-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-gaming-charity" type="radio" id="query-streamer-gaming-charity-yes" {% if data.streamer_gaming_charity == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-gaming-charity-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-gaming-charity" type="radio" id="query-streamer-gaming-charity-no" {% if data.streamer_gaming_charity == "no" %} checked {% endif %} />
+                  <label for="query-streamer-gaming-charity-no">No</label>
+                </p>
+              </div>
+            </div>
+            <div class="row">
               <div class="col s12">
                 <strong>Gaming Streamer - Key Words</strong>
                 <p>Optional.</p>
@@ -257,6 +292,41 @@
               </div>
             </div>
             <div class="row">
+              <div class="col s12" style="margin-bottom: 5px;">
+                <strong>Creative Streamer - Other Attributes</strong>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Looking to Collaborate:</p>
+                <p>
+                  <input name="query-streamer-creative-collaborating" type="radio" id="query-streamer-creative-collaborating-any" {% if data.streamer_creative_collaborating != "yes" && data.streamer_creative_collaborating != "no" %} checked {% endif %} />
+                  <label for="query-streamer-creative-collaborating-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-creative-collaborating" type="radio" id="query-streamer-creative-collaborating-yes" {% if data.streamer_creative_collaborating == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-creative-collaborating-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-creative-collaborating" type="radio" id="query-streamer-creative-collaborating-no" {% if data.streamer_creative_collaborating == "no" %} checked {% endif %} />
+                  <label for="query-streamer-creative-collaborating-no">No</label>
+                </p>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Does Charity Streams:</p>
+                <p>
+                  <input name="query-streamer-creative-charity" type="radio" id="query-streamer-creative-charity-any" {% if data.streamer_creative_charity != "yes" && data.streamer_creative_charity != "no" %} checked {% endif %} />
+                  <label for="query-streamer-creative-charity-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-creative-charity" type="radio" id="query-streamer-creative-charity-yes" {% if data.streamer_creative_charity == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-creative-charity-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-creative-charity" type="radio" id="query-streamer-creative-charity-no" {% if data.streamer_creative_charity == "no" %} checked {% endif %} />
+                  <label for="query-streamer-creative-charity-no">No</label>
+                </p>
+              </div>
+            </div>
+            <div class="row">
               <div class="col s12">
                 <strong>Creative Streamer - Key Words</strong>
                 <p>Optional.</p>
@@ -267,6 +337,41 @@
             </div>
           </div>
           <div id="query-attributes-streamer-irl" {% if !data.types.streamer_irl %} style="display: none;" {% endif %}>
+            <div class="row">
+              <div class="col s12" style="margin-bottom: 5px;">
+                <strong>IRL Streamer - Attributes</strong>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Looking to Collaborate:</p>
+                <p>
+                  <input name="query-streamer-irl-collaborating" type="radio" id="query-streamer-irl-collaborating-any" {% if data.streamer_irl_collaborating != "yes" && data.streamer_irl_collaborating != "no" %} checked {% endif %} />
+                  <label for="query-streamer-irl-collaborating-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-irl-collaborating" type="radio" id="query-streamer-irl-collaborating-yes" {% if data.streamer_irl_collaborating == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-irl-collaborating-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-irl-collaborating" type="radio" id="query-streamer-irl-collaborating-no" {% if data.streamer_irl_collaborating == "no" %} checked {% endif %} />
+                  <label for="query-streamer-irl-collaborating-no">No</label>
+                </p>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Does Charity Streams:</p>
+                <p>
+                  <input name="query-streamer-irl-charity" type="radio" id="query-streamer-irl-charity-any" {% if data.streamer_irl_charity != "yes" && data.streamer_irl_charity != "no" %} checked {% endif %} />
+                  <label for="query-streamer-irl-charity-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-irl-charity" type="radio" id="query-streamer-irl-charity-yes" {% if data.streamer_irl_charity == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-irl-charity-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-irl-charity" type="radio" id="query-streamer-irl-charity-no" {% if data.streamer_irl_charity == "no" %} checked {% endif %} />
+                  <label for="query-streamer-irl-charity-no">No</label>
+                </p>
+              </div>
+            </div>
             <div class="row">
               <div class="col s12">
                 <strong>IRL Streamer - Key Words</strong>
@@ -279,6 +384,41 @@
           </div>
           <div id="query-attributes-streamer-socialeating" {% if !data.types.streamer_socialeating %} style="display: none;" {% endif %}>
             <div class="row">
+              <div class="col s12" style="margin-bottom: 5px;">
+                <strong>Social Eating Streamer - Attributes</strong>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Looking to Collaborate:</p>
+                <p>
+                  <input name="query-streamer-socialeating-collaborating" type="radio" id="query-streamer-socialeating-collaborating-any" {% if data.streamer_socialeating_collaborating != "yes" && data.streamer_socialeating_collaborating != "no" %} checked {% endif %} />
+                  <label for="query-streamer-socialeating-collaborating-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-socialeating-collaborating" type="radio" id="query-streamer-socialeating-collaborating-yes" {% if data.streamer_socialeating_collaborating == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-socialeating-collaborating-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-socialeating-collaborating" type="radio" id="query-streamer-socialeating-collaborating-no" {% if data.streamer_socialeating_collaborating == "no" %} checked {% endif %} />
+                  <label for="query-streamer-socialeating-collaborating-no">No</label>
+                </p>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Does Charity Streams:</p>
+                <p>
+                  <input name="query-streamer-socialeating-charity" type="radio" id="query-streamer-socialeating-charity-any" {% if data.streamer_socialeating_charity != "yes" && data.streamer_socialeating_charity != "no" %} checked {% endif %} />
+                  <label for="query-streamer-socialeating-charity-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-socialeating-charity" type="radio" id="query-streamer-socialeating-charity-yes" {% if data.streamer_socialeating_charity == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-socialeating-charity-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-socialeating-charity" type="radio" id="query-streamer-socialeating-charity-no" {% if data.streamer_socialeating_charity == "no" %} checked {% endif %} />
+                  <label for="query-streamer-socialeating-charity-no">No</label>
+                </p>
+              </div>
+            </div>
+            <div class="row">
               <div class="col s12">
                 <strong>Social Eating Streamer - Key Words</strong>
                 <p>Optional.</p>
@@ -290,6 +430,41 @@
           </div>
           <div id="query-attributes-streamer-talkshow" {% if !data.types.streamer_talkshow %} style="display: none;" {% endif %}>
             <div class="row">
+              <div class="col s12" style="margin-bottom: 5px;">
+                <strong>Talk Show Streamer - Attributes</strong>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Looking to Collaborate:</p>
+                <p>
+                  <input name="query-streamer-talkshow-collaborating" type="radio" id="query-streamer-talkshow-collaborating-any" {% if data.streamer_talkshow_collaborating != "yes" && data.streamer_talkshow_collaborating != "no" %} checked {% endif %} />
+                  <label for="query-streamer-talkshow-collaborating-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-talkshow-collaborating" type="radio" id="query-streamer-talkshow-collaborating-yes" {% if data.streamer_talkshow_collaborating == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-talkshow-collaborating-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-talkshow-collaborating" type="radio" id="query-streamer-talkshow-collaborating-no" {% if data.streamer_talkshow_collaborating == "no" %} checked {% endif %} />
+                  <label for="query-streamer-talkshow-collaborating-no">No</label>
+                </p>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Does Charity Streams:</p>
+                <p>
+                  <input name="query-streamer-talkshow-charity" type="radio" id="query-streamer-talkshow-charity-any" {% if data.streamer_talkshow_charity != "yes" && data.streamer_talkshow_charity != "no" %} checked {% endif %} />
+                  <label for="query-streamer-talkshow-charity-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-talkshow-charity" type="radio" id="query-streamer-talkshow-charity-yes" {% if data.streamer_talkshow_charity == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-talkshow-charity-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-talkshow-charity" type="radio" id="query-streamer-talkshow-charity-no" {% if data.streamer_talkshow_charity == "no" %} checked {% endif %} />
+                  <label for="query-streamer-talkshow-charity-no">No</label>
+                </p>
+              </div>
+            </div>
+            <div class="row">
               <div class="col s12">
                 <strong>Talk Show Streamer - Key Words</strong>
                 <p>Optional.</p>
@@ -300,6 +475,41 @@
             </div>
           </div>
           <div id="query-attributes-streamer-music" {% if !data.types.streamer_music %} style="display: none;" {% endif %}>
+            <div class="row">
+              <div class="col s12" style="margin-bottom: 5px;">
+                <strong>Music Streamer - Attributes</strong>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Looking to Collaborate:</p>
+                <p>
+                  <input name="query-streamer-music-collaborating" type="radio" id="query-streamer-music-collaborating-any" {% if data.streamer_music_collaborating != "yes" && data.streamer_music_collaborating != "no" %} checked {% endif %} />
+                  <label for="query-streamer-music-collaborating-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-music-collaborating" type="radio" id="query-streamer-music-collaborating-yes" {% if data.streamer_music_collaborating == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-music-collaborating-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-music-collaborating" type="radio" id="query-streamer-music-collaborating-no" {% if data.streamer_music_collaborating == "no" %} checked {% endif %} />
+                  <label for="query-streamer-music-collaborating-no">No</label>
+                </p>
+              </div>
+              <div class="col l6 m6 s12">
+                <p>Does Charity Streams:</p>
+                <p>
+                  <input name="query-streamer-music-charity" type="radio" id="query-streamer-music-charity-any" {% if data.streamer_music_charity != "yes" && data.streamer_music_charity != "no" %} checked {% endif %} />
+                  <label for="query-streamer-music-charity-any">Any</label>
+                </p>
+                <p>
+                  <input name="query-streamer-music-charity" type="radio" id="query-streamer-music-charity-yes" {% if data.streamer_music_charity == "yes" %} checked {% endif %} />
+                  <label for="query-streamer-music-charity-yes">Yes</label>
+                </p>
+                <p>
+                  <input name="query-streamer-music-charity" type="radio" id="query-streamer-music-charity-no" {% if data.streamer_music_charity == "no" %} checked {% endif %} />
+                  <label for="query-streamer-music-charity-no">No</label>
+                </p>
+              </div>
+            </div>
             <div class="row">
               <div class="col s12">
                 <strong>Music Streamer - Key Words</strong>

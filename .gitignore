@@ -4,5 +4,7 @@
 node_modules
 # Ignore config
 config.js
+# Ignore JSON for Twitch Staff, Admins and Global Moderators
+officials.json
 # Ignore .db files
 *.db

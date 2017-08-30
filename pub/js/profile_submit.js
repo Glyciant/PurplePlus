@@ -1,6 +1,7 @@
 $(document).delegate("#create-profile", "click", function() {
   $("#no-profile").slideUp();
   $("#profile-settings-wrapper").slideUp();
+  $("#profile-view-wrapper").slideUp();
   $("#profile-mobile-settings").slideUp();
   $("#profile-return-wrapper").slideUp();
   $("#profile-mobile-settings-wrapper #profile-return-wrapper").slideUp();
@@ -14,6 +15,7 @@ $(document).delegate("#edit-profile", "click", function() {
   $("#profile-settings-wrapper #profile-edit-wrapper").slideUp();
   $("#profile-mobile-settings-wrapper #profile-edit-wrapper").slideUp();
   $("#profile-settings-wrapper").slideUp();
+  $("#profile-view-wrapper").slideUp();
   $("#profile-mobile-settings").slideUp();
   $("#profile-requests-wrapper").slideUp();
   $("#profile-mobile-settings-wrapper #profile-requests-wrapper").slideUp();
@@ -29,11 +31,25 @@ $(document).delegate("#profile-refresh-wrapper a", "click", function() {
 });
 
 $(document).delegate("#next-step-2", "click", function() {
-  if ($("#profile-about").val().trim().length >= 200 && $("#profile-goals").val().trim().length >= 200 && $("#profile-background").val().trim().length >= 200) {
+  if ($("#profile-introduction").val().trim().length >= 1 && $("#profile-introduction").val().trim().length <= 100 && $("#profile-about").val().trim().length >= 200 && $("#profile-background").val().trim().length >= 200) {
     $("#step-1").slideUp();
     $("#step-2").slideDown();
   }
   else {
+    if ($("#profile-introduction").val().trim().length >= 1 || $("#profile-introduction").val().trim().length <= 100) {
+      $("#profile-introduction").addClass("invalid");
+    }
+    if ($("#profile-about").val().trim().length < 200) {
+      $("#profile-about").addClass("invalid");
+    }
+    if ($("#profile-background").val().trim().length < 200) {
+      $("#profile-background").addClass("invalid");
+    }
+    setTimeout(function() {
+      $("#profile-introduction").removeClass("invalid");
+      $("#profile-about").removeClass("invalid");
+      $("#profile-background").removeClass("invalid");
+    }, 3000);
     Materialize.toast('You have not completed a field in sufficient detail.', 4000, 'rounded');
   }
 });
@@ -126,10 +142,10 @@ $(document).delegate("#next-step-3", "click", function() {
 $(document).delegate("#next-step-5", "click", function() {
   var data = $("#profile-tags").material_chip('data'),
       tags = [];
-  for (var i in data) {
-    tags.push(data[i].tag);
+  for (var tag of data) {
+    tags.push(tag.tag);
   }
-  if (tags.length > 10) {
+  if (tags.length > 15) {
     Materialize.toast('You have entered too many tags.', 4000, 'rounded');
   }
   else if (tags.length < 3) {
@@ -143,102 +159,203 @@ $(document).delegate("#next-step-5", "click", function() {
 
 $(document).delegate("#next-step-4", "click", function() {
   var missing = false;
-  if ($('#profile-type-streamer-gaming').is(':checked')) {
+  if ($("#profile-type-streamer-gaming").is(":checked")) {
     var genre = false;
-    if (($('#profile-type-streamer-gaming-action').is(':checked')) || ($('#profile-type-streamer-gaming-adventure').is(':checked')) || ($('#profile-type-streamer-gaming-horror').is(':checked')) || ($('#profile-type-streamer-gaming-roleplaying').is(':checked')) || ($('#profile-type-streamer-gaming-simulation').is(':checked')) || ($('#profile-type-streamer-gaming-strategy').is(':checked')) || ($('#profile-type-streamer-gaming-survival').is(':checked')) || ($('#profile-type-streamer-gaming-other').is(':checked'))) {
+    if (($("#profile-type-streamer-gaming-action").is(":checked")) || ($("#profile-type-streamer-gaming-adventure").is(":checked")) || ($("#profile-type-streamer-gaming-horror").is(":checked")) || ($("#profile-type-streamer-gaming-roleplaying").is(":checked")) || ($("#profile-type-streamer-gaming-simulation").is(":checked")) || ($("#profile-type-streamer-gaming-strategy").is(":checked")) || ($("#profile-type-streamer-gaming-survival").is(":checked")) || ($("#profile-type-streamer-gaming-other").is(":checked"))) {
       genre = true;
     }
-    if ($("#profile-type-streamer-gaming-goals").val().length === 0 || $("#profile-type-streamer-gaming-schedule").val().length === 0 || genre === false) {
+    else {
+      $("#profile-type-streamer-gaming-genres").addClass("invalid-wrapper");
+    }
+    if ($("#profile-type-streamer-gaming-goals").val().length === 0 || $("#profile-type-streamer-gaming-favourites").val().length === 0 || genre === false) {
+      if ($("#profile-type-streamer-gaming-goals").val().length === 0) {
+        $("#profile-type-streamer-gaming-goals").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-gaming-favourites").val().length === 0) {
+        $("#profile-type-streamer-gaming-favourites").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-streamer-creative').is(':checked')) {
+  if ($("#profile-type-streamer-creative").is(":checked")) {
     var activity = false;
-    if (($('#profile-type-streamer-creative-cooking').is(':checked')) || ($('#profile-type-streamer-creative-drawing').is(':checked')) || ($('#profile-type-streamer-creative-music').is(':checked')) || ($('#profile-type-streamer-creative-painting').is(':checked')) || ($('#profile-type-streamer-creative-programming').is(':checked')) || ($('#profile-type-streamer-creative-editing').is(':checked')) || ($('#profile-type-streamer-creative-other').is(':checked'))) {
+    if (($("#profile-type-streamer-creative-cooking").is(":checked")) || ($("#profile-type-streamer-creative-drawing").is(":checked")) || ($("#profile-type-streamer-creative-music").is(":checked")) || ($("#profile-type-streamer-creative-painting").is(":checked")) || ($("#profile-type-streamer-creative-programming").is(":checked")) || ($("#profile-type-streamer-creative-editing").is(":checked")) || ($("#profile-type-streamer-creative-other").is(":checked"))) {
       activity = true;
     }
-    if ($("#profile-type-streamer-creative-goals").val().length === 0 || $("#profile-type-streamer-creative-schedule").val().length === 0 || activity === false) {
+    else {
+      $("#profile-type-streamer-creative-activities").addClass("invalid-wrapper");
+    }
+    if ($("#profile-type-streamer-creative-goals").val().length === 0 || $("#profile-type-streamer-creative-creations").val().length === 0 || activity === false) {
+      if ($("#profile-type-streamer-creative-goals").val().length === 0) {
+        $("#profile-type-streamer-creative-goals").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-creative-creations").val().length === 0) {
+        $("#profile-type-streamer-creative-creations").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-streamer-socialeating').is(':checked')) {
-    if ($("#profile-type-streamer-socialeating-goals").val().length === 0 || $("#profile-type-streamer-socialeating-schedule").val().length === 0) {
+  if ($("#profile-type-streamer-socialeating").is(":checked")) {
+    if ($("#profile-type-streamer-socialeating-goals").val().length === 0 || $("#profile-type-streamer-socialeating-meals").val().length === 0 || $("#profile-type-streamer-socialeating-discussions").val().length === 0) {
+      if ($("#profile-type-streamer-socialeating-goals").val().length === 0) {
+        $("#profile-type-streamer-socialeating-goals").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-socialeating-meals").val().length === 0) {
+        $("#profile-type-streamer-socialeating-meals").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-socialeating-discussions").val().length === 0) {
+        $("#profile-type-streamer-socialeating-discussions").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-streamer-irl').is(':checked')) {
-    if ($("#profile-type-streamer-irl-goals").val().length === 0 || $("#profile-type-streamer-irl-schedule").val().length === 0) {
+  if ($("#profile-type-streamer-irl").is(":checked")) {
+    if ($("#profile-type-streamer-irl-goals").val().length === 0 || $("#profile-type-streamer-irl-activities").val().length === 0) {
+      if ($("#profile-type-streamer-irl-goals").val().length === 0) {
+        $("#profile-type-streamer-irl-goals").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-irl-activities").val().length === 0) {
+        $("#profile-type-streamer-irl-activities").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-streamer-talkshow').is(':checked')) {
-    if ($("#profile-type-streamer-talkshow-goals").val().length === 0 || $("#profile-type-streamer-talkshow-schedule").val().length === 0 || $("#profile-type-streamer-talkshow-discussions").val().length === 0 || $("#profile-type-streamer-talkshow-guests").val().length === 0) {
+  if ($("#profile-type-streamer-talkshow").is(":checked")) {
+    if ($("#profile-type-streamer-talkshow-goals").val().length === 0 || $("#profile-type-streamer-talkshow-discussions").val().length === 0 || $("#profile-type-streamer-talkshow-guests").val().length === 0) {
+      if ($("#profile-type-streamer-talkshow-goals").val().length === 0) {
+        $("#profile-type-streamer-talkshow-goals").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-talkshow-discussions").val().length === 0) {
+        $("#profile-type-streamer-talkshow-discussions").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-talkshow-guests").val().length === 0) {
+        $("#profile-type-streamer-talkshow-guests").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-streamer-music').is(':checked')) {
-    if ($("#profile-type-streamer-music-goals").val().length === 0 || $("#profile-type-streamer-music-schedule").val().length === 0) {
+  if ($("#profile-type-streamer-music").is(":checked")) {
+    if ($("#profile-type-streamer-music-goals").val().length === 0 || $("#profile-type-streamer-music-music").val().length === 0) {
+      if ($("#profile-type-streamer-music-goals").val().length === 0) {
+        $("#profile-type-streamer-music-goals").addClass("invalid");
+      }
+      if ($("#profile-type-streamer-music-music").val().length === 0) {
+        $("#profile-type-streamer-music-music").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-artist').is(':checked')) {
-    if ($('#profile-type-artist-commissions').is(':checked')) {
-      if ($('#profile-type-artist-commissions-charge').is(':checked')) {
+  if ($("#profile-type-artist").is(":checked")) {
+    if ($("#profile-type-artist-commissions").is(":checked")) {
+      if ($("#profile-type-artist-commissions-charge").is(":checked")) {
         if ($("#profile-type-artist-commissions-charge-rate").val().length === 0) {
+          $("#profile-type-artist-commissions-charge-rate").addClass("invalid");
           missing = true;
         }
       }
       if ($("#profile-type-artist-commissions-services").val().length === 0 || $("#profile-type-artist-commissions-contact").val().length === 0) {
+        if ($("#profile-type-artist-commissions-services").val().length === 0) {
+          $("#profile-type-artist-commissions-services").addClass("invalid");
+        }
+        if ($("#profile-type-artist-commissions-contact").val().length === 0) {
+          $("#profile-type-artist-commissions-contact").addClass("invalid");
+        }
         missing = true;
       }
     }
     if ($("#profile-type-artist-examples").val().length === 0 || $("#profile-type-artist-attraction").val().length === 0) {
+      if ($("#profile-type-artist-examples").val().length === 0) {
+        $("#profile-type-artist-examples").addClass("invalid");
+      }
+      if ($("#profile-type-artist-attraction").val().length === 0) {
+        $("#profile-type-artist-attraction").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-developer').is(':checked')) {
-    if ($('#profile-type-developer-commissions').is(':checked')) {
-      if ($('#profile-type-developer-commissions-charge').is(':checked')) {
+  if ($("#profile-type-developer").is(":checked")) {
+    if ($("#profile-type-developer-commissions").is(":checked")) {
+      if ($("#profile-type-developer-commissions-charge").is(":checked")) {
         if ($("#profile-type-developer-commissions-charge-rate").val().length === 0) {
+          $("#profile-type-developer-commissions-charge-rate").addClass("invalid");
           missing = true;
         }
       }
       if ($("#profile-type-developer-commissions-services").val().length === 0 || $("#profile-type-developer-commissions-contact").val().length === 0) {
+        if ($("#profile-type-developer-commissions-services").val().length === 0) {
+          $("#profile-type-developer-commissions-services").addClass("invalid");
+        }
+        if ($("#profile-type-developer-commissions-contact").val().length === 0) {
+          $("#profile-type-developer-commissions-contact").addClass("invalid");
+        }
         missing = true;
       }
     }
     if ($("#profile-type-developer-examples").val().length === 0 || $("#profile-type-developer-attraction").val().length === 0) {
+      if ($("#profile-type-developer-examples").val().length === 0) {
+        $("#profile-type-developer-examples").addClass("invalid");
+      }
+      if ($("#profile-type-developer-attraction").val().length === 0) {
+        $("#profile-type-developer-attraction").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-communitymanager').is(':checked')) {
+  if ($("#profile-type-communitymanager").is(":checked")) {
     if ($("#profile-type-communitymanager-examples").val().length === 0 || $("#profile-type-communitymanager-attraction").val().length === 0) {
+      if ($("#profile-type-communitymanager-examples").val().length === 0) {
+        $("#profile-type-communitymanager-examples").addClass("invalid");
+      }
+      if ($("#profile-type-communitymanager-attraction").val().length === 0) {
+        $("#profile-type-communitymanager-attraction").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-moderator').is(':checked')) {
-    if ($('#profile-type-moderator-requests').is(':checked')) {
+  if ($("#profile-type-moderator").is(":checked")) {
+    if ($("#profile-type-moderator-requests").is(":checked")) {
       if ($("#profile-type-moderator-requirements").val().length === 0 || $("#profile-type-moderator-requests-contact").val().length === 0) {
+        if ($("#profile-type-moderator-requirements").val().length === 0) {
+          $("#profile-type-moderator-requirements").addClass("invalid");
+        }
+        if ($("#profile-type-moderator-requests-contact").val().length === 0) {
+          $("#profile-type-moderator-requests-contact").addClass("invalid");
+        }
         missing = true;
       }
     }
     if ($("#profile-type-moderator-experience").val().length === 0 || $("#profile-type-moderator-attraction").val().length === 0) {
+      if ($("#profile-type-moderator-experience").val().length === 0) {
+        $("#profile-type-moderator-experience").addClass("invalid");
+      }
+      if ($("#profile-type-moderator-attraction").val().length === 0) {
+        $("#profile-type-moderator-attraction").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-viewer').is(':checked')) {
+  if ($("#profile-type-viewer").is(":checked")) {
     var type = false;
 
-    if (($('#profile-type-viewer-streams-action').is(':checked')) || ($('#profile-type-viewer-streams-adventure').is(':checked')) || ($('#profile-type-viewer-streams-roleplaying').is(':checked')) || ($('#profile-type-viewer-streams-simulation').is(':checked')) || ($('#profile-type-viewer-streams-strategy').is(':checked')) || ($('#profile-type-viewer-streams-survival').is(':checked')) || ($('#profile-type-viewer-streams-horror').is(':checked')) || ($('#profile-type-viewer-streams-music').is(':checked')) || ($('#profile-type-viewer-streams-cooking').is(':checked')) || ($('#profile-type-viewer-streams-drawing').is(':checked')) || ($('#profile-type-viewer-streams-painting').is(':checked')) || ($('#profile-type-viewer-streams-programming').is(':checked')) || ($('#profile-type-viewer-streams-editing').is(':checked')) || ($('#profile-type-viewer-streams-talkshow').is(':checked')) || ($('#profile-type-viewer-streams-irl').is(':checked')) || ($('#profile-type-viewer-streams-socialeating').is(':checked'))) {
+    if (($("#profile-type-viewer-streams-action").is(":checked")) || ($("#profile-type-viewer-streams-adventure").is(":checked")) || ($("#profile-type-viewer-streams-roleplaying").is(":checked")) || ($("#profile-type-viewer-streams-simulation").is(":checked")) || ($("#profile-type-viewer-streams-strategy").is(":checked")) || ($("#profile-type-viewer-streams-survival").is(":checked")) || ($("#profile-type-viewer-streams-horror").is(":checked")) || ($("#profile-type-viewer-streams-music").is(":checked")) || ($("#profile-type-viewer-streams-cooking").is(":checked")) || ($("#profile-type-viewer-streams-drawing").is(":checked")) || ($("#profile-type-viewer-streams-painting").is(":checked")) || ($("#profile-type-viewer-streams-programming").is(":checked")) || ($("#profile-type-viewer-streams-editing").is(":checked")) || ($("#profile-type-viewer-streams-talkshow").is(":checked")) || ($("#profile-type-viewer-streams-irl").is(":checked")) || ($("#profile-type-viewer-streams-socialeating").is(":checked"))) {
       type = true;
     }
-
+    else {
+      $("#profile-type-streamer-viewer-streams").addClass("invalid-wrapper");
+    }
     if ($("#profile-type-viewer-experience").val().length === 0 || $("#profile-type-viewer-streamers").val().length === 0 || type === false) {
+      if ($("#profile-type-viewer-experience").val().length === 0) {
+        $("#profile-type-viewer-experience").addClass("invalid");
+      }
+      if ($("#profile-type-viewer-streamers").val().length === 0) {
+        $("#profile-type-viewer-streamers").addClass("invalid");
+      }
       missing = true;
     }
   }
-  if ($('#profile-type-other').is(':checked')) {
+  if ($("#profile-type-other").is(":checked")) {
     if ($("#profile-type-other-description").val().length === 0) {
+      $("#profile-type-other-description").addClass("invalid");
       missing = true;
     }
   }
@@ -248,8 +365,17 @@ $(document).delegate("#next-step-4", "click", function() {
     window.scrollTo(0, 0);
   }
   else {
-    Materialize.toast('You have not completed a field.', 4000, 'rounded');
+    Materialize.toast("You have not completed a field.", 4000, "rounded");
   }
+});
+
+$(document).delegate("textarea", "keyup", function() {
+  $(this).removeClass("invalid");
+});
+
+$(document).delegate('input[type="checkbox"]', "change", function() {
+  $(this).parent().parent().parent().removeClass("invalid-wrapper");
+  $(this).parent().parent().parent().parent().removeClass("invalid-wrapper");
 });
 
 $(document).delegate("#back-step-1", "click", function() {
@@ -336,6 +462,8 @@ $(document).delegate("#profile-type-moderator-requests", "click", function() {
 });
 
 $(document).delegate("#submit-profile", "click", function() {
+  var edit = $(this).data("edit");
+
   var data = {};
   data.overview = {};
   data.types = {};
@@ -345,8 +473,8 @@ $(document).delegate("#submit-profile", "click", function() {
   data.notifications = {};
   data.date = Date.now();
 
+  data.overview.introduction = $("#profile-introduction").val();
   data.overview.about = $("#profile-about").val();
-  data.overview.goals = $("#profile-goals").val();
   data.overview.background = $("#profile-background").val();
 
   data.notifications.twitch = $("#profile-notifications-twitch").is(":checked");
@@ -355,14 +483,14 @@ $(document).delegate("#submit-profile", "click", function() {
 
   data.tags = [];
   var tags = $("#profile-tags").material_chip('data');
-  for (var i in tags) {
-    data.tags.push(tags[i].tag);
+  for (var tag of tags) {
+    data.tags.push(tag.tag);
   }
 
   if ($('#profile-type-streamer-gaming').is(':checked')) {
     data.types.streamer_gaming = {};
     data.types.streamer_gaming.goals = $("#profile-type-streamer-gaming-goals").val();
-    data.types.streamer_gaming.schedule = $("#profile-type-streamer-gaming-schedule").val();
+    data.types.streamer_gaming.favourites = $("#profile-type-streamer-gaming-favourites").val();
     data.types.streamer_gaming.genres = {};
     if ($('#profile-type-streamer-gaming-action').is(':checked')) {
       data.types.streamer_gaming.genres.action = true;
@@ -394,7 +522,7 @@ $(document).delegate("#submit-profile", "click", function() {
   if ($('#profile-type-streamer-creative').is(':checked')) {
     data.types.streamer_creative = {};
     data.types.streamer_creative.goals = $("#profile-type-streamer-creative-goals").val();
-    data.types.streamer_creative.schedule = $("#profile-type-streamer-creative-schedule").val();
+    data.types.streamer_creative.creations = $("#profile-type-streamer-creative-creations").val();
     data.types.streamer_creative.activities = {};
     if ($('#profile-type-streamer-creative-cooking').is(':checked')) {
       data.types.streamer_creative.activities.cooking = true;
@@ -423,14 +551,14 @@ $(document).delegate("#submit-profile", "click", function() {
   if ($('#profile-type-streamer-socialeating').is(':checked')) {
     data.types.streamer_socialeating = {};
     data.types.streamer_socialeating.goals = $("#profile-type-streamer-socialeating-goals").val();
-    data.types.streamer_socialeating.schedule = $("#profile-type-streamer-socialeating-schedule").val();
+    data.types.streamer_socialeating.meals = $("#profile-type-streamer-socialeating-meals").val();
+    data.types.streamer_socialeating.discussions = $("#profile-type-streamer-socialeating-discussions").val();
     data.types.streamer_socialeating.collaborations = $("#profile-type-streamer-socialeating-collaborations").is(":checked");
     data.types.streamer_socialeating.charity = $("#profile-type-streamer-socialeating-charity").is(":checked");
   }
   if ($('#profile-type-streamer-irl').is(':checked')) {
     data.types.streamer_irl = {};
     data.types.streamer_irl.goals = $("#profile-type-streamer-irl-goals").val();
-    data.types.streamer_irl.schedule = $("#profile-type-streamer-irl-schedule").val();
     data.types.streamer_irl.activities = $("#profile-type-streamer-irl-activities").val();
     data.types.streamer_irl.collaborations = $("#profile-type-streamer-irl-collaborations").is(":checked");
     data.types.streamer_irl.charity = $("#profile-type-streamer-irl-charity").is(":checked");
@@ -438,7 +566,6 @@ $(document).delegate("#submit-profile", "click", function() {
   if ($('#profile-type-streamer-talkshow').is(':checked')) {
     data.types.streamer_talkshow = {};
     data.types.streamer_talkshow.goals = $("#profile-type-streamer-talkshow-goals").val();
-    data.types.streamer_talkshow.schedule = $("#profile-type-streamer-talkshow-schedule").val();
     data.types.streamer_talkshow.discussions = $("#profile-type-streamer-talkshow-discussions").val();
     data.types.streamer_talkshow.guests = $("#profile-type-streamer-talkshow-guests").val();
     data.types.streamer_talkshow.collaborations = $("#profile-type-streamer-talkshow-collaborations").is(":checked");
@@ -447,7 +574,7 @@ $(document).delegate("#submit-profile", "click", function() {
   if ($('#profile-type-streamer-music').is(':checked')) {
     data.types.streamer_music = {};
     data.types.streamer_music.goals = $("#profile-type-streamer-music-goals").val();
-    data.types.streamer_music.schedule = $("#profile-type-streamer-music-schedule").val();
+    data.types.streamer_music.music = $("#profile-type-streamer-music-music").val();
     data.types.streamer_music.collaborations = $("#profile-type-streamer-music-collaborations").is(":checked");
     data.types.streamer_music.charity = $("#profile-type-streamer-music-charity").is(":checked");
   }
@@ -578,7 +705,12 @@ $(document).delegate("#submit-profile", "click", function() {
   }, function(response) {
     if (response.message == "success") {
       Materialize.toast('Your profile has been submitted for approval.', 4000, 'rounded');
-      window.location.replace("/profile?tutorial=true")
+      if (edit) {
+        window.location.replace("/profile")
+      }
+      else {
+        window.location.replace("/profile?tutorial=true")
+      }
     }
     else if (response.message == "forbidden") {
       Materialize.toast('You do not have permission to do that.', 4000, 'rounded');
@@ -617,8 +749,8 @@ $(document).ready(function() {
   var tags = $("#profile-tags").data("tags").split(","),
       data = [];
 
-  for (var i in tags) {
-    data.push({ tag: tags[i] });
+  for (var tag of tags) {
+    data.push({ tag: tag });
   }
 
   $("#profile-tags").material_chip({ data: data });

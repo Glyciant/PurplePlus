@@ -106,7 +106,7 @@
             <br />
           </div>
           <div class="row">
-            <div class="input-field col s4" id="search-data-type">
+            <div class="input-field col s3" id="search-data-type">
               <select>
                 <option value="user">User</option>
                 <option value="mod">Mod</option>
@@ -114,7 +114,7 @@
               </select>
               <label>User Type</label>
             </div>
-            <div class="input-field col s4" id="search-data-subreddit-type">
+            <div class="input-field col s3" id="search-data-subreddit-type">
               <select>
                 <option value="user">User</option>
                 <option value="wiki">Wiki Contributor</option>
@@ -123,7 +123,7 @@
               </select>
               <label>Subreddit Type</label>
             </div>
-            <div class="input-field col s4" id="search-data-profile-flair">
+            <div class="input-field col s3" id="search-data-profile-flair">
               <select>
                 <option value="">Select...</option>
                 <option value="streamer_gaming">Gaming Streamer</option>
@@ -141,12 +141,12 @@
               </select>
               <label>Verified Profile Flair</label>
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s4">
+            <div class="input-field col s3">
               <input id="search-data-twoos-balance" type="number">
               <label for="search-data-twoos-balance">Twoos Balance</label>
             </div>
+          </div>
+          <div class="row">
             <div class="input-field col s4">
               <p>
                 <input type="checkbox" class="filled-in" id="search-data-ama-flair" />
@@ -157,6 +157,12 @@
               <p>
                 <input type="checkbox" class="filled-in" id="search-data-admin" {% if !admin %} disabled {% endif %} />
                 <label for="search-data-admin">Site Admin</label>
+              </p>
+            </div>
+            <div class="input-field col s4">
+              <p>
+                <input type="checkbox" class="filled-in" id="search-data-beta" />
+                <label for="search-data-beta">Beta Tester</label>
               </p>
             </div>
           </div>
@@ -205,6 +211,8 @@
                 <option value="Lack of Content">Lack of Content</option>
                 <option value="Potentially Unsafe Links">Potentially Unsafe Links</option>
                 <option value="Offensive Content">Offensive Content</option>
+                <option value="Formatting Errors">Formatting Errors</option>
+                <option value="Invalid Links">Invalid Links</option>
                 <option value="Other">Other</option>
               </select>
               <label>Rejection Reason</label>

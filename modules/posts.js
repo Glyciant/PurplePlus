@@ -26,8 +26,8 @@ cron.schedule('*/3 * * * * *', function() {
                 accessToken: auth.access_token
               }).on("complete", function(exists) {
                 if (exists && exists[1] && exists[1].data && exists[1].data && exists[1].data.children) {
-                  for (var i in exists[1].data.children) {
-                    if (exists[1].data.children[i].data.author == config.reddit.bot.username) {
+                  for (var comment of exists[1].data.children) {
+                    if (comment.data.author == config.reddit.bot.username) {
                       return;
                     }
                   }
@@ -41,11 +41,11 @@ cron.schedule('*/3 * * * * *', function() {
                               j = 0,
                               posts = [];
 
-                          for (var i in results) {
-                            if (data.data.children[0].data.id != results[i].data.id) {
-                              var difference = distance(stopword.removeStopwords(data.data.children[0].data.title.replace(/[^\w\s]/gi, '').split(" ")).join(" "), stopword.removeStopwords(results[i].data.title.replace(/[^\w\s]/gi, '').split(" ")).join(" "), { caseSensitive: false });
-                              if (difference >= 0.75 && results[i].data.num_comments > 0 && results[i].data.selftext_html) {
-                                posts.push({ title: results[i].data.title, link: results[i].data.url, distance: difference });
+                          for (var result of results) {
+                            if (data.data.children[0].data.id != result.data.id) {
+                              var difference = distance(stopword.removeStopwords(data.data.children[0].data.title.replace(/[^\w\s]/gi, '').split(" ")).join(" "), stopword.removeStopwords(result.data.title.replace(/[^\w\s]/gi, '').split(" ")).join(" "), { caseSensitive: false });
+                              if (difference >= 0.75 && result.data.num_comments > 0 && result.data.selftext_html) {
+                                posts.push({ title: result.data.title, link: result.data.url, distance: difference });
                               }
                             }
                           }
@@ -58,8 +58,8 @@ cron.schedule('*/3 * * * * *', function() {
                             var comment = `Greetings ` + data.data.children[0].data.author + `,
     As part of an attempt to cut back on the number of repetitive threads on /r/Twitch, we are trying to provide a short list of posts from Reddit's search function that may help you. The search found the following results for you:
     `
-                            for (var i in posts) {
-                              comment = comment + `- [` + posts[i].title + `](` + posts[i].link + `) (` + Math.round(posts[i].distance  * 100) +  `% Relevancy Chance)
+                            for (var post of posts) {
+                              comment = comment + `- [` + post.title + `](` + post.link + `) (` + Math.round(post.distance  * 100) +  `% Relevancy Chance)
     `
                             }
                             comment = comment + `

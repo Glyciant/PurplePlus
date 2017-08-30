@@ -31,7 +31,7 @@ router.get("/twitch/", function(req, res) {
           req.session.twitch.username = finaldata.name;
 					req.session.twitch.auth = data.access_token;
           if (req.session.return.indexOf("/auth/") > -1) {
-            req.session.return = "/browse/streams/";
+            req.session.return = "/browse/spotlight/";
           }
           db.users.getByTwitchId(finaldata._id).then(function(data) {
             helpers.twitch.getChannelById(finaldata._id).then(function(channel) {
@@ -61,12 +61,6 @@ router.get("/twitch/", function(req, res) {
                     stream: channel.broadcaster_type
                   },
                   balance: 0,
-                  sidebar: {
-                    statistics: true,
-                    social_media: true,
-                    events: true,
-                    teams: true
-                  },
                   last_login: Date.now(),
                   bookmarks: [],
                   notes: []
@@ -131,7 +125,7 @@ router.get("/reddit/", function(req, res) {
               req.session.reddit.username = finaldata.name.toLowerCase();
               req.session.reddit.auth = data.access_token;
               if (req.session.return.indexOf("/auth/") > -1) {
-                req.session.return = "/browse/streams/";
+                req.session.return = "/browse/spotlight/";
               }
               if (req.session.twitch) {
                 db.users.getByTwitchId(req.session.twitch.id).then(function(data) {
@@ -165,12 +159,12 @@ router.get("/reddit/", function(req, res) {
                           if (!data.requests) {
                             data.requests = [];
                           }
-                          for (var i in requests.requests) {
-                            if (data.requests.map(function(x) { return x.legacy_id; }).indexOf(requests.requests[i].id) === -1) {
-                              if (requests.requests[i].deleted_at === null) {
-                                var d = new Date(requests.requests[i].updated_at),
+                          for (var request of requests.requests) {
+                            if (data.requests.map(function(x) { return x.legacy_id; }).indexOf(request.id) === -1) {
+                              if (request.deleted_at === null) {
+                                var d = new Date(request.updated_at),
                                     request = {
-                                      legacy_id: requests.requests[i].id,
+                                      legacy_id: request.id,
                                       timestamp: d.getTime(),
                                       status: "",
                                       data: {},
@@ -178,31 +172,31 @@ router.get("/reddit/", function(req, res) {
                                       downvotes: [],
                                       comments: []
                                     }
-                                if (requests.requests[i].approval_id === 0) {
+                                if (request.approval_id === 0) {
                                   request.status = "pending";
                                 }
-                                if (requests.requests[i].approval_id === 1) {
+                                if (request.approval_id === 1) {
                                   request.status = "approved";
                                 }
-                                if (requests.requests[i].approval_id === 2) {
+                                if (request.approval_id === 2) {
                                   request.status = "rejected";
                                 }
-                                for (var j in requests.requests[i].votes) {
-                                  if (requests.requests[i].votes[j].result === 1) {
-                                    request.upvotes.push(requests.requests[i].votes[j].user_id)
+                                for (var vote of request.votes) {
+                                  if (vote.result === 1) {
+                                    request.upvotes.push(vote.user_id)
                                   }
                                   else {
-                                    request.downvotes.push(requests.requests[i].votes[j].user_id)
+                                    request.downvotes.push(vote.user_id)
                                   }
                                 }
-                                for (var j in requests.requests[i].comments) {
-                                  if (requests.requests[i].comments[j].deleted_at === null) {
+                                for (var comment of request.comments) {
+                                  if (comment.deleted_at === null) {
                                     var comment = {
-                                      timestamp: requests.requests[i].comments[j].updated_at,
+                                      timestamp: comment.updated_at,
                                       submitter: "Legacy Comment",
-                                      comment: requests.requests[i].comments[j].comment
+                                      comment: comment.comment
                                     };
-                                    if (requests.requests[i].comments[j].public === 0) {
+                                    if (comment.public === 0) {
                                       comment.type = "private";
                                     }
                                     else {
@@ -211,118 +205,118 @@ router.get("/reddit/", function(req, res) {
                                     request.comments.push(comment);
                                   }
                                 }
-                                var body = JSON.parse(requests.requests[i].body);
-                                if (requests.requests[i].type_id === 1) {
+                                var body = JSON.parse(request.body);
+                                if (request.type_id === 1) {
                                   request.type = "video";
                                   request.data.name = body.name;
                                   request.data.url = body.url;
                                   if (data.owner === 1) {
-                                    request.data.owner = "true";
+                                    request.data.owner = true;
                                   }
                                   else {
-                                    request.data.owner = "false";
+                                    request.data.owner = false;
                                   }
                                   request.data.description = body.description;
                                 }
-                                else if (requests.requests[i].type_id === 2) {
+                                else if (request.type_id === 2) {
                                   request.type = "web";
                                   request.data.name = body.name;
                                   request.data.url = body.url;
                                   request.data.description = body.description;
                                   request.data.data = body.user_data;
                                   if (body.api == "1") {
-                                    request.data.api = "true";
+                                    request.data.api = true;
                                     request.data.api_data = {};
                                     request.data.api_data.store = body.api_data;
                                     request.data.api_data.scopes = body.api_scopes;
                                     request.data.api_data.scopes_description = body.api_scopes_description;
                                   }
                                   else {
-                                    request.data.api = "false";
+                                    request.data.api = false;
                                   }
                                   if (body.tos == "1") {
-                                    request.data.tos = "true";
+                                    request.data.tos = true;
                                     request.data.tos_url = body.tos_url;
                                   }
                                   else {
-                                    request.data.tos = "false";
+                                    request.data.tos = false;
                                   }
                                   if (body.source == "1") {
-                                    request.data.source = "true";
+                                    request.data.source = true;
                                     request.data.source_url = body.source_url;
                                   }
                                   else {
-                                    request.data.source = "false";
+                                    request.data.source = false;
                                   }
                                   if (body.beta == "1") {
-                                    request.data.beta = "true";
+                                    request.data.beta = true;
                                     request.data.beta_changes = body.beta_description;
                                   }
                                   else {
-                                    request.data.beta = "false";
+                                    request.data.beta = false;
                                   }
                                 }
-                                else if (requests.requests[i].type_id === 3) {
+                                else if (request.type_id === 3) {
                                   request.type = "desktop";
                                   request.data.name = body.name;
                                   request.data.url = body.url;
                                   request.data.description = body.description;
                                   request.data.data = body.user_data;
                                   if (body.api == "1") {
-                                    request.data.api = "true";
+                                    request.data.api = true;
                                     request.data.api_data = {};
                                     request.data.api_data.store = body.api_data;
                                     request.data.api_data.scopes = body.api_scopes;
                                     request.data.api_data.scopes_description = body.api_scopes_description;
                                   }
                                   else {
-                                    request.data.api = "false";
+                                    request.data.api = false;
                                   }
                                   if (body.tos == "1") {
-                                    request.data.tos = "true";
+                                    request.data.tos = true;
                                     request.data.tos_url = body.tos_url;
                                   }
                                   else {
-                                    request.data.tos = "false";
+                                    request.data.tos = false;
                                   }
                                   if (body.source == "1") {
-                                    request.data.source = "true";
+                                    request.data.source = true;
                                     request.data.source_url = body.source_url;
                                   }
                                   else {
-                                    request.data.source = "false";
+                                    request.data.source = false;
                                   }
                                   if (body.beta == "1") {
-                                    request.data.beta = "true";
+                                    request.data.beta = true;
                                     request.data.beta_changes = body.beta_description;
                                   }
                                   else {
-                                    request.data.beta = "false";
+                                    request.data.beta = false;
                                   }
                                 }
-                                else if (requests.requests[i].type_id === 5) {
+                                else if (request.type_id === 5) {
                                   request.type = "ama";
                                   request.data.name = body.name;
                                   request.data.product = body.product_name;
                                   if (body.permissions == "1") {
-                                    request.data.permission = "true";
+                                    request.data.permission = true;
                                   }
                                   else {
-                                    request.data.permission = "false";
+                                    request.data.permission = false;
                                   }
                                   if (body.tos == "1") {
-                                    request.data.tos = "true";
+                                    request.data.tos = true;
                                     request.data.tos_url = body.tos_url;
                                   }
                                   else {
-                                    request.data.tos = "false";
+                                    request.data.tos = false;
                                   }
                                   request.data.data = body.user_data;
                                   var d = new Date(body.date);
                                   request.data.date = d.getTime();
                                   request.data.days = body.days;
                                 }
-                                else if (requests.requests[i].type_id === 6) {
+                                else if (request.type_id === 6) {
                                   request.type = "other";
                                   request.data.name = body.name;
                                   request.data.description = body.description;
@@ -386,7 +380,7 @@ router.get("/discord/", function(req, res) {
           if (!discord) {
             req.session.discord_state = "";
             if (req.session.return.indexOf("/auth/") > -1) {
-              req.session.return = "/browse/streams/";
+              req.session.return = "/browse/spotlight/";
             }
             if (req.session.twitch) {
               db.users.getByTwitchId(req.session.twitch.id).then(function(data) {

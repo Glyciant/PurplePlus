@@ -98,9 +98,9 @@ $(document).delegate("#edit-command", "click", function() {
     if (data.message == "success") {
       $("#edit-command-trigger").val(data.data.name);
       $("#edit-command-response").val(data.data.response);
-      $("#edit-command-enabled").prop("checked", (data.data.enabled == "true"));
-      $("#edit-command-restrict").prop("checked", (data.data.restricted == "true"));
-      if (data.data.restricted == "true") {
+      $("#edit-command-enabled").prop("checked", (data.data.enabled === true));
+      $("#edit-command-restrict").prop("checked", (data.data.restricted === true));
+      if (data.data.restricted === true) {
         $("#edit-command-method-one").prop("disabled", false);
         $("#edit-command-method-all").prop("disabled", false);
         $("#edit-command-allow-mods").prop("disabled", false);
@@ -114,16 +114,16 @@ $(document).delegate("#edit-command", "click", function() {
         $("#edit-command-allow-twoos").prop("disabled", false);
         $("#edit-command-method-one").prop("checked", (data.data.restrictions.method == "one"));
         $("#edit-command-method-all").prop("checked", (data.data.restrictions.method == "all"));
-        $("#edit-command-allow-mods").prop("checked", (data.data.restrictions.mods == "true"));
-        $("#edit-command-allow-helpers").prop("checked", (data.data.restrictions.helpers == "true"));
-        $("#edit-command-allow-wiki").prop("checked", (data.data.restrictions.wiki == "true"));
-        $("#edit-command-allow-staff").prop("checked", (data.data.restrictions.staff == "true"));
-        $("#edit-command-allow-admins").prop("checked", (data.data.restrictions.admins == "true"));
-        $("#edit-command-allow-global-mods").prop("checked", (data.data.restrictions.global_mods == "true"));
-        $("#edit-command-allow-contributors").prop("checked", (data.data.restrictions.contributors == "true"));
-        $("#edit-command-allow-profiles").prop("checked", (data.data.restrictions.profiles == "true"));
-        $("#edit-command-allow-twoos").prop("checked", (data.data.restrictions.twoos == "true"));
-        if (data.data.restrictions.twoos == "true") {
+        $("#edit-command-allow-mods").prop("checked", data.data.restrictions.mods);
+        $("#edit-command-allow-helpers").prop("checked", data.data.restrictions.helpers);
+        $("#edit-command-allow-wiki").prop("checked", data.data.restrictions.wiki);
+        $("#edit-command-allow-staff").prop("checked", data.data.restrictions.staff);
+        $("#edit-command-allow-admins").prop("checked", data.data.restrictions.admins);
+        $("#edit-command-allow-global-mods").prop("checked", data.data.restrictions.global_mods);
+        $("#edit-command-allow-contributors").prop("checked", data.data.restrictions.contributors);
+        $("#edit-command-allow-profiles").prop("checked", data.data.restrictions.profiles);
+        $("#edit-command-allow-twoos").prop("checked", data.data.restrictions.twoos);
+        if (data.data.restrictions.twoos === true) {
           $("#edit-command-allow-twoos-value").prop("disabled", false);
           $("#edit-command-allow-twoos-value").prop("value", data.data.restrictions.twoos_value);
         }
@@ -216,6 +216,20 @@ $(document).delegate("#save-command", "click", function() {
   }
 
   if (!name || !response || (restrictions.twoos === true && restrictions.twoos_value < 0) || (restrictions.twoos === true && !restrictions.twoos_value)) {
+    if (!name) {
+      $("#edit-command-trigger").addClass("invalid");
+    }
+    if (!response) {
+      $("#edit-command-response").addClass("invalid");
+    }
+    if ((restrictions.twoos === true && restrictions.twoos_value < 0) || (restrictions.twoos === true && !restrictions.twoos_value)) {
+      $("#edit-command-allow-twoos-value").addClass("invalid");
+    }
+    setTimeout(function() {
+      $("#edit-command-trigger").removeClass("invalid");
+      $("#edit-command-response").removeClass("invalid");
+      $("#edit-command-allow-twoos-value").removeClass("invalid");
+    }, 3000);
     Materialize.toast("You have not filled out all fields correctly.", 4000, "rounded");
   }
   else {

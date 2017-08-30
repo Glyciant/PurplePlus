@@ -54,9 +54,29 @@ $(document).delegate("#save-link", "click", function() {
       url_regex = new RegExp(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/);
 
   if (!short || !redirect) {
+    if (!short) {
+      $("#edit-link-short").addClass("invalid");
+    }
+    if (!redirect) {
+      $("#edit-link-redirect").addClass("invalid");
+    }
+    setTimeout(function() {
+      $("#edit-link-short").removeClass("invalid");
+      $("#edit-link-redirect").removeClass("invalid");
+    }, 3000);
     Materialize.toast("You must complete all fields.", 4000, "rounded");
   }
   else if (!short_regex.test(short) || !url_regex.test(redirect)) {
+    if (!short) {
+      $("#edit-link-short").addClass("invalid");
+    }
+    if (!redirect) {
+      $("#edit-link-redirect").addClass("invalid");
+    }
+    setTimeout(function() {
+      $("#edit-link-short").removeClass("invalid");
+      $("#edit-link-redirect").removeClass("invalid");
+    }, 3000);
     Materialize.toast("You have entered an invalid value for a field.", 4000, "rounded");
   }
   else {

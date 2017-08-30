@@ -87,6 +87,11 @@ router.get("/", function(req, res, next) {
     data.streamer_gaming_genres_method = req.query.streamer_gaming_genres_method;
   }
 
+  if (req.query.streamer_gaming_collaborating && req.query.streamer_gaming_charity) {
+    data.streamer_gaming_collaborating = req.query.streamer_gaming_collaborating;
+    data.streamer_gaming_charity = req.query.streamer_gaming_charity;
+  }
+
   if (req.query.streamer_creative_activities) {
     var activities = req.query.streamer_creative_activities.split(",");
     data.streamer_creative_activities = {};
@@ -112,6 +117,31 @@ router.get("/", function(req, res, next) {
 
   if (req.query.streamer_creative_activities_method) {
     data.streamer_creative_activities_method = req.query.streamer_creative_activities_method;
+  }
+
+  if (req.query.streamer_creative_collaborating && req.query.streamer_creative_charity) {
+    data.streamer_creative_collaborating = req.query.streamer_creative_collaborating;
+    data.streamer_creative_charity = req.query.streamer_creative_charity;
+  }
+
+  if (req.query.streamer_irl_collaborating && req.query.streamer_irl_charity) {
+    data.streamer_irl_collaborating = req.query.streamer_irl_collaborating;
+    data.streamer_irl_charity = req.query.streamer_irl_charity;
+  }
+
+  if (req.query.streamer_socialeating_collaborating && req.query.streamer_socialeating_charity) {
+    data.streamer_socialeating_collaborating = req.query.streamer_socialeating_collaborating;
+    data.streamer_socialeating_charity = req.query.streamer_socialeating_charity;
+  }
+
+  if (req.query.streamer_talkshow_collaborating && req.query.streamer_talkshow_charity) {
+    data.streamer_talkshow_collaborating = req.query.streamer_talkshow_collaborating;
+    data.streamer_talkshow_charity = req.query.streamer_talkshow_charity;
+  }
+
+  if (req.query.streamer_music_collaborating && req.query.streamer_music_charity) {
+    data.streamer_music_collaborating = req.query.streamer_music_collaborating;
+    data.streamer_music_charity = req.query.streamer_music_charity;
   }
 
   if (req.query.artist_commissions_accepts && req.query.artist_commissions_charges && req.query.artist_commissions_currently) {
@@ -369,44 +399,77 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_gaming) {
         link.streamer_gaming_genres = [];
         if (req.body.attributes.streamer_gaming.genres.action == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.action": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.action": true });
           link.streamer_gaming_genres.push("action");
         }
         if (req.body.attributes.streamer_gaming.genres.adventure == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.adventure": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.adventure": true });
           link.streamer_gaming_genres.push("adventure");
         }
         if (req.body.attributes.streamer_gaming.genres.horror == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.horror": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.horror": true });
           link.streamer_gaming_genres.push("horror");
         }
         if (req.body.attributes.streamer_gaming.genres.roleplaying == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.roleplaying": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.roleplaying": true });
           link.streamer_gaming_genres.push("roleplaying");
         }
         if (req.body.attributes.streamer_gaming.genres.simulation == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.simulation": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.simulation": true });
           link.streamer_gaming_genres.push("simulation");
         }
         if (req.body.attributes.streamer_gaming.genres.strategy == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.strategy": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.strategy": true });
           link.streamer_gaming_genres.push("strategy");
         }
         if (req.body.attributes.streamer_gaming.genres.survival == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.survival": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.survival": true });
           link.streamer_gaming_genres.push("survival");
         }
         if (req.body.attributes.streamer_gaming.genres.other == "true") {
-          i.push({ "profile.types.streamer_gaming.genres.other": "true" });
+          i.push({ "profile.types.streamer_gaming.genres.other": true });
           link.streamer_gaming_genres.push("other");
+        }
+        var j = [];
+        if (req.body.attributes.streamer_gaming.collaborating == "yes") {
+          j.push({ "profile.types.streamer_gaming.collaborations": true });
+          link.streamer_gaming_collaborating = "yes";
+        }
+        else if (req.body.attributes.streamer_gaming.collaborating == "no") {
+          j.push({ "profile.types.streamer_gaming.collaborations": false });
+          link.streamer_gaming_collaborating = "no";
+        }
+        else {
+          link.streamer_gaming_collaborating = "any";
+        }
+        if (req.body.attributes.streamer_gaming.charity == "yes") {
+          j.push({ "profile.types.streamer_gaming.charity": true });
+          link.streamer_gaming_charity = "yes";
+        }
+        else if (req.body.attributes.streamer_gaming.charity == "no") {
+          j.push({ "profile.types.streamer_gaming.charity": false });
+          link.streamer_gaming_charity = "no";
+        }
+        else {
+          link.streamer_gaming_charity = "any";
         }
         if (i[0]) {
           if (req.body.attributes.streamer_gaming.genres.method == "one") {
-            streamer_gaming.push({ "$or": i });
+            if (j[0]) {
+              streamer_gaming.push({ "$and": [{ "$or": i }, { "$or": j }] });
+            }
+            else {
+              streamer_gaming.push({ "$or": i });
+            }
             link.streamer_gaming_genres_method = "one";
           }
           else {
-            streamer_gaming.push({ "$and": i });
+            if (j[0]) {
+              streamer_gaming.push({ "$and": [{ "$and": i }, { "$or": j }] });
+            }
+            else {
+              streamer_gaming.push({ "$or": i });
+            }
             link.streamer_gaming_genres_method = "all";
           }
         }
@@ -417,44 +480,192 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_creative) {
         link.streamer_creative_activities = [];
         if (req.body.attributes.streamer_creative.activities.cooking == "true") {
-          i.push({ "profile.types.streamer_creative.activities.cooking": "true" });
+          i.push({ "profile.types.streamer_creative.activities.cooking": true });
           link.streamer_creative_activities.push("cooking");
         }
         if (req.body.attributes.streamer_creative.activities.drawing == "true") {
-          i.push({ "profile.types.streamer_creative.activities.drawing": "true" });
+          i.push({ "profile.types.streamer_creative.activities.drawing": true });
           link.streamer_creative_activities.push("drawing");
         }
         if (req.body.attributes.streamer_creative.activities.music == "true") {
-          i.push({ "profile.types.streamer_creative.activities.music": "true" });
+          i.push({ "profile.types.streamer_creative.activities.music": true });
           link.streamer_creative_activities.push("music");
         }
         if (req.body.attributes.streamer_creative.activities.painting == "true") {
-          i.push({ "profile.types.streamer_creative.activities.painting": "true" });
+          i.push({ "profile.types.streamer_creative.activities.painting": true });
           link.streamer_creative_activities.push("painting");
         }
         if (req.body.attributes.streamer_creative.activities.programming == "true") {
-          i.push({ "profile.types.streamer_creative.activities.programming": "true" });
+          i.push({ "profile.types.streamer_creative.activities.programming": true });
           link.streamer_creative_activities.push("programming");
         }
         if (req.body.attributes.streamer_creative.activities.editing == "true") {
-          i.push({ "profile.types.streamer_creative.activities.editing": "true" });
+          i.push({ "profile.types.streamer_creative.activities.editing": true });
           link.streamer_creative_activities.push("editing");
         }
         if (req.body.attributes.streamer_creative.activities.other == "true") {
-          i.push({ "profile.types.streamer_creative.activities.other": "true" });
+          i.push({ "profile.types.streamer_creative.activities.other": true });
           link.streamer_creative_activities.push("other");
+        }
+        if (req.body.attributes.streamer_creative.collaborating == "yes") {
+          i.push({ "profile.types.streamer_creative.collaborations": true });
+          link.streamer_creative_collaborating = "yes";
+        }
+        else if (req.body.attributes.streamer_creative.collaborating == "no") {
+          i.push({ "profile.types.streamer_creative.collaborations": false });
+          link.streamer_creative_collaborating = "no";
+        }
+        else {
+          link.streamer_creative_collaborating = "any";
+        }
+        if (req.body.attributes.streamer_creative.charity == "yes") {
+          i.push({ "profile.types.streamer_creative.charity": true });
+          link.streamer_creative_charity = "yes";
+        }
+        else if (req.body.attributes.streamer_creative.charity == "no") {
+          i.push({ "profile.types.streamer_creative.charity": false });
+          link.streamer_creative_charity = "no";
+        }
+        else {
+          link.streamer_creative_charity = "any";
         }
         if (i[0]) {
           if (req.body.attributes.streamer_creative.activities.method == "one") {
-            streamer_creative.push({ "$or": i });
+            if (j[0]) {
+              streamer_creative.push({ "$and": [{ "$or": i }, { "$or": j }] });
+            }
+            else {
+              streamer_creative.push({ "$or": i });
+            }
             link.streamer_creative_activities_method = "one";
           }
           else {
-            streamer_creative.push({ "$and": i });
+            if (j[0]) {
+              streamer_creative.push({ "$and": [{ "$and": i }, { "$or": j }] });
+            }
+            else {
+              streamer_creative.push({ "$or": i });
+            }
             link.streamer_creative_activities_method = "all";
           }
         }
         link.streamer_creative_activities = link.streamer_creative_activities.join();
+      }
+
+      i = [];
+      if (req.body.attributes.streamer_irl) {
+        if (req.body.attributes.streamer_irl.collaborating == "yes") {
+          i.push({ "profile.types.streamer_irl.collaborations": true });
+          link.streamer_irl_collaborating = "yes";
+        }
+        else if (req.body.attributes.streamer_irl.collaborating == "no") {
+          i.push({ "profile.types.streamer_irl.collaborations": false });
+          link.streamer_irl_collaborating = "no";
+        }
+        else {
+          link.streamer_irl_collaborating = "any";
+        }
+        if (req.body.attributes.streamer_irl.charity == "yes") {
+          i.push({ "profile.types.streamer_irl.charity": true });
+          link.streamer_irl_charity = "yes";
+        }
+        else if (req.body.attributes.streamer_irl.charity == "no") {
+          i.push({ "profile.types.streamer_irl.charity": false });
+          link.streamer_irl_charity = "no";
+        }
+        else {
+          link.streamer_irl_charity = "any";
+        }
+        if (i[0]) {
+          streamer_irl.push({ "$and": i });
+        }
+      }
+
+      i = [];
+      if (req.body.attributes.streamer_socialeating) {
+        if (req.body.attributes.streamer_socialeating.collaborating == "yes") {
+          i.push({ "profile.types.streamer_socialeating.collaborations": true });
+          link.streamer_socialeating_collaborating = "yes";
+        }
+        else if (req.body.attributes.streamer_socialeating.collaborating == "no") {
+          i.push({ "profile.types.streamer_socialeating.collaborations": false });
+          link.streamer_socialeating_collaborating = "no";
+        }
+        else {
+          link.streamer_socialeating_collaborating = "any";
+        }
+        if (req.body.attributes.streamer_socialeating.charity == "yes") {
+          i.push({ "profile.types.streamer_socialeating.charity": true });
+          link.streamer_socialeating_charity = "yes";
+        }
+        else if (req.body.attributes.streamer_socialeating.charity == "no") {
+          i.push({ "profile.types.streamer_socialeating.charity": false });
+          link.streamer_socialeating_charity = "no";
+        }
+        else {
+          link.streamer_socialeating_charity = "any";
+        }
+        if (i[0]) {
+          streamer_socialeating.push({ "$and": i });
+        }
+      }
+
+      i = [];
+      if (req.body.attributes.streamer_talkshow) {
+        if (req.body.attributes.streamer_talkshow.collaborating == "yes") {
+          i.push({ "profile.types.streamer_talkshow.collaborations": true });
+          link.streamer_talkshow_collaborating = "yes";
+        }
+        else if (req.body.attributes.streamer_talkshow.collaborating == "no") {
+          i.push({ "profile.types.streamer_talkshow.collaborations": false });
+          link.streamer_talkshow_collaborating = "no";
+        }
+        else {
+          link.streamer_talkshow_collaborating = "any";
+        }
+        if (req.body.attributes.streamer_talkshow.charity == "yes") {
+          i.push({ "profile.types.streamer_talkshow.charity": true });
+          link.streamer_talkshow_charity = "yes";
+        }
+        else if (req.body.attributes.streamer_talkshow.charity == "no") {
+          i.push({ "profile.types.streamer_talkshow.charity": false });
+          link.streamer_talkshow_charity = "no";
+        }
+        else {
+          link.streamer_talkshow_charity = "any";
+        }
+        if (i[0]) {
+          streamer_talkshow.push({ "$and": i });
+        }
+      }
+
+      i = [];
+      if (req.body.attributes.streamer_music) {
+        if (req.body.attributes.streamer_music.collaborating == "yes") {
+          i.push({ "profile.types.streamer_music.collaborations": true });
+          link.streamer_music_collaborating = "yes";
+        }
+        else if (req.body.attributes.streamer_music.collaborating == "no") {
+          i.push({ "profile.types.streamer_music.collaborations": false });
+          link.streamer_music_collaborating = "no";
+        }
+        else {
+          link.streamer_music_collaborating = "any";
+        }
+        if (req.body.attributes.streamer_music.charity == "yes") {
+          i.push({ "profile.types.streamer_music.charity": true });
+          link.streamer_music_charity = "yes";
+        }
+        else if (req.body.attributes.streamer_music.charity == "no") {
+          i.push({ "profile.types.streamer_music.charity": false });
+          link.streamer_music_charity = "no";
+        }
+        else {
+          link.streamer_music_charity = "any";
+        }
+        if (i[0]) {
+          streamer_music.push({ "$and": i });
+        }
       }
 
       i = [];
@@ -482,11 +693,11 @@ router.post("/submit", function(req, res, next) {
           link.artist_commissions_charges = "any";
         }
         if (req.body.attributes.artist.currently == "yes") {
-          i.push({ "profile.types.artist.commissions.accepting": "true" });
+          i.push({ "profile.types.artist.commissions.accepting": true });
           link.artist_commissions_currently = "yes";
         }
         else if (req.body.attributes.artist.currently == "no") {
-          i.push({ "profile.types.artist.commissions.accepting": "false" });
+          i.push({ "profile.types.artist.commissions.accepting": false });
           link.artist_commissions_currently = "no";
         }
         else {
@@ -523,11 +734,11 @@ router.post("/submit", function(req, res, next) {
           link.developer_commissions_charges = "any";
         }
         if (req.body.attributes.developer.currently == "yes") {
-          i.push({ "profile.types.developer.commissions.accepting": "true" });
+          i.push({ "profile.types.developer.commissions.accepting": true });
           link.developer_commissions_currently = "yes";
         }
         else if (req.body.attributes.developer.currently == "no") {
-          i.push({ "profile.types.developer.commissions.accepting": "false" });
+          i.push({ "profile.types.developer.commissions.accepting": false });
           link.developer_commissions_currently = "no";
         }
         else {
@@ -562,67 +773,67 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.viewer) {
         link.viewer_preferences = [];
         if (req.body.attributes.viewer.preferences.action == "true") {
-          i.push({ "profile.types.viewer.streams.action": "true" });
+          i.push({ "profile.types.viewer.streams.action": true });
           link.viewer_preferences.push("action");
         }
         if (req.body.attributes.viewer.preferences.adventure == "true") {
-          i.push({ "profile.types.viewer.streams.adventure": "true" });
+          i.push({ "profile.types.viewer.streams.adventure": true });
           link.viewer_preferences.push("adventure");
         }
         if (req.body.attributes.viewer.preferences.roleplaying == "true") {
-          i.push({ "profile.types.viewer.streams.roleplaying": "true" });
+          i.push({ "profile.types.viewer.streams.roleplaying": true });
           link.viewer_preferences.push("roleplaying");
         }
         if (req.body.attributes.viewer.preferences.simulation == "true") {
-          i.push({ "profile.types.viewer.streams.simulation": "true" });
+          i.push({ "profile.types.viewer.streams.simulation": true });
           link.viewer_preferences.push("simulation");
         }
         if (req.body.attributes.viewer.preferences.strategy == "true") {
-          i.push({ "profile.types.viewer.streams.strategy": "true" });
+          i.push({ "profile.types.viewer.streams.strategy": true });
           link.viewer_preferences.push("strategy");
         }
         if (req.body.attributes.viewer.preferences.survival == "true") {
-          i.push({ "profile.types.viewer.streams.survival": "true" });
+          i.push({ "profile.types.viewer.streams.survival": true });
           link.viewer_preferences.push("survival");
         }
         if (req.body.attributes.viewer.preferences.horror == "true") {
-          i.push({ "profile.types.viewer.streams.horror": "true" });
+          i.push({ "profile.types.viewer.streams.horror": true });
           link.viewer_preferences.push("horror");
         }
         if (req.body.attributes.viewer.preferences.music == "true") {
-          i.push({ "profile.types.viewer.streams.music": "true" });
+          i.push({ "profile.types.viewer.streams.music": true });
           link.viewer_preferences.push("music");
         }
         if (req.body.attributes.viewer.preferences.cooking == "true") {
-          i.push({ "profile.types.viewer.streams.cooking": "true" });
+          i.push({ "profile.types.viewer.streams.cooking": true });
           link.viewer_preferences.push("cooking");
         }
         if (req.body.attributes.viewer.preferences.drawing == "true") {
-          i.push({ "profile.types.viewer.streams.drawing": "true" });
+          i.push({ "profile.types.viewer.streams.drawing": true });
           link.viewer_preferences.push("drawing");
         }
         if (req.body.attributes.viewer.preferences.painting == "true") {
-          i.push({ "profile.types.viewer.streams.painting": "true" });
+          i.push({ "profile.types.viewer.streams.painting": true });
           link.viewer_preferences.push("painting");
         }
         if (req.body.attributes.viewer.preferences.programming == "true") {
-          i.push({ "profile.types.viewer.streams.programming": "true" });
+          i.push({ "profile.types.viewer.streams.programming": true });
           link.viewer_preferences.push("programming");
         }
         if (req.body.attributes.viewer.preferences.editing == "true") {
-          i.push({ "profile.types.viewer.streams.editing": "true" });
+          i.push({ "profile.types.viewer.streams.editing": true });
           link.viewer_preferences.push("editing");
         }
         if (req.body.attributes.viewer.preferences.talkshow == "true") {
-          i.push({ "profile.types.viewer.streams.talkshow": "true" });
+          i.push({ "profile.types.viewer.streams.talkshow": true });
           link.viewer_preferences.push("talkshow");
         }
         if (req.body.attributes.viewer.preferences.irl == "true") {
-          i.push({ "profile.types.viewer.streams.irl": "true" });
+          i.push({ "profile.types.viewer.streams.irl": true });
           link.viewer_preferences.push("irl");
         }
         if (req.body.attributes.viewer.preferences.socialeating == "true") {
-          i.push({ "profile.types.viewer.streams.socialeating": "true" });
+          i.push({ "profile.types.viewer.streams.socialeating": true });
           link.viewer_preferences.push("socialeating");
         }
 
@@ -643,7 +854,7 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.overview && req.body.attributes.overview.keywords) {
         link.overview_keywords = [];
         for (var word of req.body.attributes.overview.keywords) {
-          i.push({ $or: [ { "profile.overview.about": { $regex: word } }, { "profile.overview.goals": { $regex: word } }, { "profile.overview.background": { $regex: word } } ] });
+          i.push({ $or: [ { "profile.overview.introduction": { $regex: word } }, { "profile.overview.about": { $regex: word } }, { "profile.overview.background": { $regex: word } } ] });
           link.overview_keywords.push(word);
         }
         if (i[0]) {
@@ -656,7 +867,7 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_gaming && req.body.attributes.streamer_gaming.keywords) {
         link.streamer_gaming_keywords = [];
         for (var word of req.body.attributes.streamer_gaming.keywords) {
-          i.push({ $or: [ { "profile.types.streamer_gaming.goals": { $regex: word } }, { "profile.types.streamer_gaming.schedule": { $regex: word } } ] });
+          i.push({ $or: [ { "profile.types.streamer_gaming.goals": { $regex: word } }, { "profile.types.streamer_gaming.favourites": { $regex: word } } ] });
           link.streamer_gaming_keywords.push(word);
         }
         if (i[0]) {
@@ -669,7 +880,7 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_creative && req.body.attributes.streamer_creative.keywords) {
         link.streamer_creative_keywords = [];
         for (var word of req.body.attributes.streamer_creative.keywords) {
-          i.push({ $or: [ { "profile.types.streamer_creative.goals": { $regex: word } }, { "profile.types.streamer_creative.schedule": { $regex: word } } ] });
+          i.push({ $or: [ { "profile.types.streamer_creative.goals": { $regex: word } }, { "profile.types.streamer_creative.creations": { $regex: word } } ] });
           link.streamer_creative_keywords.push(word);
         }
         if (i[0]) {
@@ -682,7 +893,7 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_irl && req.body.attributes.streamer_irl.keywords) {
         link.streamer_irl_keywords = [];
         for (var word of req.body.attributes.streamer_irl.keywords) {
-          i.push({ $or: [ { "profile.types.streamer_irl.goals": { $regex: word } }, { "profile.types.streamer_irl.schedule": { $regex: word } }, { "profile.types.streamer_irl.activities": { $regex: word } } ] });
+          i.push({ $or: [ { "profile.types.streamer_irl.goals": { $regex: word } }, { "profile.types.streamer_irl.activities": { $regex: word } } ] });
           link.streamer_irl_keywords.push(word);
         }
         if (i[0]) {
@@ -695,7 +906,7 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_socialeating && req.body.attributes.streamer_socialeating.keywords) {
         link.streamer_socialeating_keywords = [];
         for (var word of req.body.attributes.streamer_socialeating.keywords) {
-          i.push({ $or: [ { "profile.types.streamer_socialeating.goals": { $regex: word } }, { "profile.types.streamer_socialeating.schedule": { $regex: word } } ] });
+          i.push({ $or: [ { "profile.types.streamer_socialeating.goals": { $regex: word } }, { "profile.types.streamer_socialeating.meals": { $regex: word } }, { "profile.types.streamer_socialeating.discussions": { $regex: word } } ] });
           link.streamer_socialeating_keywords.push(word);
         }
         if (i[0]) {
@@ -708,7 +919,7 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_talkshow && req.body.attributes.streamer_talkshow.keywords) {
         link.streamer_talkshow_keywords = [];
         for (var word of req.body.attributes.streamer_talkshow.keywords) {
-          i.push({ $or: [ { "profile.types.streamer_talkshow.goals": { $regex: word } }, { "profile.types.streamer_talkshow.schedule": { $regex: word } }, { "profile.types.streamer_talkshow.discussions": { $regex: word } }, { "profile.types.streamer_talkshow.guests": { $regex: word } } ] });
+          i.push({ $or: [ { "profile.types.streamer_talkshow.goals": { $regex: word } }, { "profile.types.streamer_talkshow.discussions": { $regex: word } }, { "profile.types.streamer_talkshow.guests": { $regex: word } } ] });
           link.streamer_talkshow_keywords.push(word);
         }
         if (i[0]) {
@@ -721,7 +932,7 @@ router.post("/submit", function(req, res, next) {
       if (req.body.attributes.streamer_music && req.body.attributes.streamer_music.keywords) {
         link.streamer_music_keywords = [];
         for (var word of req.body.attributes.streamer_music.keywords) {
-          i.push({ $or: [ { "profile.types.streamer_music.goals": { $regex: word } }, { "profile.types.streamer_music.schedule": { $regex: word } } ] });
+          i.push({ $or: [ { "profile.types.streamer_music.goals": { $regex: word } }, { "profile.types.streamer_music.music": { $regex: word } } ] });
           link.streamer_music_keywords.push(word);
         }
         if (i[0]) {
@@ -796,7 +1007,7 @@ router.post("/submit", function(req, res, next) {
           link.viewer_keywords = link.viewer_keywords.join();
         }
         if (req.body.attributes.viewer.family == "true") {
-          viewer.push({ "profile.types.viewer.family": "true" });
+          viewer.push({ "profile.types.viewer.family": true });
           link.viewer_family = true;
         }
       }

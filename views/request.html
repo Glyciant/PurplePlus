@@ -178,11 +178,11 @@
             <hr />
             {% if data.type == "video" %}
               <h5>Video URL</h5>
-              <a href="{{ data.data.url }}">{{ data.data.url }}</a>
+              <a href="{% if data.data.url.substring(0, 7) == "http://" || data.data.url.substring(0, 8) == "https://" %}{{ data.data.url }}{% else %}http://{{ data.data.url }}{% endif %}">{{ data.data.url }}</a>
               <br /><br />
               <h5>Owner</h5>
               <p>
-                {% if data.data.owner == "true" %}
+                {% if data.data.owner == true %}
                   {{ profile.twitch_name }} is the owner of the video.
                 {% else %}
                   {{ profile.twitch_name }} is not the owner of the video.
@@ -198,7 +198,7 @@
               <br />
               <h5>Permission</h5>
               <p>
-                {% if data.data.permission == "true" %}
+                {% if data.data.permission == true %}
                   {{ profile.twitch_name }} does have permission to discuss the company and its products.
                 {% else %}
                   {{ profile.twitch_name }} does not have permission to discuss the company and its products.
@@ -206,8 +206,8 @@
               </p>
               <br />
               <h5>Terms of Service</h5>
-              {% if data.data.tos === "true" %}
-                <a href="{{ data.data.tos_url }}">{{ data.data.tos_url }}</a>
+              {% if data.data.tos === true %}
+                <a href="{% if data.data.tos_url.substring(0, 7) == "http://" || data.data.tos_url.substring(0, 8) == "https://" %}{{ data.data.tos_url }}{% else %}http://{{ data.data.tos_url }}{% endif %}">{{ data.data.tos_url }}</a>
                 <br /><br />
               {% else %}
                 <p>None.</p>
@@ -224,7 +224,7 @@
               <br />
             {% elseif data.type !== "other" %}
               <h5>Tool URL</h5>
-              <a href="{{ data.data.url }}">{{ data.data.url }}</a>
+              <a href="{% if data.data.url.substring(0, 7) == "http://" || data.data.url.substring(0, 8) == "https://" %}{{ data.data.url }}{% else %}http://{{ data.data.url }}{% endif %}">{{ data.data.url }}</a>
               <br /><br />
               <h5>Request Description</h5>
               <p>{% marked %}{{ data.data.description }}{% endmarked %}</p>
@@ -233,7 +233,7 @@
               <p>{% marked %}{{ data.data.data }}{% endmarked %}</p>
               <br />
               <h5>Twitch API Data Required</h5>
-              {% if data.data.api === "true" %}
+              {% if data.data.api === true %}
                 <p>{% marked %}{{ data.data.api_data.store }}{% endmarked %}</p>
                 <br />
                 <h5>Twitch API Scopes Required</h5>
@@ -246,23 +246,23 @@
               {% endif %}
               <br />
               <h5>Terms of Service</h5>
-              {% if data.data.tos === "true" %}
-                <a href="{{ data.data.tos_url }}">{{ data.data.tos_url }}</a>
+              {% if data.data.tos === true %}
+                <a href="{% if data.data.tos_url.substring(0, 7) == "http://" || data.data.tos_url.substring(0, 8) == "https://" %}{{ data.data.tos_url }}{% else %}http://{{ data.data.tos_url }}{% endif %}">{{ data.data.tos_url }}</a>
                 <br /><br />
               {% else %}
                 <p>None.</p>
                 <br />
               {% endif %}
               <h5>Source Code</h5>
-              {% if data.data.source === "true" %}
-                <a href="{{ data.data.source_url }}">{{ data.data.source_url }}</a>
+              {% if data.data.source === true %}
+                <a href="{% if data.data.source_url.substring(0, 7) == "http://" || data.data.source_url.substring(0, 8) == "https://" %}{{ data.data.source_url }}{% else %}http://{{ data.data.source_url }}{% endif %}">{{ data.data.source_url }}</a>
                 <br /><br />
               {% else %}
                 <p>None.</p>
                 <br />
               {% endif %}
               <h5>Post-Beta Changes</h5>
-              {% if data.data.beta === "true" %}
+              {% if data.data.beta === true %}
                 <p>{% marked %}{{ data.data.beta_changes }}{% endmarked %}</p>
               {% else %}
                 <p>None.</p>
@@ -272,29 +272,29 @@
                 <h5>Compatible Browsers</h5>
                 <div class="col s6">
                   <p>
-                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-edge" {% if data.data.browsers.edge === "true" %} checked {% endif %} disabled />
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-edge" {% if data.data.browsers.edge === true %} checked {% endif %} disabled />
                     <label for="tool-browser-edge">Microsoft Edge</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-explorer" {% if data.data.browsers.explorer === "true" %} checked {% endif %} disabled />
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-explorer" {% if data.data.browsers.explorer === true %} checked {% endif %} disabled />
                     <label for="tool-browser-explorer">Internet Explorer</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-chrome" {% if data.data.browsers.chrome === "true" %} checked {% endif %} disabled />
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-chrome" {% if data.data.browsers.chrome === true %} checked {% endif %} disabled />
                     <label for="tool-browser-chrome">Google Chrome</label>
                   </p>
                 </div>
                 <div class="col s6">
                   <p>
-                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-firefox" {% if data.data.browsers.firefox === "true" %} checked {% endif %} disabled />
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-firefox" {% if data.data.browsers.firefox === true %} checked {% endif %} disabled />
                     <label for="tool-browser-firefox">Mozilla Firefox</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-opera" {% if data.data.browsers.opera === "true" %} checked {% endif %} disabled />
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-opera" {% if data.data.browsers.opera === true %} checked {% endif %} disabled />
                     <label for="tool-browser-opera">Opera</label>
                   </p>
                   <p>
-                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-safari" {% if data.data.browsers.safari === "true" %} checked {% endif %} disabled />
+                    <input type="checkbox" class="filled-in request-browser-checkbox" id="tool-browser-safari" {% if data.data.browsers.safari === true %} checked {% endif %} disabled />
                     <label for="tool-browser-safari">Safari</label>
                   </p>
                 </div>
@@ -314,10 +314,10 @@
             <div class="col s12">
               <h4 class="center">Comments</h4>
               <hr />
-              {% if data.comments.length === 0 %}
-                <p class="center"><em>No Comments Found</em></p>
-              {% else %}
-                <div id="request-comments-wrapper">
+              <div id="request-comments-wrapper">
+                {% if data.comments.length === 0 %}
+                  <p id="request-no-comments" class="center"><em>No Comments Found</em></p>
+                {% else %}
                   {% for comment in data.comments %}
                     {% if comment.type == "public" || type == "mod" || type == "helper" %}
                       <div class="row">
@@ -333,8 +333,8 @@
                       </div>
                     {% endif %}
                   {% endfor %}
-                </div>
-              {% endif %}
+                {% endif %}
+              </div>
             </div>
           </div>
         </div>

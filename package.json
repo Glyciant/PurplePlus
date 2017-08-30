@@ -19,6 +19,7 @@
     "swig": "^1.4.2",
     "swig-marked": "0.0.1",
     "tmi.js": "^1.2.1",
+    "twitch-emoticons": "^2.1.0",
     "url": "^0.11.0"
   },
   "devDependencies": {},

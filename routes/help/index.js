@@ -6,7 +6,7 @@ var express = require("express"),
     router = express.Router();
 
 router.get("/", function(req, res, next) {
-  res.render('error', { title: '503 Error', code: '503', message: 'This feature is not available in the beta build. Sorry!' });
+  res.render('help', { title: 'Help Documentation' });
 });
 
 module.exports = router;

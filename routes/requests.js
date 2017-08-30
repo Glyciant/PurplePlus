@@ -74,10 +74,8 @@ router.post("/submit", function(req, res, next) {
   if (req.session.reddit && req.session.twitch && req.session.reddit.id == req.body.reddit && req.session.twitch.id == req.body.twitch) {
     db.users.getByRedditId(req.body.reddit).then(function(data) {
       if (!data.bans || data.bans.requests === false) {
-        if (!data.requests) {
-          data.requests = [];
-        }
         var request = {
+          twitch_id: data.twitch_id,
           timestamp: Date.now(),
           type: req.body.type,
           data: req.body.data,
@@ -86,11 +84,43 @@ router.post("/submit", function(req, res, next) {
           downvotes: [],
           status: "pending"
         }
-        data.requests.push(request);
-        db.users.editByRedditId(data.reddit_id, data).then(function() {
-          var redirect = "/user/" + data.twitch_username + "/requests/" + request.timestamp;
-          res.send({ message: "success", redirect: redirect });
-        })
+        var type;
+        if (request.type == "web") {
+          type = "Web Tool";
+        }
+        else if (request.type == "desktop") {
+          type = "Desktop Tool";
+        }
+        else if (request.type == "extension") {
+          type = "Browser Extension";
+        }
+        else {
+          type = "Other";
+        }
+        helpers.slack.webhook({ "text": "New Advertisement Request on Purple+!\n```\nTwitch Username: " + req.session.twitch.name + " (" + req.session.twitch.id + ")\nReddit Username: " + req.session.reddit.name + " (" + req.session.reddit.id + ")\nRequest Name:    " + request.data.name + "\nRequest Type:    " + type + "\nRequest URL:     <https://purple.plus/user/" + req.session.twitch.username + "/requests/" + request.timestamp +">\n```" }).then(function() {
+          if (req.body.type == "web" || req.body.type == "desktop" || req.body.type == "extension") {
+            request.data.api = (request.data.api == "true");
+            request.data.tos = (request.data.tos == "true");
+            request.data.source = (request.data.source == "true");
+            request.data.beta = (request.data.beta == "true");
+            if (req.body.type == "extension") {
+              request.data.browsers.edge = (request.data.browsers.edge == "true");
+              request.data.browsers.explorer = (request.data.browsers.explorer == "true");
+              request.data.browsers.chrome = (request.data.browsers.chrome == "true");
+              request.data.browsers.firefox = (request.data.browsers.firefox == "true");
+              request.data.browsers.opera = (request.data.browsers.opera == "true");
+              request.data.browsers.safari = (request.data.browsers.safari == "true");
+            }
+          }
+          if (!data.requests) {
+            data.requests = [];
+          }
+          data.requests.push(request);
+          db.users.editByRedditId(data.reddit_id, data).then(function() {
+            var redirect = "/user/" + data.twitch_username + "/requests/" + request.timestamp;
+            res.send({ message: "success", redirect: redirect });
+          });
+        });
       }
       else {
         res.send({ message: "forbidden" });
@@ -105,19 +135,19 @@ router.post("/submit", function(req, res, next) {
 router.post("/comment/add", function(req, res, next) {
   if (req.session.type == "mod" || req.session.type == "helper" || (req.session.twitch && req.session.twitch.id == req.body.twitch)) {
     db.users.getByTwitchId(req.body.twitch).then(function(data) {
-      for (var i in data.requests) {
-        if (data.requests[i].timestamp.toString() == req.body.id.toString()) {
+      for (var request of data.requests) {
+        if (request.timestamp.toString() == req.body.id.toString()) {
           if (req.session.twitch.id == req.body.twitch && !(req.session.type == "mod" || req.session.type == "helper")) {
             req.body.type = "public";
           }
-          data.requests[i].comments.push({
+          request.comments.push({
             timestamp: Date.now(),
             submitter: req.session.twitch.name,
             comment: req.body.comment,
             type: req.body.type
           });
           db.users.editByTwitchId(data.twitch_id, data).then(function() {
-            res.send({ message: "success", submitter: data.twitch_name });
+            res.send({ message: "success", submitter: req.session.twitch.name });
           });
           break;
         }
@@ -132,16 +162,16 @@ router.post("/comment/add", function(req, res, next) {
 router.post("/status/withdraw", function(req, res, next) {
   if (req.session.twitch.id == req.body.twitch) {
     db.users.getByTwitchId(req.body.twitch).then(function(data) {
-      for (var i in data.requests) {
-        if (data.requests[i].timestamp.toString() == req.body.id.toString()) {
-          if (data.requests[i].status == "pending") {
-            data.requests[i].status = "withdrawn";
+      for (var request of data.requests) {
+        if (request.timestamp.toString() == req.body.id.toString()) {
+          if (request.status == "pending") {
+            request.status = "withdrawn";
             db.users.editByTwitchId(data.twitch_id, data).then(function() {
               res.send({ message: "success", status: "withdrawn" });
             });
           }
-          else if (data.requests[i].status == "withdrawn") {
-            data.requests[i].status = "pending";
+          else if (request.status == "withdrawn") {
+            request.status = "pending";
             db.users.editByTwitchId(data.twitch_id, data).then(function() {
               res.send({ message: "success", status: "pending" });
             });

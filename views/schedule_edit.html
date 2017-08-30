@@ -1,0 +1,68 @@
+{% include "./header.html" %}
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12">
+            <p class="custom-text text-darken-1 center" style="font-size: 2.5rem; font-weight: 500;">Schedule Stream{% if !data %}<a href="/schedule/stream/import" class="btn-floating custom darken-1 waves-effect waves-light right tooltipped" data-position="bottom" data-delay="50" data-tooltip="Import Twitch Event"><i class="material-icons">event_available</i></a>{% endif %}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s10 offset-s1">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <div class="col s12 input-field">
+            <input id="stream-title" type="text" value="{{ data.title }}">
+            <label for="stream-title">Stream Title</label>
+          </div>
+          <div class="col s12 input-field">
+            <textarea id="stream-description" class="materialize-textarea">{{ data.description }}</textarea>
+            <label for="stream-description">Stream Description</label>
+          </div>
+          <div class="col s6 input-field">
+            <input type="text" id="stream-start-date" class="datepicker" {% if data.start %}value="{{ data.start|date('j F\, Y') }}"{% endif %}>
+            <label for="stream-start-date">Start Date</label>
+          </div>
+          <div class="col s6 input-field">
+            <input type="text" id="stream-end-date" class="datepicker" {% if data.end %}value="{{ data.end|date('j F, Y') }}"{% endif %}>
+            <label for="stream-end-date">End Date</label>
+          </div>
+          <div class="col s5">
+            <span style="position: relative; top: 5px;">Start Time:</span>
+            <div class="input-field inline" style="width: calc(100% - 85px);">
+              <input type="time" id="stream-start-time" step="1800" {% if data.start %}value="{{ data.start|date('H:i') }}"{% endif %}>
+            </div>
+          </div>
+          <div class="col s5">
+            <span style="position: relative; top: 5px;">End Time:</span>
+            <div class="input-field inline" style="width: calc(100% - 75px);">
+              <input type="time" id="stream-end-time" step="1800" {% if data.end %}value="{{ data.end|date('H:i') }}"{% endif %}>
+            </div>
+          </div>
+          <div class="col s2">
+            <a href="https://www.timeanddate.com/worldclock/converter.html" id="stream-timezone" style="position: relative; top: 32px;" target="_blank"></a>
+          </div>
+          <div class="col l10 m9 s8 input-field">
+            <input id="stream-directory" type="text" value="{{ data.directory }}">
+            <label for="stream-directory">Stream Directory</label>
+          </div>
+          <div class="col l2 m3 s4">
+            <a id="stream-submit" href="#!" class="btn waves-effect waves-light custom darken-1 white-text" data-id="{{ data.id }}" style="width: 100%; position: relative; top: 1rem;">Submit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/schedule_edit.js"></script>
+
+{% include "./footer.html" %}

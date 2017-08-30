@@ -21,32 +21,32 @@ router.post("/search", function(req, res, next) {
       db.users.getByTwitchIds(user.bookmarks).then(function(data) {
         var notes = {};
         if (user.notes) {
-          for (var i in user.notes) {
-            notes[user.notes[i].id] = user.notes[i].note;
+          for (var note of user.notes) {
+            notes[note.id] = note.note;
           }
         }
         var bookmarks = [];
-        for (var i in data) {
-          if (data[i].stream && data[i].stream.stream_type == "live") {
-            bookmarks.push(data[i]);
+        for (var bookmark of data) {
+          if (bookmark.stream && bookmark.stream.stream_type == "live") {
+            bookmarks.push(bookmark);
           }
         }
-        for (var i in data) {
-          if (data[i].stream && data[i].stream.stream_type == "vodcast") {
-            bookmarks.push(data[i]);
+        for (var bookmark of data) {
+          if (bookmark.stream && bookmark.stream.stream_type == "vodcast") {
+            bookmarks.push(bookmark);
           }
         }
-        for (var i in data) {
-          if (!data[i].stream) {
-            bookmarks.push(data[i]);
+        for (var bookmark of data) {
+          if (!bookmark.stream) {
+            bookmarks.push(bookmark);
           }
         }
         var results = [];
         if (req.body.query) {
           var regex = new RegExp(req.body.query.toLowerCase(), "g");
-          for (var i in bookmarks) {
-            if (regex.test(bookmarks[i].twitch_username)) {
-              results.push(bookmarks[i]);
+          for (var bookmark of bookmarks) {
+            if (regex.test(bookmark.twitch_username)) {
+              results.push(bookmark);
             }
           }
         }

@@ -1,6 +1,13 @@
 $(document).ready(function() {
   var height = $("body").height();
   $("#profile-stream").css("height", height - 425 + "px");
+  var d = new Date(),
+      timezone = d.toLocaleString('en', { timeZoneName:'short' }).split(' ').pop();
+  $('[id="timezone"]').html(timezone);
+  $('[id="start"], [id="end"]').each(function() {
+    var d = new Date(parseInt($(this).data("utc")));
+    $(this).html(("0" + d.getDate()).slice(-2)  + "/" + ("0" + (d.getMonth() + 1)).slice(-2) + "/" + d.getFullYear() + " " + d.getHours() + ":" + (d.getMinutes() <10 ? '0' : '') + d.getMinutes());
+  });
 });
 
 $(document).delegate("#profile-appearance-save", "click", function() {

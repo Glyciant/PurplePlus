@@ -10,7 +10,7 @@ router.get("/twitch/", function(req, res) {
 	var id = config.twitch.auth.id,
 			redirect = config.twitch.auth.redirect,
 			scopes = "user_read",
-			state = Math.random().toString(36).substring(15);
+			state = Math.floor(Math.random() * 9999999999999999999999999).toString(36).substring(0, 15);
 
   if (req.query.return) {
     req.session.return = "/profile";
@@ -33,7 +33,7 @@ router.get("/reddit/", function(req, res) {
 	var id = config.reddit.auth.id,
 			redirect = config.reddit.auth.redirect,
 			scopes = "identity",
-			state = Math.random().toString(36).substring(15);
+			state = Math.floor(Math.random() * 9999999999999999999999999).toString(36).substring(0, 15);
 
   if (req.query.return) {
     req.session.return = "/profile";
@@ -56,7 +56,7 @@ router.get("/discord/", function(req, res) {
 	var id = config.discord.auth.id,
 			redirect = config.discord.auth.redirect,
 			scopes = "identify+guilds",
-			state = Math.random().toString(36).substring(15);
+			state = Math.floor(Math.random() * 9999999999999999999999999).toString(36).substring(0, 15);
 
   if (req.query.return) {
     req.session.return = "/profile";

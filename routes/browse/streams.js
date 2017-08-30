@@ -55,18 +55,18 @@ router.post("/length", function(req, res, next) {
 router.post("/directories", function(req, res, next) {
   db.cache.getDirectories().then(function(result) {
     var data = [];
-    for (var i in result) {
-      var index = data.map(function(x) { return x.directory; }).indexOf(result[i]._id.directory);
-      if (index === -1 && result[i]._id.directory) {
+    for (var directory of result) {
+      var index = data.map(function(x) { return x.directory; }).indexOf(directory._id.directory);
+      if (index === -1 && directory._id.directory) {
         data.push({
-          directory: result[i]._id.directory,
-          viewers: result[i]._id.viewers,
+          directory: directory._id.directory,
+          viewers: directory._id.viewers,
           streamers: 1
         });
       }
-      else if (result[i]._id.directory) {
-        data[index].viewers = data[index].viewers + result[i]._id.viewers;
-        data[index].streamers = data[index].streamers + result[i]._id.streamers;
+      else if (directory._id.directory) {
+        data[index].viewers = data[index].viewers + directory._id.viewers;
+        data[index].streamers = data[index].streamers + directory._id.streamers;
       }
     }
     if (req.body.order == "az") {
@@ -90,8 +90,8 @@ router.post("/directory", function(req, res, next) {
   if (req.body.directory) {
     db.cache.getByDirectory(req.body.directory).then(function(streams) {
       var viewers = 0;
-      for (var i in streams) {
-        viewers = viewers + streams[i].stream.viewers;
+      for (var stream of streams) {
+        viewers = viewers + stream.stream.viewers;
       }
       res.render("stream_partial", { data: streams, viewers: viewers });
     });
@@ -105,17 +105,17 @@ router.post("/communities", function(req, res, next) {
   var processed = 0
       data = [];
   db.cache.getCommunities().then(function(result) {
-    for (var i in result) {
-      for (var j in result[i]._id.ids) {
-        var index = data.map(function(x) { return x.id; }).indexOf(result[i]._id.ids[j]);
-        if (index === -1 && result[i]._id.ids[j]) {
+    for (var community of result) {
+      for (var id of community._id.ids) {
+        var index = data.map(function(x) { return x.id; }).indexOf(id);
+        if (index === -1 && id) {
           data.push({
-            id: result[i]._id.ids[j],
-            viewers: result[i]._id.viewers
+            id: id,
+            viewers: community._id.viewers
           });
         }
-        else if (result[i]._id.ids[j]) {
-          data[index].viewers = data[index].viewers + result[i]._id.viewers;
+        else if (id) {
+          data[index].viewers = data[index].viewers + community._id.viewers;
         }
       }
     }

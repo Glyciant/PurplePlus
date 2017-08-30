@@ -13,19 +13,28 @@ nav, nav .nav-wrapper i, nav a.button-collapse i {
 	line-height: 50px;
 }
 
-.nav-wrapper .dropdown-content {
+.nav-wrapper .dropdown-content:not(.autocomplete-content) {
 	margin-top: 50px
 }
 
-.dropdown-content li, .dropdown-content li:hover, .dropdown-content li.active, .dropdown-content li.selected, .dropdown-content li.active.selected {
+#dropdown-about {
+	width: 180px !important;
+}
+
+.dropdown-content:not(.autocomplete-content) li, .dropdown-content:not(.autocomplete-content) li:hover, .dropdown-content:not(.autocomplete-content) li.active, .dropdown-content:not(.autocomplete-content) li.selected, .dropdown-content:not(.autocomplete-content) li.active.selected {
 	background-color: #392D5D;
 	min-height: 40px;
 	line-height: 40px;
 }
 
-.dropdown-content li a, .dropdown-content li span, .select-wrapper span.caret {
+.dropdown-content:not(.autocomplete-content) li a, .dropdown-content:not(.autocomplete-content) li span, .select-wrapper span.caret {
   color: #fff;
 	padding: 9px 16px;
+}
+
+/* AutoComplete Colour */
+.autocomplete-content li span {
+	color: #7D58C1;
 }
 
 /* Container Box Shadows */
@@ -49,32 +58,6 @@ nav, nav .nav-wrapper i, nav a.button-collapse i {
 
 .tabs .tab.disabled a, .tabs .tab.disabled a:hover {
 	color: #B9A3E3 !important;
-}
-
-/* Responsive Text */
-@media screen and (min-width: 992px) {
-    .responsive-title-l {
-      font-size: 1.7vmax;
-    }
-    .responsive-text-l {
-      font-size: 1.0vmax;
-    }
-}
-@media screen and (max-width: 992px) {
-    .responsive-title-m {
-      font-size: 2.7vmax;
-    }
-    .responsive-text-m {
-      font-size: 2.2vmax;
-    }
-}
-@media screen and (max-width: 600px) {
-    .responsive-title-s {
-      font-size: 3.7vmax;
-    }
-    .responsive-text-s {
-      font-size: 2.2vmax;
-    }
 }
 
 /* Fill Dropdowns */
@@ -131,6 +114,23 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
 
 .switch label input[type=checkbox]:checked+.lever:after {
 	background-color: #392D5D;
+}
+
+.picker__date-display, .picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+	background-color: #7D58C1;
+}
+
+.clockpicker-canvas line, .clockpicker-canvas-bg, .clockpicker-canvas-bearing {
+	fill: #7D58C1;
+	stroke: #7D58C1;
+}
+
+button.picker__today:focus, button.picker__clear:focus, button.picker__close:focus, .picker__nav--prev:hover, .picker__nav--next:hover, .clockpicker-tick.active, .clockpicker-tick:hover {
+	background-color: #D3C7EA;
+}
+
+.picker__day.picker__day--today, .picker__close, .picker__today, .picker__clear {
+	color: #7D58C1;
 }
 
 /* Default Links Colour */
@@ -210,6 +210,15 @@ body, .tap-target-wave::before, .tap-target-wave::after {
 	background-color: #EFEEF1;
 }
 
+.table-of-contents a:hover, .table-of-contents a.active {
+	border-color: #7D58C1;
+}
+
+/* Pusher Usernames Fix */
+#submission-user {
+	color: #000;
+}
+
 /* Change Opactiy */
 .card #stream #preview-stream img, #directory-wrapper .directory-thumbnail:not(.active) img, #community-wrapper .community-thumbnail:not(.active) img {
 	opacity: 0.5;
@@ -250,4 +259,46 @@ body, .tap-target-wave::before, .tap-target-wave::after {
 #bookmark-wrapper.removed {
 	transform: scale(0.85, 0.85);
 	opacity: 0.6;
+}
+
+/* Pusher Header Sizes */
+#submission-body h1 {
+	font-size: 21px;
+	margin: 0;
+}
+
+#submission-body h2 {
+	font-size: 20px;
+	margin: 0;
+}
+
+#submission-body h3 {
+	font-size: 19px;
+	margin: 0;
+}
+
+#submission-body h4 {
+	font-size: 18px;
+	margin: 0;
+}
+
+#submission-body h5 {
+	font-size: 17px;
+	margin: 0;
+}
+
+#submission-body h6 {
+	font-size: 16px;
+	margin: 0;
+}
+
+/* Invalid Fields */
+.invalid-wrapper {
+	background-color: #ffcdd2;
+	transition: background-color 0.5s ease;
+}
+
+/* Schedule Dividers */
+.schedule-divider {
+	border-left: 1px solid #000;
 }

@@ -24,9 +24,9 @@ router.post("/approve", function(req, res, next) {
   if (req.session.type == "mod" || req.session.type == "helper") {
     if (req.body.reddit && req.body.id) {
       db.users.getByRedditId(req.body.reddit).then(function(data) {
-        for (var i in data.nominations) {
-          if (data.nominations[i].nomination_id.toString() == req.body.id.toString()) {
-            data.nominations[i].status = "approved";
+        for (var nomination of data.nominations) {
+          if (nomination.nomination_id.toString() == req.body.id.toString()) {
+            nomination.status = "approved";
             db.users.editByRedditId(data.reddit_id, data).then(function() {
               res.send({ message: "success" });
             });
@@ -48,9 +48,9 @@ router.post("/reject", function(req, res, next) {
   if (req.session.type == "mod" || req.session.type == "helper") {
     if (req.body.reddit && req.body.id) {
       db.users.getByRedditId(req.body.reddit).then(function(data) {
-        for (var i in data.nominations) {
-          if (data.nominations[i].nomination_id.toString() == req.body.id.toString()) {
-            data.nominations[i].status = "rejected";
+        for (var nomination of data.nominations) {
+          if (nomination.nomination_id.toString() == req.body.id.toString()) {
+            nomination.status = "rejected";
             data.transactions.push({
               timestamp: Date.now(),
               title: "Nomination Rejected",
@@ -58,13 +58,13 @@ router.post("/reject", function(req, res, next) {
               old: parseFloat(data.balance),
               new: parseFloat((parseFloat(data.balance) - 1).toFixed(2)),
               difference: - 1,
-              description: "Nomination for " + data.nominations[i].nomination_url
+              description: "Nomination for " + nomination.nomination_url
             });
-            var url = data.nominations[i].nomination_url;
+            var url = nomination.nomination_url;
             data.balance = parseFloat((parseFloat(data.balance) - 1).toFixed(2));
             Promise.all([helpers.reddit.setFlair(data, null), helpers.discord.setRole(data)]).then(function(response) {
               db.users.editByRedditId(data.reddit_id, data).then(function() {
-                db.users.getByRedditUsername(data.nominations[i].nominator_name.toLowerCase()).then(function(data) {
+                db.users.getByRedditUsername(nomination.nominator_name.toLowerCase()).then(function(data) {
                   data.transactions.push({
                     timestamp: Date.now(),
                     title: "Nominating Submission (Rejected)",
@@ -101,9 +101,9 @@ router.post("/reapprove", function(req, res, next) {
   if (req.session.type == "mod" || req.session.type == "helper") {
     if (req.body.reddit && req.body.id) {
       db.users.getByRedditId(req.body.reddit).then(function(data) {
-        for (var i in data.nominations) {
-          if (data.nominations[i].nomination_id.toString() == req.body.id.toString()) {
-            data.nominations[i].status = "rejected";
+        for (var nomination of data.nominations) {
+          if (nomination.nomination_id.toString() == req.body.id.toString()) {
+            nomination.status = "rejected";
             data.transactions.push({
               timestamp: Date.now(),
               title: "Nomination Reapproved",
@@ -111,14 +111,14 @@ router.post("/reapprove", function(req, res, next) {
               old: parseFloat(data.balance),
               new: parseFloat((parseFloat(data.balance) + 1).toFixed(2)),
               difference: 1,
-              description: "Nomination for " + data.nominations[i].nomination_url
+              description: "Nomination for " + nomination.nomination_url
             });
-            var url = data.nominations[i].nomination_url;
+            var url = nomination.nomination_url;
             data.balance = parseFloat((parseFloat(data.balance) + 1).toFixed(2));
-            data.nominations[i].status = "approved";
+            nomination.status = "approved";
             Promise.all([helpers.reddit.setFlair(data, null), helpers.discord.setRole(data)]).then(function(response) {
               db.users.editByRedditId(data.reddit_id, data).then(function() {
-                db.users.getByRedditUsername(data.nominations[i].nominator_name.toLowerCase()).then(function(data) {
+                db.users.getByRedditUsername(nomination.nominator_name.toLowerCase()).then(function(data) {
                   data.transactions.push({
                     timestamp: Date.now(),
                     title: "Nominating Submission (Reapproved)",
@@ -168,12 +168,12 @@ router.post("/transactions", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.transactions) {
-          if (req.body.id && data.transactions[i].timestamp.toString() != req.body.id) {
+        for (var transaction of data.transactions) {
+          if (req.body.id && transaction.timestamp.toString() != req.body.id) {
             continue;
           }
-          data.transactions[i].user = data.reddit_name;
-          result.push(data.transactions[i]);
+          transaction.user = data.reddit_name;
+          result.push(transaction);
         }
         if (result.length > 0) {
           if (req.body.response == "table") {
@@ -203,12 +203,12 @@ router.post("/transactions", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.transactions) {
-          if (req.body.id && data.transactions[i].timestamp.toString() != req.body.id) {
+        for (var transaction of data.transactions) {
+          if (req.body.id && transaction.timestamp.toString() != req.body.id) {
             continue;
           }
-          data.transactions[i].user = data.reddit_name;
-          result.push(data.transactions[i]);
+          transaction.user = data.reddit_name;
+          result.push(transaction);
         }
         if (result.length > 0) {
           if (req.body.response == "table") {
@@ -234,12 +234,12 @@ router.post("/transactions", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.transactions) {
-          if (req.body.id && data.transactions[i].timestamp.toString() != req.body.id) {
+        for (var transaction of data.transactions) {
+          if (req.body.id && transaction.timestamp.toString() != req.body.id) {
             continue;
           }
-          data.transactions[i].user = data.reddit_name;
-          result.push(data.transactions[i]);
+          transaction.user = data.reddit_name;
+          result.push(transaction);
         }
         if (result.length > 0) {
           if (req.body.response == "table") {
@@ -265,14 +265,14 @@ router.post("/transactions", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data) {
-          for (var j in data[i].transactions) {
-            if (req.body.id && data[i].transactions[j].timestamp.toString() != req.body.id.toString()) {
+        for (var user of data) {
+          for (var transaction of user.transactions) {
+            if (req.body.id && transaction.timestamp.toString() != req.body.id.toString()) {
               continue;
             }
-            data[i].transactions[j].user = data[i].reddit_name;
-            data[i].transactions[j].user_id = data[i].reddit_id;
-            result.push(data[i].transactions[j]);
+            transaction.user = user.reddit_name;
+            transaction.user_id = user.reddit_id;
+            result.push(transaction);
           }
         }
         if (result.length > 0) {
@@ -316,19 +316,19 @@ router.post("/nominations", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.nominations) {
-          if (req.body.id && data.nominations[i].nomination_id.toString() != req.body.id) {
+        for (var nomination of data.nominations) {
+          if (req.body.id && nomination.nomination_id.toString() != req.body.id) {
             continue;
           }
-          if (req.body.url && req.body.url != data.nominations[i].nomination_url) {
+          if (req.body.url && req.body.url != nomination.nomination_url) {
             continue;
           }
-          if (req.body.status && req.body.status != data.nominations[i].status) {
+          if (req.body.status && req.body.status != nomination.status) {
             continue;
           }
-          data.nominations[i].user = data.reddit_name;
-          data.nominations[i].user_id = data.reddit_id;
-          result.push(data.nominations[i]);
+          nomination.user = data.reddit_name;
+          nomination.user_id = data.reddit_id;
+          result.push(nomination);
         }
         if (result.length > 0) {
           if (req.body.response == "table") {
@@ -358,19 +358,19 @@ router.post("/nominations", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.nominations) {
-          if (req.body.id && data.nominations[i].nomination_id != req.body.id) {
+        for (var nomination of data.nominations) {
+          if (req.body.id && nomination.nomination_id != req.body.id) {
             continue;
           }
-          if (req.body.url && req.body.url != data.nominations[i].nomination_url) {
+          if (req.body.url && req.body.url != nomination.nomination_url) {
             continue;
           }
-          if (req.body.status && req.body.status != data.nominations[i].status) {
+          if (req.body.status && req.body.status != nomination.status) {
             continue;
           }
-          data.nominations[i].user = data.reddit_name;
-          data.nominations[i].user_id = data.reddit_id;
-          result.push(data.nominations[i]);
+          nomination.user = data.reddit_name;
+          nomination.user_id = data.reddit_id;
+          result.push(nomination);
         }
         if (result.length > 0) {
           if (req.body.response == "table") {
@@ -396,19 +396,19 @@ router.post("/nominations", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data.nominations) {
-          if (req.body.id && data.nominations[i].nomination_id.toString() != req.body.id) {
+        for (var nomination of data.nominations) {
+          if (req.body.id && nomination.nomination_id.toString() != req.body.id) {
             continue;
           }
-          if (req.body.url && req.body.url != data.nominations[i].nomination_url) {
+          if (req.body.url && req.body.url != nomination.nomination_url) {
             continue;
           }
-          if (req.body.status && req.body.status != data.nominations[i].status) {
+          if (req.body.status && req.body.status != nomination.status) {
             continue;
           }
-          data.nominations[i].user = data.reddit_name;
-          data.nominations[i].user_id = data.reddit_id;
-          result.push(data.nominations[i]);
+          nomination.user = data.reddit_name;
+          nomination.user_id = data.reddit_id;
+          result.push(nomination);
         }
         if (result.length > 0) {
           if (req.body.response == "table") {
@@ -434,20 +434,20 @@ router.post("/nominations", function(req, res, next) {
           res.send({ message: "not_found" });
           return;
         }
-        for (var i in data) {
-          for (var j in data[i].nominations) {
-            if (req.body.id && data[i].nominations[j].nomination_id.toString() != req.body.id.toString()) {
+        for (var user of data) {
+          for (var nomination of user.nominations) {
+            if (req.body.id && nomination.nomination_id.toString() != req.body.id.toString()) {
               continue;
             }
-            if (req.body.url && req.body.url != data[i].nominations[j].nomination_url) {
+            if (req.body.url && req.body.url != nomination.nomination_url) {
               continue;
             }
-            if (req.body.status && req.body.status != data[i].nominations[j].status) {
+            if (req.body.status && req.body.status != nomination.status) {
               continue;
             }
-            data[i].nominations[j].user = data[i].reddit_name;
-            data[i].nominations[j].user_id = data[i].reddit_id;
-            result.push(data[i].nominations[j]);
+            nomination.user = user.reddit_name;
+            nomination.user_id = user.reddit_id;
+            result.push(nomination);
           }
         }
         if (result.length > 0) {

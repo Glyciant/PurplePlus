@@ -4,10 +4,12 @@ config.app = {};
 config.reddit = {};
 config.twitch = {};
 config.discord = {};
+config.slack = {};
 config.legacy = {};
 
 config.app.port = 1000;
 config.app.base = "http://localhost:" + config.app.port;
+config.app.db = "mongodb://127.0.0.1:27017/Purple+";
 
 config.reddit.auth = {};
 config.reddit.auth.id = "";
@@ -15,7 +17,7 @@ config.reddit.auth.secret = "";
 config.reddit.auth.redirect = config.app.base + "/auth/login/reddit/";
 
 config.reddit.bot = {};
-config.reddit.bot.username = "TwitchSubreddit";
+config.reddit.bot.username = "";
 config.reddit.bot.password = '';
 config.reddit.bot.id = "";
 config.reddit.bot.secret = "";
@@ -26,7 +28,7 @@ config.twitch.auth.secret = "";
 config.twitch.auth.redirect = config.app.base + "/auth/login/twitch/";
 
 config.twitch.bot = {};
-config.twitch.bot.username = "TwitchSubreddit";
+config.twitch.bot.username = "";
 config.twitch.bot.password = "";
 
 config.twitch.community = "7958736b-9fe4-4299-b9d7-6e07d41eb493";
@@ -78,6 +80,8 @@ config.discord.bot.roles = {
   "verified": "347402757214568448",
   "everyone": "122111299713892354"
 }
+
+config.slack.webhook = "";
 
 config.legacy.requests = {};
 config.legacy.requests.token = "";

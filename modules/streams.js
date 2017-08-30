@@ -17,8 +17,8 @@ var task = cron.schedule('0 */5 * * * *', function() {
           streams[0].streams.forEach(function(stream) {
             db.cache.addStream(stream.channel._id, stream).then(function() {
               var community = false;
-              for (var i in stream.community_ids) {
-                if (stream.community_ids[i] == config.twitch.community) {
+              for (var community of stream.community_ids) {
+                if (community == config.twitch.community) {
                   community = true;
                 }
               }

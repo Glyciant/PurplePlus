@@ -64,52 +64,37 @@
       <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Other"><img src="/img/flair/intro.png" /></a>
     {% endif %}
   {% endif %}
-  {% if data.balance >= 1 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="1 Twoo"><img src="/img/flair/bits-1.png" /></a>
-  {% endif %}
-  {% if data.balance >= 5 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="5 Twoos"><img src="/img/flair/bits-5.png" /></a>
-  {% endif %}
-  {% if data.balance >= 10 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="10 Twoos"><img src="/img/flair/bits-10.png" /></a>
-  {% endif %}
-  {% if data.balance >= 25 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="25 Twoos"><img src="/img/flair/bits-25.png" /></a>
-  {% endif %}
-  {% if data.balance >= 50 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="50 Twoos"><img src="/img/flair/bits-50.png" /></a>
-  {% endif %}
-  {% if data.balance >= 75 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="75 Twoos"><img src="/img/flair/bits-75.png" /></a>
-  {% endif %}
-  {% if data.balance >= 100 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="100 Twoos"><img src="/img/flair/bits-100.png" /></a>
-  {% endif %}
-  {% if data.balance >= 200 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="200 Twoos"><img src="/img/flair/bits-200.png" /></a>
-  {% endif %}
-  {% if data.balance >= 300 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="300 Twoos"><img src="/img/flair/bits-300.png" /></a>
-  {% endif %}
-  {% if data.balance >= 400 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="400 Twoos"><img src="/img/flair/bits-400.png" /></a>
-  {% endif %}
-  {% if data.balance >= 500 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="500 Twoos"><img src="/img/flair/bits-500.png" /></a>
-  {% endif %}
-  {% if data.balance >= 600 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="600 Twoos"><img src="/img/flair/bits-600.png" /></a>
-  {% endif %}
-  {% if data.balance >= 700 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="700 Twoo"s><img src="/img/flair/bits-700.png" /></a>
-  {% endif %}
-  {% if data.balance >= 800 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="800 Twoos"><img src="/img/flair/bits-800.png" /></a>
-  {% endif %}
-  {% if data.balance >= 900 %}
-    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="900 Twoos"><img src="/img/flair/bits-900.png" /></a>
-  {% endif %}
   {% if data.balance >= 1000 %}
     <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="1000 Twoos"><img src="/img/flair/bits-1000.png" /></a>
+  {% elseif data.balance >= 900 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="900 Twoos"><img src="/img/flair/bits-900.png" /></a>
+  {% elseif data.balance >= 800 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="800 Twoos"><img src="/img/flair/bits-800.png" /></a>
+  {% elseif data.balance >= 700 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="700 Twoo"s><img src="/img/flair/bits-700.png" /></a>
+  {% elseif data.balance >= 600 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="600 Twoos"><img src="/img/flair/bits-600.png" /></a>
+  {% elseif data.balance >= 500 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="500 Twoos"><img src="/img/flair/bits-500.png" /></a>
+  {% elseif data.balance >= 400 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="400 Twoos"><img src="/img/flair/bits-400.png" /></a>
+  {% elseif data.balance >= 300 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="300 Twoos"><img src="/img/flair/bits-300.png" /></a>
+  {% elseif data.balance >= 200 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="200 Twoos"><img src="/img/flair/bits-200.png" /></a>
+  {% elseif data.balance >= 100 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="100 Twoos"><img src="/img/flair/bits-100.png" /></a>
+  {% elseif data.balance >= 75 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="75 Twoos"><img src="/img/flair/bits-75.png" /></a>
+  {% elseif data.balance >= 50 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="50 Twoos"><img src="/img/flair/bits-50.png" /></a>
+  {% elseif data.balance >= 25 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="25 Twoos"><img src="/img/flair/bits-25.png" /></a>
+  {% elseif data.balance >= 10 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="10 Twoos"><img src="/img/flair/bits-10.png" /></a>
+  {% elseif data.balance >= 5 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="5 Twoos"><img src="/img/flair/bits-5.png" /></a>
+  {% elseif data.balance >= 1 %}
+    <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="1 Twoo"><img src="/img/flair/bits-1.png" /></a>
   {% endif %}
 </div>

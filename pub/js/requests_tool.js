@@ -51,6 +51,18 @@ $(document).delegate("#submit-request", "click", function() {
     missing = false;
 
     if (!data.name || !data.url || !data.description || !data.data) {
+      if (!data.name) {
+        $("#tool-name").addClass("invalid");
+      }
+      if (!data.url) {
+        $("#tool-url").addClass("invalid");
+      }
+      if (!data.description) {
+        $("#tool-description").addClass("invalid");
+      }
+      if (!data.data) {
+        $("#tool-data").addClass("invalid");
+      }
       missing = true;
     }
     if (data.api === true) {
@@ -60,6 +72,15 @@ $(document).delegate("#submit-request", "click", function() {
         scopes_description: $("#tool-api-scopes-description").val()
       }
       if (!data.api_data.store || !data.api_data.scopes || !data.api_data.scopes_description) {
+        if (!data.api_data.store) {
+          $("#tool-api-store").addClass("invalid");
+        }
+        if (!data.api_data.scopes) {
+          $("#tool-api-scopes").addClass("invalid");
+        }
+        if (!data.api_data.scopes_description) {
+          $("#tool-api-scopes-description").addClass("invalid");
+        }
         missing = true;
       }
     }
@@ -67,6 +88,7 @@ $(document).delegate("#submit-request", "click", function() {
     if (data.tos === true) {
       data.tos_url = $("#tool-tos-link").val();
       if (!data.tos_url) {
+        $("#tool-tos-link").addClass("invalid");
         missing = true;
       }
     }
@@ -74,6 +96,7 @@ $(document).delegate("#submit-request", "click", function() {
     if (data.source === true) {
       data.source_url = $("#tool-source-link").val();
       if (!data.source_url) {
+        $("#tool-source-link").addClass("invalid");
         missing = true;
       }
     }
@@ -81,6 +104,7 @@ $(document).delegate("#submit-request", "click", function() {
     if (data.beta === true) {
       data.beta_changes = $("#tool-beta-description").val();
       if (!data.beta_changes) {
+        $("#tool-beta-description").addClass("invalid");
         missing = true;
       }
     }
@@ -97,6 +121,18 @@ $(document).delegate("#submit-request", "click", function() {
     }
 
     if (missing) {
+      setTimeout(function() {
+        $("#tool-name").removeClass("invalid");
+        $("#tool-url").removeClass("invalid");
+        $("#tool-description").removeClass("invalid");
+        $("#tool-data").removeClass("invalid");
+        $("#tool-api-store").removeClass("invalid");
+        $("#tool-api-scopes").removeClass("invalid");
+        $("#tool-api-scopes-description").removeClass("invalid");
+        $("#tool-tos-link").removeClass("invalid");
+        $("#tool-source-link").removeClass("invalid");
+        $("#tool-beta-description").removeClass("invalid");
+      }, 3000);
       Materialize.toast('You have not completed a field.', 4000, 'rounded');
     }
     else {

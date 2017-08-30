@@ -7,7 +7,7 @@ var express = require("express"),
 
 router.get("/", function(req, res, next) {
   db.users.getAdmins().then(function(data) {
-    res.render("admins", { title: "Home", data: data });
+    res.render("admins", { title: "Site Admins", data: data });
   })
 });
 

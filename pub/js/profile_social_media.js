@@ -52,7 +52,7 @@ $(document).delegate("#social-media-save", "click", function() {
     social_media: social_media
   }, function(data) {
     if (data.message == "success") {
-      Materialize.toast("Your social media accounts were updated.", 4000, "rounded");
+      location.reload();
     }
     else if (data.message == "forbidden") {
       Materialize.toast("You do not have permission to do that.", 4000, "rounded");

@@ -13,7 +13,7 @@ router.get("/", function(req, res, next) {
     req.query.offset = parseInt(req.query.offset);
   }
   if (!req.query.limit || isNaN(parseInt(req.query.limit)) || req.query.limit < 0 || req.query.limit > 100) {
-    req.query.limit = 100;
+    req.query.limit = 25;
   }
   else {
     req.query.limit = parseInt(req.query.limit)
@@ -23,14 +23,21 @@ router.get("/", function(req, res, next) {
     for (var user of data) {
       users.push({
         twitch_id: user.twitch_id,
-        twitch_name: user.twitch_name,
-        twitch_username: user.twitch_username,
-        reddit_id: user.reddit_id,
-        reddit_name: user.reddit_name,
-        reddit_username: user.reddit_username,
-        discord_id: user.discord_id,
-        discord_name: user.discord_name,
-        discord_discriminator: user.discord_tag,
+        twitch: {
+          id: user.twitch_id,
+          name: user.twitch_name,
+          username: user.twitch_username
+        },
+        reddit: {
+          id: user.reddit_id,
+          name: user.reddit_name,
+          username: user.reddit_username
+        },
+        discord: {
+          id: user.discord_id,
+          name: user.discord_name,
+          discriminator: user.discord_tag
+        },
         balance: user.balance,
         last_login: user.last_login
       });
@@ -52,14 +59,21 @@ router.get("/:id", function(req, res, next) {
         message: "OK",
         description: "Match Found",
         twitch_id: data.twitch_id,
-        twitch_name: data.twitch_name,
-        twitch_username: data.twitch_username,
-        reddit_id: data.reddit_id,
-        reddit_name: data.reddit_name,
-        reddit_username: data.reddit_username,
-        discord_id: data.discord_id,
-        discord_name: data.discord_name,
-        discord_discriminator: data.discord_tag,
+        twitch: {
+          id: data.twitch_id,
+          name: data.twitch_name,
+          username: data.twitch_username
+        },
+        reddit: {
+          id: data.reddit_id,
+          name: data.reddit_name,
+          username: data.reddit_username
+        },
+        discord: {
+          id: data.discord_id,
+          name: data.discord_name,
+          discriminator: data.discord_tag
+        },
         balance: data.balance,
         last_login: data.last_login
       });
@@ -115,6 +129,7 @@ router.get("/:id/profile", function(req, res, next) {
             overview: data.profile.overview,
             types: data.profile.types,
             votes: data.profile.votes.length,
+            views: data.profile.views.length,
             tags: data.profile.tags,
             social_media: data.profile.social_media,
             communities: data.profile.communities,
@@ -153,6 +168,80 @@ router.get("/:id/profile", function(req, res, next) {
   });
 });
 
+router.get("/:id/schedule", function(req, res, next) {
+  db.users.getByTwitchId(req.params.id).then(function(data) {
+    if (data) {
+      if (data.streams && data.streams[0]) {
+        res.json({
+          status: 200,
+          message: "OK",
+          description: "Match Found.",
+          streams: data.streams
+        });
+      }
+      else {
+        res.json({
+          status: 204,
+          message: "No Content",
+          description: "The user with the Twitch ID " + req.params.id + " has no scheduled streams."
+        });
+      }
+    }
+    else {
+      res.json({
+        status: 404,
+        message: "Not Found",
+        description: "There is no user with the Twitch ID " + req.params.id + "."
+      });
+    }
+  });
+});
+
+router.get("/:id/schedule/:stream", function(req, res, next) {
+  db.users.getByTwitchId(req.params.id).then(function(data) {
+    if (data) {
+      if (data.streams && data.streams[0]) {
+        var index = data.streams.map(function(x) { return x.id }).indexOf(req.params.stream);
+        if (index > -1) {
+          res.json({
+            status: 200,
+            message: "OK",
+            description: "Match Found.",
+            id: data.streams[index].id,
+            title: data.streams[index].title,
+            description: data.streams[index].description,
+            start: data.streams[index].start,
+            end: data.streams[index].end,
+            directory: data.streams[index].directory,
+            type: data.streams[index].type
+          });
+        }
+        else {
+          res.json({
+            status: 404,
+            message: "Not Found",
+            description: "The user with the Twitch ID " + req.params.id + " does not have a scheduled stream with the ID of " + req.params.request + "."
+          });
+        }
+      }
+      else {
+        res.json({
+          status: 204,
+          message: "No Content",
+          description: "The user with the Twitch ID " + req.params.id + " has no scheduled streams."
+        });
+      }
+    }
+    else {
+      res.json({
+        status: 404,
+        message: "Not Found",
+        description: "There is no user with the Twitch ID " + req.params.id + "."
+      });
+    }
+  });
+});
+
 router.get("/:id/requests", function(req, res, next) {
   db.users.getByTwitchId(req.params.id).then(function(data) {
     if (data) {
@@ -170,18 +259,27 @@ router.get("/:id/requests", function(req, res, next) {
             });
           }
         }
-        res.json({
-          status: 200,
-          message: "OK",
-          description: "Match Found.",
-          requests: requests
-        });
+        if (requests[0]) {
+          res.json({
+            status: 200,
+            message: "OK",
+            description: "Match Found.",
+            requests: requests
+          });
+        }
+        else {
+          res.json({
+            status: 204,
+            message: "No Content",
+            description: "The user with the Twitch ID " + req.params.id + " has no approved advertisement requests."
+          });
+        }
       }
       else {
         res.json({
           status: 204,
           message: "No Content",
-          description: "The user with the Twitch ID " + req.params.id + " has no advertisement requests."
+          description: "The user with the Twitch ID " + req.params.id + " has no approved advertisement requests."
         });
       }
     }
@@ -217,7 +315,7 @@ router.get("/:id/requests/:request", function(req, res, next) {
             res.json({
               status: 206,
               message: "Partial Content",
-              description: "The user with the Twitch ID " + req.params.id + " does not have an approved profile.",
+              description: "The user with the Twitch ID " + req.params.id + " does not have an approved request with the ID of " + req.params.request + ".",
               legacy: (data.requests[index].legacy_id !== undefined),
               timestamp: data.requests[index].timestamp,
               approval_status: data.requests[index].status,

@@ -25,6 +25,16 @@ $(document).delegate("#submit-request", "click", function() {
     });
   }
   else {
+    if (!data.name) {
+      $("#tool-name").addClass("invalid");
+    }
+    if (!data.description) {
+      $("#tool-description").addClass("invalid");
+    }
+    setTimeout(function() {
+      $("#tool-name").removeClass("invalid");
+      $("#tool-description").removeClass("invalid");
+    }, 3000);
     Materialize.toast('You have not completed a field.', 4000, 'rounded');
   }
 });

@@ -44,7 +44,7 @@
                       <td class="center">{{ command.name }}</td>
                       <td class="center">{{ command.response }}</td>
                       <td class="center">
-                        {% if command.enabled == "true" %}
+                        {% if command.enabled === true %}
                           Yes
                         {% else %}
                           No
@@ -63,7 +63,7 @@
         </div>
       </div>
     {% else %}
-      {% set message = "There have not been any messages logged." %}
+      {% set message = "There have no commands." %}
       {% include "./missing_partial.html" %}
     {% endif %}
   </div>
@@ -101,13 +101,13 @@
       <div class="col l6 m6 s12">
         <p>
           <input name="edit-command-method" type="radio" id="edit-command-method-one" checked disabled />
-          <label for="edit-command-method-one">Users Match At Least One of the Following Attributes</label>
+          <label for="edit-command-method-one">Users Must Match At Least One of the Following Attributes</label>
         </p>
       </div>
       <div class="col l6 m6 s12">
         <p>
           <input name="edit-command-method" type="radio" id="edit-command-method-all" disabled />
-          <label for="edit-command-method-all">Users Match All of the Following Attributes</label>
+          <label for="edit-command-method-all">Users Must Match All of the Following Attributes</label>
         </p>
       </div>
       <div class="col l6 m6 s12">
@@ -171,28 +171,155 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#!" id="save-command" class="modal-action modal-close waves-effect waves-green btn-flat">Save & Close</a>
+    <a href="#!" id="save-command" class="modal-action waves-effect waves-green btn-flat">Save & Close</a>
     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
   </div>
 </div>
 
 <div id="tab-filters" class="row">
   <div class="col s10 offset-s1">
-    <div class="card center">
+    <div class="card">
+      <div class="card-content">
+        <div class="row" style="margin: 0;">
+          <p class="custom-text text-darken-1 center" style="font-size: 2rem; font-weight: 500; margin: 10px 0;">Manage Filters<a href="#modal-edit-filter" id="add-filter" class="btn-floating custom darken-1 waves-effect waves-light right"><i class="material-icons">add</i></a></p>
+        </div>
+      </div>
+    </div>
+    {% if filters[0] %}
+    <div class="card">
       <div class="card-content">
         <div class="row">
           <div class="col s12">
-            <h2>Error 503</h2>
-          </div>
-          <div class="col s12">
-            <h5>This feature is not available in the beta build. Sorry!</h5>
-          </div>
-          <div class="col s12">
-            <p>Please use the navigation bar at the top of the page to return to the main site.</p>
+            <table>
+              <thead>
+                <th class="center">Banphrase</th>
+                <th class="center">Enabled</th>
+                <th class="center">Action</th>
+              </thead>
+              <tbody>
+                {% for filter in filters %}
+                  <tr>
+                    <td class="center">{{ filter.banphrase }}</td>
+                    <td class="center">
+                      {% if filter.enabled === true %}
+                        Yes
+                      {% else %}
+                        No
+                      {% endif %}
+                    </td>
+                    <td class="center">
+                      <a href="#modal-edit-filter" id="edit-filter" class="btn waves-effect waves-light orange darken-2" data-id="{{ filter._id.toString() }}"><i class="material-icons">edit</i></a>
+                      <a href="#!" id="delete-filter" class="btn waves-effect waves-light red darken-2" data-id="{{ filter._id.toString() }}"><i class="material-icons">delete</i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+    {% else %}
+      {% set message = "There have not been any messages logged." %}
+      {% include "./missing_partial.html" %}
+    {% endif %}
+  </div>
+</div>
+
+<div id="modal-edit-filter" class="modal">
+  <div class="modal-content">
+    <h4 id="filter-modal-title">Add Discord Filter</h4>
+    <hr />
+    <div class="row" style="margin: 0";>
+      <div class="col l8 m6 s12 input-field">
+        <input id="edit-filter-banphrase" type="text">
+        <label for="edit-filter-banphrase">Filter Banphrase</label>
+      </div>
+      <div class="col l4 m6 s12 input-field">
+        <div class="switch">
+          <label>
+            Disabled
+            <input id="edit-filter-enabled" type="checkbox" checked>
+            <span class="lever"></span>
+            Enabled
+          </label>
+        </div>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input name="edit-filter-method" type="radio" id="edit-filter-method-one" checked />
+          <label for="edit-filter-method-one">Users Must Match At Least One of the Following Attributes</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input name="edit-filter-method" type="radio" id="edit-filter-method-all" />
+          <label for="edit-filter-method-all">Users Must Match All of the Following Attributes</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-mods" checked />
+          <label for="edit-filter-exclude-mods">Exclude Subreddit Moderators</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-helpers" checked />
+          <label for="edit-filter-exclude-helpers">Exclude Community Helpers</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-wiki" />
+          <label for="edit-filter-exclude-wiki">Exclude Wiki Contributors</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-staff" />
+          <label for="edit-filter-exclude-staff">Exclude Twitch Staff</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-admins" />
+          <label for="edit-filter-exclude-admins">Exclude Twitch Admins</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-global-mods" />
+          <label for="edit-filter-exclude-global-mods">Exclude Global Moderators</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-contributors" />
+          <label for="edit-filter-exclude-contributors">Exclude Outstanding Contributors</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-profiles" />
+          <label for="edit-filter-exclude-profiles">Exclude Users With Approved Profiles</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12">
+        <p>
+          <input type="checkbox" class="filled-in" id="edit-filter-exclude-twoos" />
+          <label for="edit-filter-exclude-twoos">Exclude Users With More Than The Following Twoos Balance:</label>
+        </p>
+      </div>
+      <div class="col l6 m6 s12 input-field" style="margin-top: -5px;">
+        <input id="edit-filter-exclude-twoos-value" type="number" min="1" disabled />
+        <label for="edit-filter-allow-twoos-value">Minimum Twoos Value</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" id="save-filter" class="modal-action waves-effect waves-green btn-flat">Save & Close</a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
   </div>
 </div>
 
@@ -295,6 +422,7 @@
 {% endif %}
 
 <script src="/js/admin_discord_commands.js"></script>
+<script src="/js/admin_discord_filters.js"></script>
 <script src="/js/admin_discord_logs.js"></script>
 
 {% include "./footer.html" %}

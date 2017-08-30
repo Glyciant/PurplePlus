@@ -3,6 +3,7 @@ $(document).delegate("#twoos-transactions", "click", function() {
   $("#no-profile").slideUp();
   $("#profile-edit-wrapper").slideUp();
   $("#profile-settings-wrapper").slideUp();
+  $("#profile-view-wrapper").slideUp();
   $("#profile-mobile-settings").slideUp();
   $("#profile-requests-wrapper").slideUp();
   $("#profile-mobile-settings-wrapper #profile-requests-wrapper").slideUp();
@@ -19,6 +20,7 @@ $(document).delegate("#profile-return-wrapper a", "click", function() {
   $("#no-profile").slideDown();
   $("#profile-edit-wrapper").slideDown();
   $("#profile-settings-wrapper").slideDown();
+  $("#profile-view-wrapper").slideDown();
   $("#profile-mobile-settings").slideDown();
   $("#profile-requests-wrapper").slideDown();
   $("#profile-mobile-settings-wrapper #profile-requests-wrapper").slideDown();

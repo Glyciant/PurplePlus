@@ -1,7 +1,8 @@
 var mongodb = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
     assert = require('assert'),
-    url = "mongodb://localhost:27017/Purple+";
+    config = require('./config'),
+    url = config.app.db;
 
 var users = {
   add: (object) => {
@@ -321,6 +322,25 @@ var users = {
       });
     });
   },
+  getBetaTesters: () => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("users").find({ beta: true }, function(err, result) {
+          result.toArray().then(function(arrayResult) {
+            assert.equal(null, err);
+            db.close();
+            if (arrayResult) {
+              resolve(arrayResult);
+            }
+            else {
+              resolve(null);
+            }
+          });
+        });
+      });
+    });
+  },
   getRandomApprovedByType: (type, live) => {
     return new Promise((resolve, reject) => {
       mongodb.connect(url, function(err, db) {
@@ -350,7 +370,8 @@ var users = {
     return new Promise((resolve, reject) => {
       mongodb.connect(url, function(err, db) {
         assert.equal(null, err);
-        db.collection("users").aggregate([{ $match: { balance: { $gte: 20 }, reddit_id: { $not: { $type: 10 } }, "profile.status": "approved" } }, { $sample: { size: 10 } }], function(err, result) {
+        var now = Date.now();
+        db.collection("users").aggregate([{ $match: { "profile.status": "approved", "profile.created": { $gte: (now - 2629746000) } } }, { $limit: 5 }, { $sort: { balance: -1 } }], function(err, result) {
           assert.equal(null, err);
           db.close();
           if (result) {
@@ -359,6 +380,44 @@ var users = {
           else {
             resolve(null);
           }
+        });
+      });
+    });
+  },
+  getTwitchOfficials: () => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("users").find({ $or: [{ "display.twitch": "staff" }, { "display.twitch": "admin" }, { "display.twitch": "global_mod" }] }, function(err, result) {
+          result.toArray().then(function(arrayResult) {
+            assert.equal(null, err);
+            db.close();
+            if (arrayResult) {
+              resolve(arrayResult);
+            }
+            else {
+              resolve(null);
+            }
+          });
+        });
+      });
+    });
+  },
+  getScheduledStreams: (start, end, limit, offset) => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("users").find({ streams: { $elemMatch: { start: { $lte: end }, end: { $gt: start } } } }, { sort: [[ "balance", "descending" ]], skip: offset, limit: limit }, function(err, result) {
+          result.toArray().then(function(arrayResult) {
+            assert.equal(null, err);
+            db.close();
+            if (arrayResult) {
+              resolve(arrayResult);
+            }
+            else {
+              resolve(null);
+            }
+          });
         });
       });
     });
@@ -437,7 +496,7 @@ var users = {
       mongodb.connect(url, function(err, db) {
         assert.equal(null, err);
         var now = Date.now();
-        db.collection("users").updateOne({ "profile.types.artist.commissions.accepting": "true", last_login: { $lt: (now - 2629746000) } }, { $set: { "profile.types.artist.commissions.accepting": "false" } }, function(err, result) {
+        db.collection("users").updateOne({ "profile.types.artist.commissions.accepting": true, last_login: { $lt: (now - 2629746000) } }, { $set: { "profile.types.artist.commissions.accepting": false } }, function(err, result) {
           assert.equal(null, err);
           db.close();
           if (result) {
@@ -455,7 +514,7 @@ var users = {
       mongodb.connect(url, function(err, db) {
         assert.equal(null, err);
         var now = Date.now();
-        db.collection("users").updateOne({ "profile.types.developer.commissions.accepting": "true", last_login: { $lt: (now - 2629746000) } }, { $set: { "profile.types.developer.commissions.accepting": "false" } }, function(err, result) {
+        db.collection("users").updateOne({ "profile.types.developer.commissions.accepting": true, last_login: { $lt: (now - 2629746000) } }, { $set: { "profile.types.developer.commissions.accepting": false } }, function(err, result) {
           assert.equal(null, err);
           db.close();
           if (result) {
@@ -778,26 +837,6 @@ var queries = {
   }
 }
 
-var filters = {
-  add: (object) => {
-    return new Promise((resolve, reject) => {
-      mongodb.connect(url, function(err, db) {
-        assert.equal(null, err);
-        db.collection("filters").insertOne(object, function(err, result) {
-          assert.equal(null, err);
-          db.close();
-          if (result) {
-            resolve(result);
-          }
-          else {
-            resolve(null);
-          }
-        });
-      });
-    });
-  }
-}
-
 var commands = {
   add: (object) => {
     return new Promise((resolve, reject) => {
@@ -889,6 +928,113 @@ var commands = {
       mongodb.connect(url, function(err, db) {
         assert.equal(null, err);
         db.collection("commands").find({}, function(err, result) {
+          result.toArray().then(function(arrayResult) {
+            assert.equal(null, err);
+            db.close();
+            if (arrayResult) {
+              resolve(arrayResult);
+            }
+            else {
+              resolve(null);
+            }
+          });
+        });
+      });
+    });
+  }
+}
+
+var filters = {
+  add: (object) => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("filters").insertOne(object, function(err, result) {
+          assert.equal(null, err);
+          db.close();
+          if (result) {
+            resolve(result);
+          }
+          else {
+            resolve(null);
+          }
+        });
+      });
+    });
+  },
+  edit: (id, object) => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("filters").updateOne({ _id: ObjectID(id) }, object, function(err, result) {
+          assert.equal(null, err);
+          db.close();
+          if (result) {
+            resolve(result);
+          }
+          else {
+            resolve(null);
+          }
+        });
+      });
+    });
+  },
+  delete: (id) => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("filters").deleteOne({ _id: ObjectID(id) }, function(err, result) {
+          assert.equal(null, err);
+          db.close();
+          if (result) {
+            resolve(result);
+          }
+          else {
+            resolve(null);
+          }
+        });
+      });
+    });
+  },
+  getById: (id) => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("filters").findOne({ _id: ObjectID(id) }, function(err, result) {
+          assert.equal(null, err);
+          db.close();
+          if (result) {
+            resolve(result);
+          }
+          else {
+            resolve(null);
+          }
+        });
+      });
+    });
+  },
+  getByName: (name) => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("filters").findOne({ name: name }, function(err, result) {
+          assert.equal(null, err);
+          db.close();
+          if (result) {
+            resolve(result);
+          }
+          else {
+            resolve(null);
+          }
+        });
+      });
+    });
+  },
+  getAll: () => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        db.collection("filters").find({}, function(err, result) {
           result.toArray().then(function(arrayResult) {
             assert.equal(null, err);
             db.close();

@@ -33,22 +33,21 @@ $(document).delegate("#search", "click", function() {
           $("#search-data-profile-creation").html(d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + (d.getMinutes() <10 ? '0' : '') + d.getMinutes());
           var d = new Date(parseInt(data.data.profile.updated));
           $("#search-data-profile-update").html(d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + (d.getMinutes() <10 ? '0' : '') + d.getMinutes());
+          $("#search-data-profile-rejection-reason select").prop("disabled", true);
+          $("#search-data-profile-flair select").prop("disabled", true);
+          $("#search-data-profile-rejection-reason select").val("");
+          $("#search-data-profile-flair select").val("");
           if (data.data.profile.status == "pending") {
-            $("#search-data-profile-flair select").prop("disabled", true);
             $("#search-data-profile-pending").prop("checked", true);
-            $("#search-data-profile-rejection-reason").prop("disabled", true);
           }
           else if (data.data.profile.status == "approved") {
+            $("#search-data-profile-approved").prop("checked", true);
             $("#search-data-profile-flair select").prop("disabled", false);
             $("#search-data-profile-flair select").val(data.data.display.profile);
-            $("#search-data-profile-approved").prop("checked", true);
-            $("#search-data-profile-rejection-reason").prop("disabled", true);
-            $("#search-data-profile-rejection-reason select").val("");
           }
           else if (data.data.profile.status == "rejected") {
-            $("#search-data-profile-flair select").prop("disabled", true);
             $("#search-data-profile-rejected").prop("checked", true);
-            $("#search-data-profile-rejection-reason").prop("disabled", false);
+            $("#search-data-profile-rejection-reason select").prop("disabled", false);
             $("#search-data-profile-rejection-reason select").val(data.data.profile.rejection_reason);
           }
         }
@@ -69,9 +68,11 @@ $(document).delegate("#search", "click", function() {
         if (data.data.requests) {
           $("#search-data-ad-requests").html(data.data.requests.length);
         }
-        $("#search-data-bans-profile").prop("checked", data.data.bans.profile);
-        $("#search-data-bans-nominations").prop("checked", data.data.bans.nominations);
-        $("#search-data-bans-requests").prop("checked", data.data.bans.requests);
+        if (data.data.bans) {
+          $("#search-data-bans-profile").prop("checked", data.data.bans.profile);
+          $("#search-data-bans-nominations").prop("checked", data.data.bans.nominations);
+          $("#search-data-bans-requests").prop("checked", data.data.bans.requests);
+        }
         $("#search-data-type select").val(data.data.type);
         $("#search-data-subreddit-type select").val(data.data.display.subreddit);
         if (data.data.display.ama === true) {
@@ -85,6 +86,12 @@ $(document).delegate("#search", "click", function() {
         }
         else {
           $("#search-data-admin").prop("checked", false);
+        }
+        if (data.data.beta === true) {
+          $("#search-data-beta").prop("checked", true);
+        }
+        else {
+          $("#search-data-beta").prop("checked", false);
         }
         $('select').material_select();
         Materialize.updateTextFields();
@@ -125,9 +132,15 @@ $(document).delegate("#search-data-submit", "click", function() {
   }
   else if ($("#search-data-profile-approved").is(":checked")) {
     profile = "approved";
+    if (!flair) {
+      flair = "other";
+    }
   }
   else if ($("#search-data-profile-rejected").is(":checked")) {
     profile = "rejected";
+    if (!rejection_reason) {
+      rejection_reason = "Other";
+    }
   }
   else if ($("#search-data-profile-clear").is(":checked")) {
     profile = "clear";
@@ -147,6 +160,13 @@ $(document).delegate("#search-data-submit", "click", function() {
     admin = false;
   }
 
+  if ($("#search-data-beta").is(":checked")) {
+    beta = true;
+  }
+  else {
+    beta = false;
+  }
+
   $.post("/admin/accounts/submit/", {
     id: id,
     field: field,
@@ -158,7 +178,8 @@ $(document).delegate("#search-data-submit", "click", function() {
     bans: bans,
     profile: profile,
     ama: ama,
-    admin: admin
+    admin: admin,
+    beta: beta
   }, function(data) {
     if (data.message == "success") {
       $("#search-data").slideUp();

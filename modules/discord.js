@@ -1,6 +1,6 @@
 var db = require('../db'),
-config = require('../config'),
-helpers = require('../helpers');
+		config = require('../config'),
+		helpers = require('../helpers');
 
 module.exports = function(client) {
 	client.on('ready', function() {
@@ -27,9 +27,38 @@ module.exports = function(client) {
 				}
 			}
 
+			db.filters.getAll().then(function(filters) {
+				db.users.getByDiscordId(message.author.id).then(function(user) {
+					for (var filter of filters) {
+						if (filter.enabled === true) {
+							var pattern;
+							if (filter.banphrase.substring(0, 1) == "/" && filter.banphrase.substring(filter.banphrase.length - 1, filter.banphrase.length) == "/") {
+			          pattern = new RegExp(filter.banphrase.slice(1, -1));
+			        }
+			        else {
+			          pattern = new RegExp(filter.banphrase);
+			        }
+							if (pattern.test(message) === true) {
+								if (filter.exclusions.method == "one") {
+									if (user && (filter.exclusions.mods == true && user.type == "mod") || (filter.exclusions.helpers == true && user.type == "helper") || (filter.exclusions.wiki == true && user.display.subreddit == "wiki") || (filter.exclusions.staff == true && user.display.twitch == "staff") || (filter.exclusions.admins == true && user.display.twitch == "admin") || (filter.exclusions.global_mods == true && user.display.twitch == "global_mod") || (filter.exclusions.contributors == true && user.display.subreddit == "contributor") || (filter.exclusions.twoos == true && user.balance >= filter.exclusions.twoos_value)) {
+										continue;
+									}
+								}
+								else {
+									if (user && (filter.exclusions.mods == true && user.type == "mod") && (filter.exclusions.helpers == true && user.type == "helper") && (filter.exclusions.wiki == true && user.display.subreddit == "wiki") && (filter.exclusions.staff == true && user.display.twitch == "staff") && (filter.exclusions.admins == true && user.display.twitch == "admin") && (filter.exclusions.global_mods == true && user.display.twitch == "global_mod") && (filter.exclusions.contributors == true && user.display.subreddit == "contributor") && (filter.exclusions.twoos == true && user.balance >= filter.exclusions.twoos_value)) {
+										continue;
+									}
+								}
+								message.delete();
+							}
+						}
+					}
+				});
+			});
+
 			if (message.channel.recipient) {
 				var guild = client.guilds.get(config.discord.bot.server),
-						member = guild.members.get(message.author.id);
+				member = guild.members.get(message.author.id);
 
 				if (params[0] == "!accept") {
 					if (data.verify === true) {
@@ -74,18 +103,18 @@ module.exports = function(client) {
 			db.commands.getByName(params[0]).then(function(data) {
 				db.users.getByDiscordId(message.author.id).then(function(user) {
 					if (data) {
-						if (data.enabled == "true") {
-							if (data.restricted == "false") {
+						if (data.enabled == true) {
+							if (data.restricted == false) {
 								message.reply(data.response);
 							}
 							else {
 								if (data.restrictions.method == "one") {
-									if ((data.restrictions.mods == "true" && user.type == "mod") || (data.restrictions.helpers == "true" && user.type == "helper") || (data.restrictions.wiki == "true" && user.display.subreddit == "wiki") || (data.restrictions.staff == "true" && user.display.twitch == "staff") || (data.restrictions.admins == "true" && user.display.twitch == "admin") || (data.restrictions.global_mods == "true" && user.display.twitch == "global_mod") || (data.restrictions.contributors == "true" && user.display.subreddit == "contributor") || (data.restrictions.twoos == "true" && !isNaN(parseInt(data.restrictions.twoos_value)) && user.balance >= parseInt(data.restrictions.twoos_value))) {
+									if (user && ((data.restrictions.mods == true && user.type == "mod") || (data.restrictions.helpers == true && user.type == "helper") || (data.restrictions.wiki == true && user.display.subreddit == "wiki") || (data.restrictions.staff == true && user.display.twitch == "staff") || (data.restrictions.admins == true && user.display.twitch == "admin") || (data.restrictions.global_mods == true && user.display.twitch == "global_mod") || (data.restrictions.contributors == true && user.display.subreddit == "contributor") || (data.restrictions.twoos == true && user.balance >= data.restrictions.twoos_value))) {
 										message.reply(data.response);
 									}
 								}
 								else {
-									if ((data.restrictions.mods == "false" || user.type == "mod") && (data.restrictions.helpers == "false" || user.type == "helper") && (data.restrictions.wiki == "false" || user.display.subreddit == "wiki") && (data.restrictions.staff == "false" || user.display.twitch == "staff") && (data.restrictions.admins == "false" || user.display.twitch == "admin") && (data.restrictions.global_mods == "false" || user.display.twitch == "global_mod") && (data.restrictions.contributors == "false" || user.display.subreddit == "contributor") && (data.restrictions.profiles == "false" || user.profile.status == "approved") && ((data.restrictions.twoos == "false" || user.balance >= parseInt(data.restrictions.twoos_value)) && !isNaN(parseInt(data.restrictions.twoos_value)))) {
+									if (user && (data.restrictions.mods == false || user.type == "mod") && (data.restrictions.helpers == false || user.type == "helper") && (data.restrictions.wiki == false || user.display.subreddit == "wiki") && (data.restrictions.staff == false || user.display.twitch == "staff") && (data.restrictions.admins == false || user.display.twitch == "admin") && (data.restrictions.global_mods == false || user.display.twitch == "global_mod") && (data.restrictions.contributors == false || user.display.subreddit == "contributor") && (data.restrictions.profiles == false || user.profile.status == "approved") && (data.restrictions.twoos == false || user.balance >= data.restrictions.twoos_value)) {
 										message.reply(data.response);
 									}
 								}
@@ -136,16 +165,16 @@ module.exports = function(client) {
 										if (data.type == "helper" || data.type == "mod") {
 											db.logs.query(null, params[4].replace("<@", "").replace(">", ""), 5).then(function(logs) {
 												logs = logs.reverse();
-												for (var i in logs) {
-													var d = new Date(logs[i].timestamp),
+												for (var log of logs) {
+													var d = new Date(log.timestamp),
 													deleted;
-													if (logs[i].deleted === true) {
+													if (log.deleted === true) {
 														deleted = "Yes";
 													}
 													else {
 														deleted = "No";
 													}
-													var reply = "```Channel:  #" + logs[i].channel_name + "\nTime:     " + d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + (d.getMinutes() <10 ? '0' : '') + d.getMinutes() + ":" + d.getSeconds() + "\nEdits:    " + logs[i].edits.length + "\nDeleted:  " + deleted + "\n\n" + logs[i].message + "\n\n```";
+													var reply = "```Channel:  #" + log.channel_name + "\nTime:     " + d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + (d.getMinutes() <10 ? '0' : '') + d.getMinutes() + ":" + d.getSeconds() + "\nEdits:    " + log.edits.length + "\nDeleted:  " + deleted + "\n\n" + log.message + "\n\n```";
 													message.reply(reply)
 												}
 											});
@@ -159,9 +188,9 @@ module.exports = function(client) {
 								db.users.getByDiscordId(params[2].replace("<@", "").replace(">", "")).then(function(user) {
 									if (user && user.profile) {
 										var d = new Date(user.profile.updated),
-												date = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear(),
-												characters = user.profile.status.split(""),
-												status = characters[0].toUpperCase();
+										date = d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear(),
+										characters = user.profile.status.split(""),
+										status = characters[0].toUpperCase();
 										characters.splice(0, 1);
 										status = status + characters.join("");
 
@@ -238,12 +267,12 @@ module.exports = function(client) {
 								}
 								else if (params[2] == "leaders") {
 									db.users.getAllByTwoos(0, 5).then(function(data) {
-										for (var i in data) {
-											if (data[i].discord_id) {
-												var reply = "```Rank:            "+ (parseInt(i) + 1) +"\nTwitch Username: " + data[i].twitch_name + "\nReddit Username: " + data[i].reddit_name + "\nDiscord Tag:     " + data[i].discord_name + "#" +  data[i].discord_tag + "\nTwoos Balance:   " + data[i].balance + "```";
+										for (var user of data) {
+											if (user.discord_id) {
+												var reply = "```Rank:            "+ (parseInt(i) + 1) +"\nTwitch Username: " + user.twitch_name + "\nReddit Username: " + user.reddit_name + "\nDiscord Tag:     " + user.discord_name + "#" +  user.discord_tag + "\nTwoos Balance:   " + user.balance + "```";
 											}
 											else {
-												var reply = "```Rank:            "+ (parseInt(i) + 1) +"\nTwitch Username: " + data[i].twitch_name + "\nReddit Username: " + data[i].reddit_name + "\nDiscord Tag:     \nTwoos Balance:   " + data[i].balance + "```";
+												var reply = "```Rank:            "+ (parseInt(i) + 1) +"\nTwitch Username: " + user.twitch_name + "\nReddit Username: " + user.reddit_name + "\nDiscord Tag:     \nTwoos Balance:   " + user.balance + "```";
 											}
 											message.reply(reply)
 										}
@@ -256,94 +285,95 @@ module.exports = function(client) {
 				}
 			});
 		});
+	});
 
-		client.on('messageDelete', function(message) {
-			db.settings.get().then(function(data) {
-				if (data.logs === true) {
-					if (message.channel.guild && message.guild.id == config.discord.bot.server) {
-						db.logs.getByMessageId(message.channel.id, message.id).then(function(data) {
-							if (data) {
-								data.deleted = true;
-								db.logs.editByMessageId(data.channel_id, data.message_id, data);
-							}
-						});
-					}
+	client.on('messageDelete', function(message) {
+		db.settings.get().then(function(data) {
+			if (data.logs === true) {
+				if (message.channel.guild && message.guild.id == config.discord.bot.server) {
+					db.logs.getByMessageId(message.channel.id, message.id).then(function(data) {
+						if (data) {
+							data.deleted = true;
+							db.logs.editByMessageId(data.channel_id, data.message_id, data);
+						}
+					});
 				}
-			});
-		});
-
-		client.on('messageUpdate', function(oldMessage, newMessage) {
-			db.settings.get().then(function(data) {
-				if (data.logs === true) {
-					if (newMessage.channel.guild && newMessage.guild.id == config.discord.bot.server) {
-						db.logs.getByMessageId(newMessage.channel.id, newMessage.id).then(function(data) {
-							if (data) {
-								data.edits.push({
-									message: oldMessage.content,
-									timestamp: newMessage.editedTimestamp
-								});
-								data.message = newMessage.content;
-								db.logs.editByMessageId(data.channel_id, data.message_id, data);
-							}
-						});
-					}
-				}
-			});
-		});
-
-		client.on('guildMemberAdd', function(member) {
-			if (member.guild.id == config.discord.bot.server) {
-				db.settings.get().then(function(data) {
-					if (data.verify === true) {
-						member.createDM().then(function(channel) {
-							channel.send("Welcome to the /r/Twitch Discord server!\n\nIn line with the Discord Terms of Service, we are required to verify you are happy for us to log your messages. We would also like to ensure you read the server rules before continuing.\n\nIf you have read and accept the server rules, and permit us to log your messages, reply to this message with the command `!accpet`. You will then be permitted to send messages to the server.\n\nThank you for understanding.");
-						});
-					}
-				});
-				db.users.getByDiscordId(member.id).then(function(user) {
-					if (user) {
-						user.transactions.push({
-							timestamp: Date.now(),
-							title: "Joining the Discord Server",
-							type: "Other",
-							old: parseFloat(user.balance),
-							new: parseFloat((parseFloat(user.balance) + 1).toFixed(2)),
-							difference: 1,
-							description: null
-						});
-						user.discord = true;
-						user.balance = parseFloat((parseFloat(user.balance) + 1).toFixed(2));
-						Promise.all([helpers.reddit.setFlair(user, null), helpers.discord.setRole(user)]).then(function(response) {
-							db.users.editByTwitchId(user.twitch_id, user);
-						});
-					}
-				});
-			}
-		});
-
-		client.on('guildMemberRemove', function(member) {
-			if (member.guild.id == config.discord.bot.server) {
-				db.users.getByDiscordId(member.id).then(function(user) {
-					if (user && user.discord === true) {
-						user.transactions.push({
-							timestamp: Date.now(),
-							title: "Leaving the Discord Server",
-							type: "Other",
-							old: parseFloat(user.balance),
-							new: parseFloat((parseFloat(user.balance) - 1).toFixed(2)),
-							difference: -1,
-							description: null
-						});
-						user.discord = false;
-						user.balance = parseFloat((parseFloat(user.balance) - 1).toFixed(2));
-						helpers.reddit.setFlair(user, null).then(function(response) {
-							db.users.editByTwitchId(user.twitch_id, user);
-						});
-					}
-				});
 			}
 		});
 	});
+
+	client.on('messageUpdate', function(oldMessage, newMessage) {
+		db.settings.get().then(function(data) {
+			if (data.logs === true) {
+				if (newMessage.channel.guild && newMessage.guild.id == config.discord.bot.server) {
+					db.logs.getByMessageId(newMessage.channel.id, newMessage.id).then(function(data) {
+						if (data) {
+							data.edits.push({
+								message: oldMessage.content,
+								timestamp: newMessage.editedTimestamp
+							});
+							data.message = newMessage.content;
+							db.logs.editByMessageId(data.channel_id, data.message_id, data);
+						}
+					});
+				}
+			}
+		});
+	});
+
+	client.on('guildMemberAdd', function(member) {
+		if (member.guild.id == config.discord.bot.server) {
+			db.settings.get().then(function(data) {
+				if (data.verify === true) {
+					member.createDM().then(function(channel) {
+						channel.send("Welcome to the /r/Twitch Discord server!\n\nIn line with the Discord Terms of Service, we are required to verify you are happy for us to log your messages. We would also like to ensure you read the server rules before continuing.\n\nIf you have read and accept the server rules, and permit us to log your messages, reply to this message with the command `!accpet`. You will then be permitted to send messages to the server.\n\nThank you for understanding.");
+					});
+				}
+			});
+			db.users.getByDiscordId(member.id).then(function(user) {
+				if (user) {
+					user.transactions.push({
+						timestamp: Date.now(),
+						title: "Joining the Discord Server",
+						type: "Other",
+						old: parseFloat(user.balance),
+						new: parseFloat((parseFloat(user.balance) + 1).toFixed(2)),
+						difference: 1,
+						description: null
+					});
+					user.discord = true;
+					user.balance = parseFloat((parseFloat(user.balance) + 1).toFixed(2));
+					Promise.all([helpers.reddit.setFlair(user, null), helpers.discord.setRole(user)]).then(function(response) {
+						db.users.editByTwitchId(user.twitch_id, user);
+					});
+				}
+			});
+		}
+	});
+
+	client.on('guildMemberRemove', function(member) {
+		if (member.guild.id == config.discord.bot.server) {
+			db.users.getByDiscordId(member.id).then(function(user) {
+				if (user && user.discord === true) {
+					user.transactions.push({
+						timestamp: Date.now(),
+						title: "Leaving the Discord Server",
+						type: "Other",
+						old: parseFloat(user.balance),
+						new: parseFloat((parseFloat(user.balance) - 1).toFixed(2)),
+						difference: -1,
+						description: null
+					});
+					user.discord = false;
+					user.balance = parseFloat((parseFloat(user.balance) - 1).toFixed(2));
+					helpers.reddit.setFlair(user, null).then(function(response) {
+						db.users.editByTwitchId(user.twitch_id, user);
+					});
+				}
+			});
+		}
+	});
+
 
 	client.login(config.discord.bot.token);
 
