@@ -1,7 +1,7 @@
 {
-  "name": "webrtc",
+  "name": "Purple+",
   "version": "1.0.0",
-  "description": "basic app template",
+  "description": "Purple+ is a promotion platform related to the /r/Twitch Subreddit. Its purpose is to give everyone a chance to be recognised for their uniqueness and achievements.",
   "main": "app.js",
   "dependencies": {
     "assert": "^1.4.1",
@@ -13,7 +13,6 @@
     "jaro-winkler": "^0.2.8",
     "mongodb": "^2.2.27",
     "node-cron": "^1.2.0",
-    "nodemon": "^1.11.0",
     "restler": "^3.4.0",
     "stopword": "^0.1.6",
     "swig": "^1.4.2",
@@ -26,6 +25,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Glyciant",
   "license": "ISC"
 }

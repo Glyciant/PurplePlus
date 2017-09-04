@@ -37,3 +37,7 @@ body.night, .night table.striped tbody tr:nth-child(odd), .night table.highlight
 .night [type="checkbox"].filled-in:disabled:not(:checked)+label:after, .night [type="checkbox"].filled-in:disabled:checked+label:after, .schedule-divider {
 	border-color: #666;
 }
+
+.night .tabs .tab.disabled a, .night .tabs .tab.disabled a:hover {
+	color: #B9A3E3 !important;
+}

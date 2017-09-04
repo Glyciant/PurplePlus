@@ -298,25 +298,31 @@
               <div class="row" id="profile-type-streamer-creative-activities" style="padding-bottom: 30px;">
                 <div class="input-field col s12">
                   <p>Your Creative Activites - What do you like to do in the creative directory?</p>
-                  <div class="col s12 m6 l6">
+                  <div class="col s12 m4 l4">
                     <p>
                       <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-cooking" {% if existing.types.streamer_creative.activities.cooking %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-cooking">Cooking</label>
                     </p>
                     <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-cosplay" {% if existing.types.streamer_creative.activities.cosplay %}checked{% endif %} />
+                      <label for="profile-type-streamer-creative-cosplay">Cosplay</label>
+                    </p>
+                    <p>
                       <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-drawing" {% if existing.types.streamer_creative.activities.drawing %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-drawing">Drawing</label>
                     </p>
+                  </div>
+                  <div class="col s12 m4 l4">
                     <p>
                       <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-painting" {% if existing.types.streamer_creative.activities.painting %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-painting">Painting</label>
                     </p>
-                  </div>
-                  <div class="col s12 m6 l6">
                     <p>
                       <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-programming" {% if existing.types.streamer_creative.activities.programming %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-programming">Programming</label>
                     </p>
+                  </div>
+                  <div class="col s12 m4 l4">
                     <p>
                       <input type="checkbox" class="filled-in" id="profile-type-streamer-creative-editing" {% if existing.types.streamer_creative.activities.editing %}checked{% endif %} />
                       <label for="profile-type-streamer-creative-editing">Video Editing</label>
@@ -629,6 +635,10 @@
                       <label for="profile-type-viewer-streams-adventure">Adventure Games</label>
                     </p>
                     <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-horror" {% if existing.types.viewer.streams.horror %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-horror">Horror Games</label>
+                    </p>
+                    <p>
                       <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-roleplaying" {% if existing.types.viewer.streams.roleplaying %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-roleplaying">Role-Playing Games</label>
                     </p>
@@ -638,10 +648,6 @@
                     </p>
                   </div>
                   <div class="col s12 m6 l3">
-                    <p>
-                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-horror" {% if existing.types.viewer.streams.horror %}checked{% endif %} />
-                      <label for="profile-type-viewer-streams-horror">Horror Games</label>
-                    </p>
                     <p>
                       <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-strategy" {% if existing.types.viewer.streams.strategy %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-strategy">Strategy Games</label>
@@ -653,6 +659,10 @@
                     <p>
                       <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-cooking" {% if existing.types.viewer.streams.cooking %}checked{% endif %} />
                       <label for="profile-type-viewer-streams-cooking">Cooking</label>
+                    </p>
+                    <p>
+                      <input type="checkbox" class="filled-in" id="profile-type-viewer-streams-cosplay" {% if existing.types.viewer.streams.cosplay %}checked{% endif %} />
+                      <label for="profile-type-viewer-streams-cosplay">Cosplay</label>
                     </p>
                   </div>
                   <div class="col s12 m6 l3">

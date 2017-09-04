@@ -17,21 +17,23 @@ $(document).ready(function() {
   var slider = document.getElementById('viewers-options-range'),
       min = $("#tab-viewers").data("min"),
       max = $("#tab-viewers").data("max");
-  noUiSlider.create(slider, {
-    start: [min, max],
-    connect: true,
-    step: 1,
-    orientation: "horizontal",
-    tooltips: true,
-    range: {
-      'min': min,
-      'max': max
-    },
-    format: wNumb({
-     decimals: 0
-    })
-  });
-
+  if (min < max) {
+    noUiSlider.create(slider, {
+      start: [min, max],
+      connect: true,
+      step: 1,
+      orientation: "horizontal",
+      tooltips: true,
+      range: {
+        'min': min,
+        'max': max
+      },
+      format: wNumb({
+       decimals: 0
+      })
+    });
+  }
+  
   slider.noUiSlider.on('set', function() {
     var min = slider.noUiSlider.get()[0],
         max = slider.noUiSlider.get()[1],

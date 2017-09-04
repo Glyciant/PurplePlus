@@ -187,7 +187,7 @@ module.exports = function(client, bot) {
               password: config.reddit.bot.password,
             }
           }).on("complete", function(data) {
-            restler.get('https://oauth.reddit.com/r/Twitch/api/flairlist.json?name=' + user.reddit_name, {
+            restler.get('https://oauth.reddit.com/' + config.app.subreddit + '/api/flairlist.json?name=' + user.reddit_name, {
               accessToken: data.access_token
             }).on("complete", function(api) {
               if (api.users && api.users[0].user.toLowerCase() == user.reddit_name.toLowerCase()) {
@@ -336,7 +336,7 @@ module.exports = function(client, bot) {
                   text: api.users[0].flair_text
                 };
                 if (JSON.stringify(flair) != JSON.stringify(reddit_data)) {
-                  restler.post('https://oauth.reddit.com/r/Twitch/api/flair', {
+                  restler.post('https://oauth.reddit.com/' + config.app.subreddit + '/api/flair', {
                     accessToken: data.access_token,
                     data: flair
                   }).on("complete", function(result) {
@@ -375,7 +375,7 @@ module.exports = function(client, bot) {
               password: config.reddit.bot.password,
             }
           }).on("complete", function(data) {
-            restler.get('https://oauth.reddit.com/r/Twitch/api/flairlist.json?name=' + user.reddit_name, {
+            restler.get('https://oauth.reddit.com/' + config.app.subreddit + '/api/flairlist.json?name=' + user.reddit_name, {
               accessToken: data.access_token
             }).on("complete", function(api) {
               resolve({ message: "success", data: api })
@@ -398,7 +398,7 @@ module.exports = function(client, bot) {
             password: config.reddit.bot.password,
           }
         }).on("complete", function(data) {
-          restler.get('https://oauth.reddit.com/r/Twitch/wiki/toolbox', {
+          restler.get('https://oauth.reddit.com/' + config.app.subreddit + '/wiki/toolbox', {
             accessToken: data.access_token
           }).on("complete", function(api) {
             resolve({ message: "success", data: api })
@@ -423,7 +423,7 @@ module.exports = function(client, bot) {
             link: link,
             text: text
           };
-          restler.post('https://oauth.reddit.com/r/Twitch/api/flair', {
+          restler.post('https://oauth.reddit.com/' + config.app.subreddit + '/api/flair', {
             accessToken: data.access_token,
             data: flair
           }).on("complete", function(result) {
@@ -448,7 +448,7 @@ module.exports = function(client, bot) {
             password: config.reddit.bot.password,
           }
         }).on("complete", function(data) {
-          restler.get('https://oauth.reddit.com/r/Twitch/api/link_flair', {
+          restler.get('https://oauth.reddit.com/' + config.app.subreddit + '/api/link_flair', {
             accessToken: data.access_token
           }).on("complete", function(result) {
             if (result) {

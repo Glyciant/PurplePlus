@@ -7,7 +7,7 @@ var cron = require('node-cron'),
 // Check Reddit API for nominations
 var last_comment;
 cron.schedule('*/3 * * * * *', function() {
-	restler.get('https://www.reddit.com/r/Twitch/comments.json?limit=1').on("complete", function(data) {
+	restler.get('https://www.reddit.com/' + config.app.subreddit + '/comments.json?limit=1').on("complete", function(data) {
     if (data.kind) {
   		if (last_comment != data.data.children[0].data.id) {
   			last_comment = data.data.children[0].data.id;

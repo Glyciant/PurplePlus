@@ -179,7 +179,7 @@ $(document).delegate("#next-step-4", "click", function() {
   }
   if ($("#profile-type-streamer-creative").is(":checked")) {
     var activity = false;
-    if (($("#profile-type-streamer-creative-cooking").is(":checked")) || ($("#profile-type-streamer-creative-drawing").is(":checked")) || ($("#profile-type-streamer-creative-music").is(":checked")) || ($("#profile-type-streamer-creative-painting").is(":checked")) || ($("#profile-type-streamer-creative-programming").is(":checked")) || ($("#profile-type-streamer-creative-editing").is(":checked")) || ($("#profile-type-streamer-creative-other").is(":checked"))) {
+    if (($("#profile-type-streamer-creative-cooking").is(":checked")) || ($("#profile-type-streamer-creative-cosplay").is(":checked")) || ($("#profile-type-streamer-creative-drawing").is(":checked")) || ($("#profile-type-streamer-creative-music").is(":checked")) || ($("#profile-type-streamer-creative-painting").is(":checked")) || ($("#profile-type-streamer-creative-programming").is(":checked")) || ($("#profile-type-streamer-creative-editing").is(":checked")) || ($("#profile-type-streamer-creative-other").is(":checked"))) {
       activity = true;
     }
     else {
@@ -337,7 +337,7 @@ $(document).delegate("#next-step-4", "click", function() {
   if ($("#profile-type-viewer").is(":checked")) {
     var type = false;
 
-    if (($("#profile-type-viewer-streams-action").is(":checked")) || ($("#profile-type-viewer-streams-adventure").is(":checked")) || ($("#profile-type-viewer-streams-roleplaying").is(":checked")) || ($("#profile-type-viewer-streams-simulation").is(":checked")) || ($("#profile-type-viewer-streams-strategy").is(":checked")) || ($("#profile-type-viewer-streams-survival").is(":checked")) || ($("#profile-type-viewer-streams-horror").is(":checked")) || ($("#profile-type-viewer-streams-music").is(":checked")) || ($("#profile-type-viewer-streams-cooking").is(":checked")) || ($("#profile-type-viewer-streams-drawing").is(":checked")) || ($("#profile-type-viewer-streams-painting").is(":checked")) || ($("#profile-type-viewer-streams-programming").is(":checked")) || ($("#profile-type-viewer-streams-editing").is(":checked")) || ($("#profile-type-viewer-streams-talkshow").is(":checked")) || ($("#profile-type-viewer-streams-irl").is(":checked")) || ($("#profile-type-viewer-streams-socialeating").is(":checked"))) {
+    if (($("#profile-type-viewer-streams-action").is(":checked")) || ($("#profile-type-viewer-streams-adventure").is(":checked")) || ($("#profile-type-viewer-streams-roleplaying").is(":checked")) || ($("#profile-type-viewer-streams-simulation").is(":checked")) || ($("#profile-type-viewer-streams-strategy").is(":checked")) || ($("#profile-type-viewer-streams-survival").is(":checked")) || ($("#profile-type-viewer-streams-horror").is(":checked")) || ($("#profile-type-viewer-streams-music").is(":checked")) || ($("#profile-type-viewer-streams-cooking").is(":checked")) || ($("#profile-type-viewer-streams-cosplay").is(":checked")) || ($("#profile-type-viewer-streams-drawing").is(":checked")) || ($("#profile-type-viewer-streams-painting").is(":checked")) || ($("#profile-type-viewer-streams-programming").is(":checked")) || ($("#profile-type-viewer-streams-editing").is(":checked")) || ($("#profile-type-viewer-streams-talkshow").is(":checked")) || ($("#profile-type-viewer-streams-irl").is(":checked")) || ($("#profile-type-viewer-streams-socialeating").is(":checked"))) {
       type = true;
     }
     else {
@@ -527,6 +527,9 @@ $(document).delegate("#submit-profile", "click", function() {
     if ($('#profile-type-streamer-creative-cooking').is(':checked')) {
       data.types.streamer_creative.activities.cooking = true;
     }
+    if ($('#profile-type-streamer-creative-cosplay').is(':checked')) {
+      data.types.streamer_creative.activities.cosplay = true;
+    }
     if ($('#profile-type-streamer-creative-drawing').is(':checked')) {
       data.types.streamer_creative.activities.drawing = true;
     }
@@ -648,6 +651,9 @@ $(document).delegate("#submit-profile", "click", function() {
     if ($('#profile-type-viewer-streams-adventure').is(':checked')) {
       data.types.viewer.streams.adventure = true;
     }
+    if ($('#profile-type-viewer-streams-horror').is(':checked')) {
+      data.types.viewer.streams.horror = true;
+    }
     if ($('#profile-type-viewer-streams-roleplaying').is(':checked')) {
       data.types.viewer.streams.roleplaying = true;
     }
@@ -660,14 +666,11 @@ $(document).delegate("#submit-profile", "click", function() {
     if ($('#profile-type-viewer-streams-survival').is(':checked')) {
       data.types.viewer.streams.survival = true;
     }
-    if ($('#profile-type-viewer-streams-horror').is(':checked')) {
-      data.types.viewer.streams.horror = true;
-    }
-    if ($('#profile-type-viewer-streams-music').is(':checked')) {
-      data.types.viewer.streams.music = true;
-    }
     if ($('#profile-type-viewer-streams-cooking').is(':checked')) {
       data.types.viewer.streams.cooking = true;
+    }
+    if ($('#profile-type-viewer-streams-cosplay').is(':checked')) {
+      data.types.viewer.streams.cosplay = true;
     }
     if ($('#profile-type-viewer-streams-drawing').is(':checked')) {
       data.types.viewer.streams.drawing = true;
@@ -689,6 +692,9 @@ $(document).delegate("#submit-profile", "click", function() {
     }
     if ($('#profile-type-viewer-streams-socialeating').is(':checked')) {
       data.types.viewer.streams.socialeating = true;
+    }
+    if ($('#profile-type-viewer-streams-music').is(':checked')) {
+      data.types.viewer.streams.music = true;
     }
     if ($('#profile-type-viewer-family').is(':checked')) {
       data.types.viewer.family = true;

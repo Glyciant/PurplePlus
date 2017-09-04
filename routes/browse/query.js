@@ -98,6 +98,9 @@ router.get("/", function(req, res, next) {
     if (activities.indexOf("cooking") > -1) {
       data.streamer_creative_activities.cooking = true;
     }
+    if (activities.indexOf("cosplay") > -1) {
+      data.streamer_creative_activities.cosplay = true;
+    }
     if (activities.indexOf("drawing") > -1) {
       data.streamer_creative_activities.drawing = true;
     }
@@ -192,6 +195,9 @@ router.get("/", function(req, res, next) {
     }
     if (preferences.indexOf("cooking") > -1) {
       data.viewer_preferences.cooking = true;
+    }
+    if (preferences.indexOf("cosplay") > -1) {
+      data.viewer_preferences.cosplay = true;
     }
     if (preferences.indexOf("drawing") > -1) {
       data.viewer_preferences.drawing = true;
@@ -482,6 +488,10 @@ router.post("/submit", function(req, res, next) {
         if (req.body.attributes.streamer_creative.activities.cooking == "true") {
           i.push({ "profile.types.streamer_creative.activities.cooking": true });
           link.streamer_creative_activities.push("cooking");
+        }
+        if (req.body.attributes.streamer_creative.activities.cosplay == "true") {
+          i.push({ "profile.types.streamer_creative.activities.cosplay": true });
+          link.streamer_creative_activities.push("cosplay");
         }
         if (req.body.attributes.streamer_creative.activities.drawing == "true") {
           i.push({ "profile.types.streamer_creative.activities.drawing": true });
@@ -807,6 +817,10 @@ router.post("/submit", function(req, res, next) {
         if (req.body.attributes.viewer.preferences.cooking == "true") {
           i.push({ "profile.types.viewer.streams.cooking": true });
           link.viewer_preferences.push("cooking");
+        }
+        if (req.body.attributes.viewer.preferences.cosplay == "true") {
+          i.push({ "profile.types.viewer.streams.cosplay": true });
+          link.viewer_preferences.push("cosplay");
         }
         if (req.body.attributes.viewer.preferences.drawing == "true") {
           i.push({ "profile.types.viewer.streams.drawing": true });

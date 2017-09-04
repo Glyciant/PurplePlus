@@ -9,38 +9,39 @@ config.legacy = {};
 
 config.app.port = 1000;
 config.app.base = "http://localhost:" + config.app.port;
-config.app.db = "mongodb://127.0.0.1:27017/Purple+";
+config.app.db = "mongodb://127.0.0.1:27017/Purple+"; // MongoDB Connection String
+config.app.subreddit = "r/Twitch"; // Subreddit in Format of "r/SUBREDDITNAME"
 
 config.reddit.auth = {};
-config.reddit.auth.id = "";
-config.reddit.auth.secret = "";
+config.reddit.auth.id = ""; // Reddit Application Client ID
+config.reddit.auth.secret = ""; // Redit Application Client Secret
 config.reddit.auth.redirect = config.app.base + "/auth/login/reddit/";
 
 config.reddit.bot = {};
-config.reddit.bot.username = "";
-config.reddit.bot.password = '';
-config.reddit.bot.id = "";
-config.reddit.bot.secret = "";
+config.reddit.bot.username = ""; // Reddit Bot Username
+config.reddit.bot.password = ""; // Reddit Bot Password
+config.reddit.bot.id = ""; // Reddit Bot Client ID
+config.reddit.bot.secret = ""; // Reddit Bot Client Secret
 
 config.twitch.auth = {};
-config.twitch.auth.id = "";
-config.twitch.auth.secret = "";
+config.twitch.auth.id = ""; // Twitch Application Client ID
+config.twitch.auth.secret = ""; // Twitch Application Client Secret
 config.twitch.auth.redirect = config.app.base + "/auth/login/twitch/";
 
 config.twitch.bot = {};
-config.twitch.bot.username = "";
-config.twitch.bot.password = "";
+config.twitch.bot.username = ""; // Twitch Bot Username
+config.twitch.bot.password = ""; // Twitch Bot OAuth Token
 
-config.twitch.community = "7958736b-9fe4-4299-b9d7-6e07d41eb493";
+config.twitch.community = "7958736b-9fe4-4299-b9d7-6e07d41eb493"; // Twitch Community ID
 
 config.discord.auth = {};
-config.discord.auth.id = "";
-config.discord.auth.secret = "";
+config.discord.auth.id = ""; // Discord Application Client ID
+config.discord.auth.secret = ""; // Discord Application Client Secret
 config.discord.auth.redirect = config.app.base + "/auth/login/discord/";
 
 config.discord.bot = {};
-config.discord.bot.token = "";
-config.discord.bot.server = "122111299713892354";
+config.discord.bot.token = ""; // Discord Bot Token
+config.discord.bot.server = "122111299713892354"; // Discord Server
 config.discord.bot.roles = {
   "1": "336124797190799363",
   "5": "336124896461586432",
@@ -79,11 +80,11 @@ config.discord.bot.roles = {
   "contributor": "336159400148336641",
   "verified": "347402757214568448",
   "everyone": "122111299713892354"
-}
+} // Discord Role IDs
 
-config.slack.webhook = "";
+config.slack.webhook = ""; // Slack Webhook URL
 
 config.legacy.requests = {};
-config.legacy.requests.token = "";
+config.legacy.requests.token = ""; // /r/Twitch Advertisement Requests API Token
 
 module.exports = config;

@@ -9,7 +9,8 @@ $(document).ready(function() {
   }
 
   function redditData(type, callback) {
-    $.getJSON("https://www.reddit.com/r/Twitch/" + type + ".json?limit=1", function(data) {
+    var subreddit = $("#alert").data("subreddit");
+    $.getJSON("https://www.reddit.com/" + subreddit + "/" + type + ".json?limit=1", function(data) {
       var id = data.data.children[0].data.id,
           user = data.data.children[0].data.author,
           user_flair = data.data.children[0].data.author_flair_text,

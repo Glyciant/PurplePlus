@@ -18,12 +18,7 @@ module.exports = function(app) {
   app.use('/browse/surf',  require('./routes/browse/surf'));
   app.use('/browse/leaderboards',  require('./routes/browse/leaderboards'));
   app.use('/browse/bookmarks',  require('./routes/browse/bookmarks'));
-  app.use('/help',  require('./routes/help/index'));
-  app.use('/help/browsing',  require('./routes/help/browsing'));
-  app.use('/help/profiles',  require('./routes/help/profiles'));
-  app.use('/help/twoos',  require('./routes/help/twoos'));
-  app.use('/help/requests',  require('./routes/help/requests'));
-  app.use('/help/api',  require('./routes/help/api'));
+  app.use('/help',  require('./routes/help'));
   app.use('/profile',  require('./routes/profile'));
   app.use('/user',  require('./routes/user'));
   app.use('/schedule',  require('./routes/schedule'));

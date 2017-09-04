@@ -6,11 +6,11 @@ var cron = require('node-cron'),
 
 var task = cron.schedule('0 0 0 1 * *', function() {
   db.users.getSpotlight().then(function(profiles) {
-    restler.get('https://www.reddit.com/r/Twitch/search.json?q=&restrict_sr=on&sort=top&t=month&limit=5').on("complete", function(top) {
+    restler.get('https://www.reddit.com/' + config.app.subreddit + '/search.json?q=&restrict_sr=on&sort=top&t=month&limit=5').on("complete", function(top) {
       top = top.data.children;
-      restler.get('https://www.reddit.com/r/Twitch/search.json?q=flair%3Aad&restrict_sr=on&sort=top&t=month').on("complete", function(ads) {
+      restler.get('https://www.reddit.com/' + config.app.subreddit + '/search.json?q=flair%3Aad&restrict_sr=on&sort=top&t=month').on("complete", function(ads) {
         ads = ads.data.children;
-        restler.get('https://www.reddit.com/r/Twitch/search.json?q=flair%3Aama+OR+flair%3Aama-closed&sort=relevance&restrict_sr=on&t=month').on("complete", function(amas) {
+        restler.get('https://www.reddit.com/' + config.app.subreddit + '/search.json?q=flair%3Aama+OR+flair%3Aama-closed&sort=relevance&restrict_sr=on&t=month').on("complete", function(amas) {
           amas = amas.data.children;
           var submission = `Greetings /r/Twitch, [](#HeyGuys)
 

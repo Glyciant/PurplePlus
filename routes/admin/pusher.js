@@ -9,7 +9,7 @@ var express = require("express"),
 router.get("/", function(req, res, next) {
   if (req.session.type == "mod") {
     Promise.all([helpers.reddit.getMacros(), helpers.reddit.getLinkFlairs()]).then(function(data) {
-      res.render("admin_pusher", { title: "Pusher", macros: JSON.parse(data[0].data.data.content_md).modMacros, flairs: data[1].data });
+      res.render("admin_pusher", { title: "Pusher", macros: JSON.parse(data[0].data.data.content_md).modMacros, flairs: data[1].data, subreddit: config.app.subreddit });
     });
   }
   else if (req.session.twitch) {
