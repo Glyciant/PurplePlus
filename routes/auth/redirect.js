@@ -20,7 +20,7 @@ router.get("/twitch/", function(req, res) {
       req.session.return = req.headers.referer;
     }
     else {
-      req.session.return = "/browse/spotlight";
+      req.session.return = "/browse/streams";
     }
   }
 	req.session.twitch_state = state;
@@ -43,7 +43,7 @@ router.get("/reddit/", function(req, res) {
       req.session.return = req.headers.referer;
     }
     else {
-      req.session.return = "/browse/spotlight";
+      req.session.return = "/browse/streams";
     }
   }
 	req.session.reddit_state = state;
@@ -66,7 +66,7 @@ router.get("/discord/", function(req, res) {
       req.session.return = req.headers.referer;
     }
     else {
-      req.session.return = "/browse/spotlight";
+      req.session.return = "/browse/streams";
     }
   }
   req.session.discord_state = state;

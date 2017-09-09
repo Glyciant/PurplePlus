@@ -38,7 +38,7 @@ $(document).delegate("#profile-appearance-save", "click", function() {
       Materialize.toast("Your profile's appearance was updated.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");

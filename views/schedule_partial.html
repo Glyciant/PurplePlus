@@ -1,7 +1,7 @@
 {% for user in data %}
   <div class="row" data-id="{{ user.twitch_id }}">
     <div class="col s1 center">
-      <a href="/user/{{ user.twitch_username }}" class="tooltipped {% if user.stream.stream_type == "live" %}img-pulse live"{% elseif user.stream.stream_type == "vodcast" %}img-pulse video"{% elseif data.hosting %}img-pulse host"{% endif %} target="_blank" style="max-height: 75px; max-width: 75px; display: inline-block;" data-position="right" data-delay="50" data-tooltip="{{ user.twitch_name }}"><img {% if user.logo %} src="{{ user.logo }}" {% else %} src="/img/twitch.png" {% endif %} class="circle z-depth-2 responsive-img" style="max-height: 75px;"></a>
+      <a href="/user/{{ user.twitch_username }}" class="tooltipped {% if user.stream.stream_type == "live" %}img-pulse live"{% elseif user.stream.stream_type == "vodcast" %}img-pulse video"{% elseif data.hosting %}img-pulse host"{% endif %} target="_blank" style="max-height: 75px; max-width: 75px; display: inline-block;" data-position="right" data-delay="50" data-tooltip="{{ user.twitch_name }}"><img {% if user.logo %} src="{{ user.logo }}" {% else %} src="/img/default_user.png" {% endif %} class="circle z-depth-2 responsive-img" style="max-height: 75px;"></a>
     </div>
     {% set used = 0 %}
     {% for stream in user.streams %}

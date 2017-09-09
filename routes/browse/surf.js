@@ -6,7 +6,7 @@ var express = require("express"),
     router = express.Router();
 
 router.get("/", function(req, res, next) {
-  db.cache.getByRandom(1).then(function(data) {
+  db.cache.getByRandom(1, "").then(function(data) {
     var twitter;
     if (data && data[0]) {
       if (data[0].profile && data[0].profile.social_media) {

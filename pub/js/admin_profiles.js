@@ -19,7 +19,7 @@ $(document).delegate("#admin-approve", "click", function() {
       Materialize.toast("That user does not appear to exist.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -50,7 +50,7 @@ $(document).delegate("#admin-reject", "click", function() {
       Materialize.toast("That user does not appear to exist.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");

@@ -8,7 +8,7 @@ var express = require("express"),
 
 router.get("/", function(req, res) {
 	req.session.destroy();
-	res.redirect("/browse/spotlight");
+	res.redirect("/browse/streams");
 });
 
 module.exports = router;

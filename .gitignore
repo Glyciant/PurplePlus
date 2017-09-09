@@ -4,5 +4,6 @@
 node_modules
 # Ignore config
 config.js
+config_server.js
 # Ignore .db files
 *.db

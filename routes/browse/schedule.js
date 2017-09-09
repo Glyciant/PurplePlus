@@ -65,6 +65,9 @@ router.post("/streams", function(req, res, next) {
     i++;
   }
   if (req.body.method == "scroll") {
+    if (!req.body.ids) {
+      req.body.ids = [];
+    }
     db.users.getByTwitchIds(req.body.ids).then(function(data) {
       data.sort(function(a, b){
         if (a.balance > b.balance) { return -1; }

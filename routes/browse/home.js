@@ -12,12 +12,12 @@ router.get("/", function(req, res, next) {
         res.render("home", { title: "Home" });
       }
       else {
-        res.redirect("/browse/spotlight");
+        res.redirect("/browse/streams");
       }
     });
   }
   else {
-    res.redirect("/browse/spotlight");
+    res.redirect("/browse/streams");
   }
 });
 

@@ -21,7 +21,7 @@
     </div>
     <ul class="collapsible" data-collapsible="accordion" style="margin-top: 0;">
       <li>
-        <div class="collapsible-header truncate custom lighten-1 white-text" style="max-height: 3rem;"><img class="responsive-img" src="{{ user.stream.channel.logo }}" style="max-height: calc(3rem + 1px); position: relative; right: 16px; bottom: 1px;" /><span style="position: relative; bottom: 18px;">Streaming {{ user.stream.channel.game }} for {{ user.stream.viewers }} viewer{% if user.stream.viewers !== 1 %}s{% endif %}.</span></div>
+        <div class="collapsible-header truncate custom lighten-1 white-text" style="max-height: 3rem;"><img class="responsive-img" {% if user.stream.channel.logo %} src="{{ user.stream.channel.logo }}" {% else %} src="/img/default_user.png" {% endif %} style="max-height: calc(3rem + 1px); position: relative; right: 16px; bottom: 1px;" /><span style="position: relative; bottom: 18px;">Streaming {{ user.stream.channel.game }} for {{ user.stream.viewers }} viewer{% if user.stream.viewers !== 1 %}s{% endif %}.</span></div>
         <div class="collapsible-body" style="padding: 5px; background-color: #fff;">
         <table class="row" style="margin: 0;">
           <tbody>
@@ -42,6 +42,14 @@
             <tr class="valign-wrapper">
               <td class="col s3 custom-text text-darken-1" style="padding: 15px 0 15px 0.75rem;">Live Since:</td>
               <td class="col s9 custom-text text-darken-1" style="padding: 15px 0 15px 0.75rem;">{{ user.stream.created_at|date('d/m/Y H:i:s') }}</td>
+            </tr>
+            <tr class="valign-wrapper">
+              <td class="col s3 custom-text text-darken-1" style="padding: 15px 0 15px 0.75rem;">Viewers:</td>
+              <td class="col s9 custom-text text-darken-1" style="padding: 15px 0 15px 0.75rem;">{{ user.stream.viewers }}</td>
+            </tr>
+            <tr class="valign-wrapper">
+              <td class="col s3 custom-text text-darken-1" style="padding: 15px 0 15px 0.75rem;">Directory:</td>
+              <td class="col s9 custom-text text-darken-1" style="padding: 15px 0 15px 0.75rem;">{{ user.stream.game }}</td>
             </tr>
             <tr class="valign-wrapper">
               <td class="col s3 custom-text text-darken-1" style="padding: 15px 0 15px 0.75rem;">Twoos:</td>

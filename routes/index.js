@@ -7,7 +7,7 @@ var express = require("express"),
 
 router.get("/", function(req, res, next) {
   if (req.session.visited && !req.query.show) {
-    res.redirect("/browse/spotlight");
+    res.redirect("/browse/streams");
   }
   else {
     req.session.visited = true;

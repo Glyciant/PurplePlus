@@ -129,7 +129,7 @@ $(document).delegate('#approve', "click", function() {
       Materialize.toast("The submission was approved successfully.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -147,7 +147,7 @@ $(document).delegate('#remove', "click", function() {
       Materialize.toast("The submission was removed successfully.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -165,7 +165,7 @@ $(document).delegate('#lock', "click", function() {
       Materialize.toast("The submission was locked successfully.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -208,7 +208,7 @@ $(document).delegate('#submit-comment', "click", function() {
       Materialize.toast("The comment was submitted successfully.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -233,7 +233,7 @@ $(document).delegate('#submit-flair', "click", function() {
       Materialize.toast("The link flair was set successfully.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");

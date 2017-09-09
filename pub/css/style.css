@@ -302,3 +302,13 @@ body, .tap-target-wave::before, .tap-target-wave::after {
 .schedule-divider {
 	border-left: 1px solid #000;
 }
+
+/* Fix Profile Lists */
+#profile-body-wrapper ul ul li {
+	list-style-type: disc;
+	margin-left: 40px;
+}
+
+#profile-body-wrapper ul ol li {
+	list-style-type: decimal;
+}

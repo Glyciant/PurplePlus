@@ -31,7 +31,7 @@ router.get("/twitch/", function(req, res) {
           req.session.twitch.username = finaldata.name;
 					req.session.twitch.auth = data.access_token;
           if (req.session.return.indexOf("/auth/") > -1) {
-            req.session.return = "/browse/spotlight/";
+            req.session.return = "/browse/streams/";
           }
           db.users.getByTwitchId(finaldata._id).then(function(data) {
             helpers.twitch.getChannelById(finaldata._id).then(function(channel) {
@@ -63,7 +63,8 @@ router.get("/twitch/", function(req, res) {
                   balance: 0,
                   last_login: Date.now(),
                   bookmarks: [],
-                  notes: []
+                  notes: [],
+                  transactions: []
                 }).then(function() {
                   res.redirect(req.session.return);
                 });
@@ -125,7 +126,7 @@ router.get("/reddit/", function(req, res) {
               req.session.reddit.username = finaldata.name.toLowerCase();
               req.session.reddit.auth = data.access_token;
               if (req.session.return.indexOf("/auth/") > -1) {
-                req.session.return = "/browse/spotlight/";
+                req.session.return = "/browse/streams/";
               }
               if (req.session.twitch) {
                 db.users.getByTwitchId(req.session.twitch.id).then(function(data) {
@@ -155,7 +156,7 @@ router.get("/reddit/", function(req, res) {
                       });
                       data.balance = parseFloat((parseFloat(data.balance) + balance).toFixed(2));
                       helpers.legacy.getRequests(finaldata.id).then(function(requests) {
-                        if (requests.requests) {
+                        if (requests.requests && requests.requests[0]) {
                           if (!data.requests) {
                             data.requests = [];
                           }
@@ -181,145 +182,151 @@ router.get("/reddit/", function(req, res) {
                                 if (request.approval_id === 2) {
                                   request.status = "rejected";
                                 }
-                                for (var vote of request.votes) {
-                                  if (vote.result === 1) {
-                                    request.upvotes.push(vote.user_id)
-                                  }
-                                  else {
-                                    request.downvotes.push(vote.user_id)
-                                  }
-                                }
-                                for (var comment of request.comments) {
-                                  if (comment.deleted_at === null) {
-                                    var comment = {
-                                      timestamp: comment.updated_at,
-                                      submitter: "Legacy Comment",
-                                      comment: comment.comment
-                                    };
-                                    if (comment.public === 0) {
-                                      comment.type = "private";
+                                if (request.votes && requests.votes[0]) {
+                                  for (var vote of request.votes) {
+                                    if (vote.result === 1) {
+                                      request.upvotes.push(vote.user_id)
                                     }
                                     else {
-                                      comment.type = "public";
+                                      request.downvotes.push(vote.user_id)
                                     }
-                                    request.comments.push(comment);
                                   }
                                 }
-                                var body = JSON.parse(request.body);
-                                if (request.type_id === 1) {
-                                  request.type = "video";
-                                  request.data.name = body.name;
-                                  request.data.url = body.url;
-                                  if (data.owner === 1) {
-                                    request.data.owner = true;
-                                  }
-                                  else {
-                                    request.data.owner = false;
-                                  }
-                                  request.data.description = body.description;
-                                }
-                                else if (request.type_id === 2) {
-                                  request.type = "web";
-                                  request.data.name = body.name;
-                                  request.data.url = body.url;
-                                  request.data.description = body.description;
-                                  request.data.data = body.user_data;
-                                  if (body.api == "1") {
-                                    request.data.api = true;
-                                    request.data.api_data = {};
-                                    request.data.api_data.store = body.api_data;
-                                    request.data.api_data.scopes = body.api_scopes;
-                                    request.data.api_data.scopes_description = body.api_scopes_description;
-                                  }
-                                  else {
-                                    request.data.api = false;
-                                  }
-                                  if (body.tos == "1") {
-                                    request.data.tos = true;
-                                    request.data.tos_url = body.tos_url;
-                                  }
-                                  else {
-                                    request.data.tos = false;
-                                  }
-                                  if (body.source == "1") {
-                                    request.data.source = true;
-                                    request.data.source_url = body.source_url;
-                                  }
-                                  else {
-                                    request.data.source = false;
-                                  }
-                                  if (body.beta == "1") {
-                                    request.data.beta = true;
-                                    request.data.beta_changes = body.beta_description;
-                                  }
-                                  else {
-                                    request.data.beta = false;
+                                if (request.comments && request.comments[0]) {
+                                  for (var comment of request.comments) {
+                                    if (comment.deleted_at === null) {
+                                      var comment = {
+                                        timestamp: comment.updated_at,
+                                        submitter: "Legacy Comment",
+                                        comment: comment.comment
+                                      };
+                                      if (comment.public === 0) {
+                                        comment.type = "private";
+                                      }
+                                      else {
+                                        comment.type = "public";
+                                      }
+                                      request.comments.push(comment);
+                                    }
                                   }
                                 }
-                                else if (request.type_id === 3) {
-                                  request.type = "desktop";
-                                  request.data.name = body.name;
-                                  request.data.url = body.url;
-                                  request.data.description = body.description;
-                                  request.data.data = body.user_data;
-                                  if (body.api == "1") {
-                                    request.data.api = true;
-                                    request.data.api_data = {};
-                                    request.data.api_data.store = body.api_data;
-                                    request.data.api_data.scopes = body.api_scopes;
-                                    request.data.api_data.scopes_description = body.api_scopes_description;
+                                if (request.body) {
+                                  var body = JSON.parse(request.body);
+                                  if (request.type_id === 1) {
+                                    request.type = "video";
+                                    request.data.name = body.name;
+                                    request.data.url = body.url;
+                                    if (data.owner === 1) {
+                                      request.data.owner = true;
+                                    }
+                                    else {
+                                      request.data.owner = false;
+                                    }
+                                    request.data.description = body.description;
                                   }
-                                  else {
-                                    request.data.api = false;
+                                  else if (request.type_id === 2) {
+                                    request.type = "web";
+                                    request.data.name = body.name;
+                                    request.data.url = body.url;
+                                    request.data.description = body.description;
+                                    request.data.data = body.user_data;
+                                    if (body.api == "1") {
+                                      request.data.api = true;
+                                      request.data.api_data = {};
+                                      request.data.api_data.store = body.api_data;
+                                      request.data.api_data.scopes = body.api_scopes;
+                                      request.data.api_data.scopes_description = body.api_scopes_description;
+                                    }
+                                    else {
+                                      request.data.api = false;
+                                    }
+                                    if (body.tos == "1") {
+                                      request.data.tos = true;
+                                      request.data.tos_url = body.tos_url;
+                                    }
+                                    else {
+                                      request.data.tos = false;
+                                    }
+                                    if (body.source == "1") {
+                                      request.data.source = true;
+                                      request.data.source_url = body.source_url;
+                                    }
+                                    else {
+                                      request.data.source = false;
+                                    }
+                                    if (body.beta == "1") {
+                                      request.data.beta = true;
+                                      request.data.beta_changes = body.beta_description;
+                                    }
+                                    else {
+                                      request.data.beta = false;
+                                    }
                                   }
-                                  if (body.tos == "1") {
-                                    request.data.tos = true;
-                                    request.data.tos_url = body.tos_url;
+                                  else if (request.type_id === 3) {
+                                    request.type = "desktop";
+                                    request.data.name = body.name;
+                                    request.data.url = body.url;
+                                    request.data.description = body.description;
+                                    request.data.data = body.user_data;
+                                    if (body.api == "1") {
+                                      request.data.api = true;
+                                      request.data.api_data = {};
+                                      request.data.api_data.store = body.api_data;
+                                      request.data.api_data.scopes = body.api_scopes;
+                                      request.data.api_data.scopes_description = body.api_scopes_description;
+                                    }
+                                    else {
+                                      request.data.api = false;
+                                    }
+                                    if (body.tos == "1") {
+                                      request.data.tos = true;
+                                      request.data.tos_url = body.tos_url;
+                                    }
+                                    else {
+                                      request.data.tos = false;
+                                    }
+                                    if (body.source == "1") {
+                                      request.data.source = true;
+                                      request.data.source_url = body.source_url;
+                                    }
+                                    else {
+                                      request.data.source = false;
+                                    }
+                                    if (body.beta == "1") {
+                                      request.data.beta = true;
+                                      request.data.beta_changes = body.beta_description;
+                                    }
+                                    else {
+                                      request.data.beta = false;
+                                    }
                                   }
-                                  else {
-                                    request.data.tos = false;
+                                  else if (request.type_id === 5) {
+                                    request.type = "ama";
+                                    request.data.name = body.name;
+                                    request.data.product = body.product_name;
+                                    if (body.permissions == "1") {
+                                      request.data.permission = true;
+                                    }
+                                    else {
+                                      request.data.permission = false;
+                                    }
+                                    if (body.tos == "1") {
+                                      request.data.tos = true;
+                                      request.data.tos_url = body.tos_url;
+                                    }
+                                    else {
+                                      request.data.tos = false;
+                                    }
+                                    request.data.data = body.user_data;
+                                    var d = new Date(body.date);
+                                    request.data.date = d.getTime();
+                                    request.data.days = body.days;
                                   }
-                                  if (body.source == "1") {
-                                    request.data.source = true;
-                                    request.data.source_url = body.source_url;
+                                  else if (request.type_id === 6) {
+                                    request.type = "other";
+                                    request.data.name = body.name;
+                                    request.data.description = body.description;
                                   }
-                                  else {
-                                    request.data.source = false;
-                                  }
-                                  if (body.beta == "1") {
-                                    request.data.beta = true;
-                                    request.data.beta_changes = body.beta_description;
-                                  }
-                                  else {
-                                    request.data.beta = false;
-                                  }
-                                }
-                                else if (request.type_id === 5) {
-                                  request.type = "ama";
-                                  request.data.name = body.name;
-                                  request.data.product = body.product_name;
-                                  if (body.permissions == "1") {
-                                    request.data.permission = true;
-                                  }
-                                  else {
-                                    request.data.permission = false;
-                                  }
-                                  if (body.tos == "1") {
-                                    request.data.tos = true;
-                                    request.data.tos_url = body.tos_url;
-                                  }
-                                  else {
-                                    request.data.tos = false;
-                                  }
-                                  request.data.data = body.user_data;
-                                  var d = new Date(body.date);
-                                  request.data.date = d.getTime();
-                                  request.data.days = body.days;
-                                }
-                                else if (request.type_id === 6) {
-                                  request.type = "other";
-                                  request.data.name = body.name;
-                                  request.data.description = body.description;
                                 }
                               }
                               if (Object.keys(request.data).length !== 0) {
@@ -328,8 +335,10 @@ router.get("/reddit/", function(req, res) {
                             }
                           }
                         }
-                        db.users.editByTwitchId(data.twitch_id, data).then(function() {
-                          res.redirect(req.session.return);
+                        Promise.all([helpers.reddit.setFlair(data, null), helpers.discord.setRole(data)]).then(function(response) {
+                          db.users.editByTwitchId(data.twitch_id, data).then(function() {
+                            res.redirect(req.session.return);
+                          });
                         });
                       });
                     });
@@ -380,7 +389,7 @@ router.get("/discord/", function(req, res) {
           if (!discord) {
             req.session.discord_state = "";
             if (req.session.return.indexOf("/auth/") > -1) {
-              req.session.return = "/browse/spotlight/";
+              req.session.return = "/browse/streams/";
             }
             if (req.session.twitch) {
               db.users.getByTwitchId(req.session.twitch.id).then(function(data) {
@@ -393,6 +402,9 @@ router.get("/discord/", function(req, res) {
                   data.discord_tag = finaldata.discriminator;
                   helpers.discord.inServer(data).then(function(server) {
                     if (server.server === true) {
+                      if (!data.transactions) {
+                        data.transactions = [];
+                      }
                       data.transactions.push({
                         timestamp: Date.now(),
                         title: "Joining the Discord Server",

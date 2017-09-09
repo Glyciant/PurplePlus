@@ -123,7 +123,7 @@ app.get('*', function(req, res, next) {
 require('./routes')(app);
 
 app.post('/error/user', function(req, res) {
-	db.cache.getByRandom(1).then(function(data) {
+	db.cache.getByRandom(1, "").then(function(data) {
 		if (data[0]) {
 			 res.send(data[0].stream);
 		}
@@ -180,4 +180,8 @@ var server = app.listen(config.app.port, function() {
 		}
 	});
 	console.log('[DASHBOARD] Ready (' + config.app.port + ')');
+});
+
+process.on('unhandledRejection', function(reason, p){
+  console.log("Promise Rejection at: ", p, " \nReason: ", reason);
 });

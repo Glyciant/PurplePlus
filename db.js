@@ -341,16 +341,41 @@ var users = {
       });
     });
   },
-  getRandomApprovedByType: (type, live) => {
+  getRandomApprovedGamingStreamer: (live) => {
+    return new Promise((resolve, reject) => {
+      mongodb.connect(url, function(err, db) {
+        assert.equal(null, err);
+        var key = "profile.types.streamer_gaming";
+        if (live === true) {
+          var match = { "profile.status": "approved", "stream.game": { $nin: ["Creative", "IRL", "Social Eating", "Talk Show", "Music"] }, "stream": { $exists: true } };
+        }
+        else {
+          var match = { "profile.status": "approved", "stream.game": { $nin: ["Creative", "IRL", "Social Eating", "Talk Show", "Music"] } };
+        }
+        match[key] = { $exists: true };
+        db.collection("users").aggregate([{ $match: match }, { $sample: { size: 1 } }], function(err, result) {
+          assert.equal(null, err);
+          db.close();
+          if (result) {
+            resolve(result);
+          }
+          else {
+            resolve(null);
+          }
+        });
+      });
+    });
+  },
+  getRandomApprovedByType: (type, directory, live) => {
     return new Promise((resolve, reject) => {
       mongodb.connect(url, function(err, db) {
         assert.equal(null, err);
         var key = "profile.types." + type;
         if (live === true) {
-          var match = { "profile.status": "approved", "stream": { $exists: true } };
+          var match = { "profile.status": "approved", "stream.game": directory, "stream": { $exists: true } };
         }
         else {
-          var match = { "profile.status": "approved" };
+          var match = { "profile.status": "approved", "stream.game": directory };
         }
         match[key] = { $exists: true };
         db.collection("users").aggregate([{ $match: match }, { $sample: { size: 1 } }], function(err, result) {

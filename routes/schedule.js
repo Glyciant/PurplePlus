@@ -108,7 +108,7 @@ router.post("/streams/save", function(req, res, next) {
         data.streams = [];
       }
       helpers.twitch.getDirectoriesByQuery(req.body.directory).then(function(game) {
-        if (game.games && game.games[0] && game.games[0].name == req.body.directory) {
+        if (game.games && game.games.map(function(x) { return x.name; }).indexOf(req.body.directory) > -1) {
           req.body.start = parseInt(req.body.start);
           req.body.end = parseInt(req.body.end);
           for (var stream of data.streams) {

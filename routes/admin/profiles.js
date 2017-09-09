@@ -8,6 +8,11 @@ var express = require("express"),
 router.get("/", function(req, res, next) {
   if (req.session.type == "mod" || req.session.type == "helper") {
     db.users.getByStatus("pending").then(function(data) {
+      data.sort(function(a, b){
+        if (a.profile.updated < b.profile.updated) { return -1; }
+        if (a.profile.updated > b.profile.updated) { return 1; }
+        return 0;
+      });
       res.render("admin_profiles", { title: "Manage Profiles", data: data });
     });
   }

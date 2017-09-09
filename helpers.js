@@ -858,7 +858,7 @@ module.exports = function(client, bot) {
               }
             }
             if (roles.sort().toString() != match.sort().toString()) {
-              member.removeRoles(exists).then(function() {
+              member.removeRoles(match).then(function() {
                 member.addRoles(roles).then(function() {
                   resolve({ message: "success" });
                 }).catch(function(err) {

@@ -9,7 +9,14 @@ var express = require("express"),
 		   type: "markdown",
 		   match: /:(.+?):/g
 		}),
+    cron = require('node-cron'),
     router = express.Router();
+
+var task = cron.schedule('0 0 0 * * *', function() {
+  Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]);
+});
+
+Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]);
 
 router.get("/:name", function(req, res, next) {
   db.users.getByTwitchUsername(req.params.name.toLowerCase()).then(function(data) {
@@ -59,154 +66,150 @@ router.get("/:name", function(req, res, next) {
                 data.profile.views.push(req.session.twitch.id);
               }
               db.users.editByTwitchId(data.twitch_id, data).then(function() {
-                Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]).then(function() {
-                  data.profile.overview.about = parser.parse(data.profile.overview.about).replace(/\s\"\w*\"/, "");
-                  data.profile.overview.background = parser.parse(data.profile.overview.background).replace(/\s\"\w*\"/, "");
-                  if (data.profile.types.streamer_gaming) {
-                    data.profile.types.streamer_gaming.goals = parser.parse(data.profile.types.streamer_gaming.goals).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_gaming.favourites = parser.parse(data.profile.types.streamer_gaming.favourites).replace(/\s\"\w*\"/, "");
-                  }
-                  if (data.profile.types.streamer_creative) {
-                    data.profile.types.streamer_creative.goals = parser.parse(data.profile.types.streamer_creative.goals).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_creative.creations = parser.parse(data.profile.types.streamer_creative.creations).replace(/\s\"\w*\"/, "");
-                  }
-                  if (data.profile.types.streamer_socialeating) {
-                    data.profile.types.streamer_socialeating.goals = parser.parse(data.profile.types.streamer_socialeating.goals).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_socialeating.meals = parser.parse(data.profile.types.streamer_socialeating.meals).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_socialeating.discussions = parser.parse(data.profile.types.streamer_socialeating.discussions).replace(/\s\"\w*\"/, "");
-                  }
-                  if (data.profile.types.streamer_irl) {
-                    data.profile.types.streamer_irl.goals = parser.parse(data.profile.types.streamer_irl.goals).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_irl.activities = parser.parse(data.profile.types.streamer_irl.activities).replace(/\s\"\w*\"/, "");
-                  }
-                  if (data.profile.types.streamer_talkshow) {
-                    data.profile.types.streamer_talkshow.goals = parser.parse(data.profile.types.streamer_talkshow.goals).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_talkshow.discussions = parser.parse(data.profile.types.streamer_talkshow.discussions).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_talkshow.guests = parser.parse(data.profile.types.streamer_talkshow.guests).replace(/\s\"\w*\"/, "");
-                  }
-                  if (data.profile.types.streamer_music) {
-                    data.profile.types.streamer_music.goals = parser.parse(data.profile.types.streamer_music.goals).replace(/\s\"\w*\"/, "");
-                    data.profile.types.streamer_music.music = parser.parse(data.profile.types.streamer_music.music).replace(/\s\"\w*\"/, "");
-                  }
-                  if (data.profile.types.artist) {
-                    data.profile.types.artist.examples = parser.parse(data.profile.types.artist.examples).replace(/\s\"\w*\"/, "");
-                    data.profile.types.artist.attraction = parser.parse(data.profile.types.artist.attraction).replace(/\s\"\w*\"/, "");
-                    if (data.profile.types.artist.commissions) {
-                      data.profile.types.artist.commissions.services = parser.parse(data.profile.types.artist.commissions.services).replace(/\s\"\w*\"/, "");
-                      data.profile.types.artist.commissions.contact = parser.parse(data.profile.types.artist.commissions.contact).replace(/\s\"\w*\"/, "");
-                      if (data.profile.types.artist.commissions.charge) {
-                        data.profile.types.artist.commissions.charge = parser.parse(data.profile.types.artist.commissions.charge).replace(/\s\"\w*\"/, "");
-                      }
+                data.profile.overview.about = parser.parse(data.profile.overview.about).replace(/\s\"\w*\"/, "");
+                data.profile.overview.background = parser.parse(data.profile.overview.background).replace(/\s\"\w*\"/, "");
+                if (data.profile.types.streamer_gaming) {
+                  data.profile.types.streamer_gaming.goals = parser.parse(data.profile.types.streamer_gaming.goals).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_gaming.favourites = parser.parse(data.profile.types.streamer_gaming.favourites).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.streamer_creative) {
+                  data.profile.types.streamer_creative.goals = parser.parse(data.profile.types.streamer_creative.goals).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_creative.creations = parser.parse(data.profile.types.streamer_creative.creations).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.streamer_socialeating) {
+                  data.profile.types.streamer_socialeating.goals = parser.parse(data.profile.types.streamer_socialeating.goals).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_socialeating.meals = parser.parse(data.profile.types.streamer_socialeating.meals).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_socialeating.discussions = parser.parse(data.profile.types.streamer_socialeating.discussions).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.streamer_irl) {
+                  data.profile.types.streamer_irl.goals = parser.parse(data.profile.types.streamer_irl.goals).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_irl.activities = parser.parse(data.profile.types.streamer_irl.activities).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.streamer_talkshow) {
+                  data.profile.types.streamer_talkshow.goals = parser.parse(data.profile.types.streamer_talkshow.goals).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_talkshow.discussions = parser.parse(data.profile.types.streamer_talkshow.discussions).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_talkshow.guests = parser.parse(data.profile.types.streamer_talkshow.guests).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.streamer_music) {
+                  data.profile.types.streamer_music.goals = parser.parse(data.profile.types.streamer_music.goals).replace(/\s\"\w*\"/, "");
+                  data.profile.types.streamer_music.music = parser.parse(data.profile.types.streamer_music.music).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.artist) {
+                  data.profile.types.artist.examples = parser.parse(data.profile.types.artist.examples).replace(/\s\"\w*\"/, "");
+                  data.profile.types.artist.attraction = parser.parse(data.profile.types.artist.attraction).replace(/\s\"\w*\"/, "");
+                  if (data.profile.types.artist.commissions) {
+                    data.profile.types.artist.commissions.services = parser.parse(data.profile.types.artist.commissions.services).replace(/\s\"\w*\"/, "");
+                    data.profile.types.artist.commissions.contact = parser.parse(data.profile.types.artist.commissions.contact).replace(/\s\"\w*\"/, "");
+                    if (data.profile.types.artist.commissions.charge) {
+                      data.profile.types.artist.commissions.charge = parser.parse(data.profile.types.artist.commissions.charge).replace(/\s\"\w*\"/, "");
                     }
                   }
-                  if (data.profile.types.developer) {
-                    data.profile.types.developer.examples = parser.parse(data.profile.types.developer.examples).replace(/\s\"\w*\"/, "");
-                    data.profile.types.developer.attraction = parser.parse(data.profile.types.developer.attraction).replace(/\s\"\w*\"/, "");
-                    if (data.profile.types.developer.commissions) {
-                      data.profile.types.developer.commissions.services = parser.parse(data.profile.types.developer.commissions.services).replace(/\s\"\w*\"/, "");
-                      data.profile.types.developer.commissions.contact = parser.parse(data.profile.types.developer.commissions.contact).replace(/\s\"\w*\"/, "");
-                      if (data.profile.types.developer.commissions.charge) {
-                        data.profile.types.developer.commissions.charge = parser.parse(data.profile.types.developer.commissions.charge).replace(/\s\"\w*\"/, "");
-                      }
+                }
+                if (data.profile.types.developer) {
+                  data.profile.types.developer.examples = parser.parse(data.profile.types.developer.examples).replace(/\s\"\w*\"/, "");
+                  data.profile.types.developer.attraction = parser.parse(data.profile.types.developer.attraction).replace(/\s\"\w*\"/, "");
+                  if (data.profile.types.developer.commissions) {
+                    data.profile.types.developer.commissions.services = parser.parse(data.profile.types.developer.commissions.services).replace(/\s\"\w*\"/, "");
+                    data.profile.types.developer.commissions.contact = parser.parse(data.profile.types.developer.commissions.contact).replace(/\s\"\w*\"/, "");
+                    if (data.profile.types.developer.commissions.charge) {
+                      data.profile.types.developer.commissions.charge = parser.parse(data.profile.types.developer.commissions.charge).replace(/\s\"\w*\"/, "");
                     }
                   }
-                  if (data.profile.types.communitymanager) {
-                    data.profile.types.communitymanager.examples = parser.parse(data.profile.types.communitymanager.examples).replace(/\s\"\w*\"/, "");
-                    data.profile.types.communitymanager.attraction = parser.parse(data.profile.types.communitymanager.attraction).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.communitymanager) {
+                  data.profile.types.communitymanager.examples = parser.parse(data.profile.types.communitymanager.examples).replace(/\s\"\w*\"/, "");
+                  data.profile.types.communitymanager.attraction = parser.parse(data.profile.types.communitymanager.attraction).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.moderator) {
+                  data.profile.types.moderator.experience = parser.parse(data.profile.types.moderator.experience).replace(/\s\"\w*\"/, "");
+                  data.profile.types.moderator.attraction = parser.parse(data.profile.types.moderator.attraction).replace(/\s\"\w*\"/, "");
+                  if (data.profile.types.moderator.requests) {
+                    data.profile.types.moderator.requests.requirements = parser.parse(data.profile.types.moderator.requests.requirements).replace(/\s\"\w*\"/, "");
+                    data.profile.types.moderator.requests.contact = parser.parse(data.profile.types.moderator.requests.contact).replace(/\s\"\w*\"/, "");
                   }
-                  if (data.profile.types.moderator) {
-                    data.profile.types.moderator.experience = parser.parse(data.profile.types.moderator.experience).replace(/\s\"\w*\"/, "");
-                    data.profile.types.moderator.attraction = parser.parse(data.profile.types.moderator.attraction).replace(/\s\"\w*\"/, "");
-                    if (data.profile.types.moderator.requests) {
-                      data.profile.types.moderator.requests.requirements = parser.parse(data.profile.types.moderator.requests.requirements).replace(/\s\"\w*\"/, "");
-                      data.profile.types.moderator.requests.contact = parser.parse(data.profile.types.moderator.requests.contact).replace(/\s\"\w*\"/, "");
-                    }
-                  }
-                  if (data.profile.types.viewer) {
-                    data.profile.types.viewer.experience = parser.parse(data.profile.types.viewer.experience).replace(/\s\"\w*\"/, "");
-                    data.profile.types.viewer.streamers = parser.parse(data.profile.types.viewer.streamers).replace(/\s\"\w*\"/, "");
-                  }
-                  if (data.profile.types.other) {
-                    data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
-                  }
-                  res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
-                });
+                }
+                if (data.profile.types.viewer) {
+                  data.profile.types.viewer.experience = parser.parse(data.profile.types.viewer.experience).replace(/\s\"\w*\"/, "");
+                  data.profile.types.viewer.streamers = parser.parse(data.profile.types.viewer.streamers).replace(/\s\"\w*\"/, "");
+                }
+                if (data.profile.types.other) {
+                  data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
+                }
+                res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
               });
             });
           }
           else {
-            Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]).then(function() {
-              data.profile.overview.about = parser.parse(data.profile.overview.about).replace(/\s\"\w*\"/, "");
-              data.profile.overview.background = parser.parse(data.profile.overview.background).replace(/\s\"\w*\"/, "");
-              if (data.profile.types.streamer_gaming) {
-                data.profile.types.streamer_gaming.goals = parser.parse(data.profile.types.streamer_gaming.goals).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_gaming.favourites = parser.parse(data.profile.types.streamer_gaming.favourites).replace(/\s\"\w*\"/, "");
-              }
-              if (data.profile.types.streamer_creative) {
-                data.profile.types.streamer_creative.goals = parser.parse(data.profile.types.streamer_creative.goals).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_creative.creations = parser.parse(data.profile.types.streamer_creative.creations).replace(/\s\"\w*\"/, "");
-              }
-              if (data.profile.types.streamer_socialeating) {
-                data.profile.types.streamer_socialeating.goals = parser.parse(data.profile.types.streamer_socialeating.goals).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_socialeating.meals = parser.parse(data.profile.types.streamer_socialeating.meals).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_socialeating.discussions = parser.parse(data.profile.types.streamer_socialeating.discussions).replace(/\s\"\w*\"/, "");
-              }
-              if (data.profile.types.streamer_irl) {
-                data.profile.types.streamer_irl.goals = parser.parse(data.profile.types.streamer_irl.goals).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_irl.activities = parser.parse(data.profile.types.streamer_irl.activities).replace(/\s\"\w*\"/, "");
-              }
-              if (data.profile.types.streamer_talkshow) {
-                data.profile.types.streamer_talkshow.goals = parser.parse(data.profile.types.streamer_talkshow.goals).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_talkshow.discussions = parser.parse(data.profile.types.streamer_talkshow.discussions).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_talkshow.guests = parser.parse(data.profile.types.streamer_talkshow.guests).replace(/\s\"\w*\"/, "");
-              }
-              if (data.profile.types.streamer_music) {
-                data.profile.types.streamer_music.goals = parser.parse(data.profile.types.streamer_music.goals).replace(/\s\"\w*\"/, "");
-                data.profile.types.streamer_music.music = parser.parse(data.profile.types.streamer_music.music).replace(/\s\"\w*\"/, "");
-              }
-              if (data.profile.types.artist) {
-                data.profile.types.artist.examples = parser.parse(data.profile.types.artist.examples).replace(/\s\"\w*\"/, "");
-                data.profile.types.artist.attraction = parser.parse(data.profile.types.artist.attraction).replace(/\s\"\w*\"/, "");
-                if (data.profile.types.artist.commissions) {
-                  data.profile.types.artist.commissions.services = parser.parse(data.profile.types.artist.commissions.services).replace(/\s\"\w*\"/, "");
-                  data.profile.types.artist.commissions.contact = parser.parse(data.profile.types.artist.commissions.contact).replace(/\s\"\w*\"/, "");
-                  if (data.profile.types.artist.commissions.charge) {
-                    data.profile.types.artist.commissions.charge = parser.parse(data.profile.types.artist.commissions.charge).replace(/\s\"\w*\"/, "");
-                  }
+            data.profile.overview.about = parser.parse(data.profile.overview.about).replace(/\s\"\w*\"/, "");
+            data.profile.overview.background = parser.parse(data.profile.overview.background).replace(/\s\"\w*\"/, "");
+            if (data.profile.types.streamer_gaming) {
+              data.profile.types.streamer_gaming.goals = parser.parse(data.profile.types.streamer_gaming.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_gaming.favourites = parser.parse(data.profile.types.streamer_gaming.favourites).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_creative) {
+              data.profile.types.streamer_creative.goals = parser.parse(data.profile.types.streamer_creative.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_creative.creations = parser.parse(data.profile.types.streamer_creative.creations).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_socialeating) {
+              data.profile.types.streamer_socialeating.goals = parser.parse(data.profile.types.streamer_socialeating.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_socialeating.meals = parser.parse(data.profile.types.streamer_socialeating.meals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_socialeating.discussions = parser.parse(data.profile.types.streamer_socialeating.discussions).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_irl) {
+              data.profile.types.streamer_irl.goals = parser.parse(data.profile.types.streamer_irl.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_irl.activities = parser.parse(data.profile.types.streamer_irl.activities).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_talkshow) {
+              data.profile.types.streamer_talkshow.goals = parser.parse(data.profile.types.streamer_talkshow.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_talkshow.discussions = parser.parse(data.profile.types.streamer_talkshow.discussions).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_talkshow.guests = parser.parse(data.profile.types.streamer_talkshow.guests).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_music) {
+              data.profile.types.streamer_music.goals = parser.parse(data.profile.types.streamer_music.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_music.music = parser.parse(data.profile.types.streamer_music.music).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.artist) {
+              data.profile.types.artist.examples = parser.parse(data.profile.types.artist.examples).replace(/\s\"\w*\"/, "");
+              data.profile.types.artist.attraction = parser.parse(data.profile.types.artist.attraction).replace(/\s\"\w*\"/, "");
+              if (data.profile.types.artist.commissions) {
+                data.profile.types.artist.commissions.services = parser.parse(data.profile.types.artist.commissions.services).replace(/\s\"\w*\"/, "");
+                data.profile.types.artist.commissions.contact = parser.parse(data.profile.types.artist.commissions.contact).replace(/\s\"\w*\"/, "");
+                if (data.profile.types.artist.commissions.charge) {
+                  data.profile.types.artist.commissions.charge = parser.parse(data.profile.types.artist.commissions.charge).replace(/\s\"\w*\"/, "");
                 }
               }
-              if (data.profile.types.developer) {
-                data.profile.types.developer.examples = parser.parse(data.profile.types.developer.examples).replace(/\s\"\w*\"/, "");
-                data.profile.types.developer.attraction = parser.parse(data.profile.types.developer.attraction).replace(/\s\"\w*\"/, "");
-                if (data.profile.types.developer.commissions) {
-                  data.profile.types.developer.commissions.services = parser.parse(data.profile.types.developer.commissions.services).replace(/\s\"\w*\"/, "");
-                  data.profile.types.developer.commissions.contact = parser.parse(data.profile.types.developer.commissions.contact).replace(/\s\"\w*\"/, "");
-                  if (data.profile.types.developer.commissions.charge) {
-                    data.profile.types.developer.commissions.charge = parser.parse(data.profile.types.developer.commissions.charge).replace(/\s\"\w*\"/, "");
-                  }
+            }
+            if (data.profile.types.developer) {
+              data.profile.types.developer.examples = parser.parse(data.profile.types.developer.examples).replace(/\s\"\w*\"/, "");
+              data.profile.types.developer.attraction = parser.parse(data.profile.types.developer.attraction).replace(/\s\"\w*\"/, "");
+              if (data.profile.types.developer.commissions) {
+                data.profile.types.developer.commissions.services = parser.parse(data.profile.types.developer.commissions.services).replace(/\s\"\w*\"/, "");
+                data.profile.types.developer.commissions.contact = parser.parse(data.profile.types.developer.commissions.contact).replace(/\s\"\w*\"/, "");
+                if (data.profile.types.developer.commissions.charge) {
+                  data.profile.types.developer.commissions.charge = parser.parse(data.profile.types.developer.commissions.charge).replace(/\s\"\w*\"/, "");
                 }
               }
-              if (data.profile.types.communitymanager) {
-                data.profile.types.communitymanager.examples = parser.parse(data.profile.types.communitymanager.examples).replace(/\s\"\w*\"/, "");
-                data.profile.types.communitymanager.attraction = parser.parse(data.profile.types.communitymanager.attraction).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.communitymanager) {
+              data.profile.types.communitymanager.examples = parser.parse(data.profile.types.communitymanager.examples).replace(/\s\"\w*\"/, "");
+              data.profile.types.communitymanager.attraction = parser.parse(data.profile.types.communitymanager.attraction).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.moderator) {
+              data.profile.types.moderator.experience = parser.parse(data.profile.types.moderator.experience).replace(/\s\"\w*\"/, "");
+              data.profile.types.moderator.attraction = parser.parse(data.profile.types.moderator.attraction).replace(/\s\"\w*\"/, "");
+              if (data.profile.types.moderator.requests) {
+                data.profile.types.moderator.requests.requirements = parser.parse(data.profile.types.moderator.requests.requirements).replace(/\s\"\w*\"/, "");
+                data.profile.types.moderator.requests.contact = parser.parse(data.profile.types.moderator.requests.contact).replace(/\s\"\w*\"/, "");
               }
-              if (data.profile.types.moderator) {
-                data.profile.types.moderator.experience = parser.parse(data.profile.types.moderator.experience).replace(/\s\"\w*\"/, "");
-                data.profile.types.moderator.attraction = parser.parse(data.profile.types.moderator.attraction).replace(/\s\"\w*\"/, "");
-                if (data.profile.types.moderator.requests) {
-                  data.profile.types.moderator.requests.requirements = parser.parse(data.profile.types.moderator.requests.requirements).replace(/\s\"\w*\"/, "");
-                  data.profile.types.moderator.requests.contact = parser.parse(data.profile.types.moderator.requests.contact).replace(/\s\"\w*\"/, "");
-                }
-              }
-              if (data.profile.types.viewer) {
-                data.profile.types.viewer.experience = parser.parse(data.profile.types.viewer.experience).replace(/\s\"\w*\"/, "");
-                data.profile.types.viewer.streamers = parser.parse(data.profile.types.viewer.streamers).replace(/\s\"\w*\"/, "");
-              }
-              if (data.profile.types.other) {
-                data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
-              }
-              res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
-            });
+            }
+            if (data.profile.types.viewer) {
+              data.profile.types.viewer.experience = parser.parse(data.profile.types.viewer.experience).replace(/\s\"\w*\"/, "");
+              data.profile.types.viewer.streamers = parser.parse(data.profile.types.viewer.streamers).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.other) {
+              data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
+            }
+            res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
           }
         });
       }
@@ -325,6 +328,75 @@ router.get("/:name/revisions/:id", function(req, res, next) {
             var profile = {
               profile: selection,
               balance: selection.balance
+            }
+            data.profile.overview.about = parser.parse(data.profile.overview.about).replace(/\s\"\w*\"/, "");
+            data.profile.overview.background = parser.parse(data.profile.overview.background).replace(/\s\"\w*\"/, "");
+            if (data.profile.types.streamer_gaming) {
+              data.profile.types.streamer_gaming.goals = parser.parse(data.profile.types.streamer_gaming.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_gaming.favourites = parser.parse(data.profile.types.streamer_gaming.favourites).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_creative) {
+              data.profile.types.streamer_creative.goals = parser.parse(data.profile.types.streamer_creative.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_creative.creations = parser.parse(data.profile.types.streamer_creative.creations).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_socialeating) {
+              data.profile.types.streamer_socialeating.goals = parser.parse(data.profile.types.streamer_socialeating.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_socialeating.meals = parser.parse(data.profile.types.streamer_socialeating.meals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_socialeating.discussions = parser.parse(data.profile.types.streamer_socialeating.discussions).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_irl) {
+              data.profile.types.streamer_irl.goals = parser.parse(data.profile.types.streamer_irl.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_irl.activities = parser.parse(data.profile.types.streamer_irl.activities).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_talkshow) {
+              data.profile.types.streamer_talkshow.goals = parser.parse(data.profile.types.streamer_talkshow.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_talkshow.discussions = parser.parse(data.profile.types.streamer_talkshow.discussions).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_talkshow.guests = parser.parse(data.profile.types.streamer_talkshow.guests).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.streamer_music) {
+              data.profile.types.streamer_music.goals = parser.parse(data.profile.types.streamer_music.goals).replace(/\s\"\w*\"/, "");
+              data.profile.types.streamer_music.music = parser.parse(data.profile.types.streamer_music.music).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.artist) {
+              data.profile.types.artist.examples = parser.parse(data.profile.types.artist.examples).replace(/\s\"\w*\"/, "");
+              data.profile.types.artist.attraction = parser.parse(data.profile.types.artist.attraction).replace(/\s\"\w*\"/, "");
+              if (data.profile.types.artist.commissions) {
+                data.profile.types.artist.commissions.services = parser.parse(data.profile.types.artist.commissions.services).replace(/\s\"\w*\"/, "");
+                data.profile.types.artist.commissions.contact = parser.parse(data.profile.types.artist.commissions.contact).replace(/\s\"\w*\"/, "");
+                if (data.profile.types.artist.commissions.charge) {
+                  data.profile.types.artist.commissions.charge = parser.parse(data.profile.types.artist.commissions.charge).replace(/\s\"\w*\"/, "");
+                }
+              }
+            }
+            if (data.profile.types.developer) {
+              data.profile.types.developer.examples = parser.parse(data.profile.types.developer.examples).replace(/\s\"\w*\"/, "");
+              data.profile.types.developer.attraction = parser.parse(data.profile.types.developer.attraction).replace(/\s\"\w*\"/, "");
+              if (data.profile.types.developer.commissions) {
+                data.profile.types.developer.commissions.services = parser.parse(data.profile.types.developer.commissions.services).replace(/\s\"\w*\"/, "");
+                data.profile.types.developer.commissions.contact = parser.parse(data.profile.types.developer.commissions.contact).replace(/\s\"\w*\"/, "");
+                if (data.profile.types.developer.commissions.charge) {
+                  data.profile.types.developer.commissions.charge = parser.parse(data.profile.types.developer.commissions.charge).replace(/\s\"\w*\"/, "");
+                }
+              }
+            }
+            if (data.profile.types.communitymanager) {
+              data.profile.types.communitymanager.examples = parser.parse(data.profile.types.communitymanager.examples).replace(/\s\"\w*\"/, "");
+              data.profile.types.communitymanager.attraction = parser.parse(data.profile.types.communitymanager.attraction).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.moderator) {
+              data.profile.types.moderator.experience = parser.parse(data.profile.types.moderator.experience).replace(/\s\"\w*\"/, "");
+              data.profile.types.moderator.attraction = parser.parse(data.profile.types.moderator.attraction).replace(/\s\"\w*\"/, "");
+              if (data.profile.types.moderator.requests) {
+                data.profile.types.moderator.requests.requirements = parser.parse(data.profile.types.moderator.requests.requirements).replace(/\s\"\w*\"/, "");
+                data.profile.types.moderator.requests.contact = parser.parse(data.profile.types.moderator.requests.contact).replace(/\s\"\w*\"/, "");
+              }
+            }
+            if (data.profile.types.viewer) {
+              data.profile.types.viewer.experience = parser.parse(data.profile.types.viewer.experience).replace(/\s\"\w*\"/, "");
+              data.profile.types.viewer.streamers = parser.parse(data.profile.types.viewer.streamers).replace(/\s\"\w*\"/, "");
+            }
+            if (data.profile.types.other) {
+              data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
             }
             res.render("profile_revision", { title: data.twitch_name + possession + " Profile", data: profile, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, status: true });
           }

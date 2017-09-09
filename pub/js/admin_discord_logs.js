@@ -16,7 +16,7 @@ $(document).delegate("#search", "click", function() {
         Materialize.toast("There were no results found.", 4000, "rounded");
       }
       else if (data.message == "forbidden") {
-        Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+        Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
       }
       else if (data.message == "unknown") {
         Materialize.toast("An unknown error occurred.", 4000, "rounded");

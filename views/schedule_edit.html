@@ -36,14 +36,14 @@
             <label for="stream-end-date">End Date</label>
           </div>
           <div class="col s5">
-            <span style="position: relative; top: 5px;">Start Time:</span>
-            <div class="input-field inline" style="width: calc(100% - 85px);">
+            <span style="position: relative; top: 5px;">Start Time (To Nearest 30 Minutes):</span>
+            <div class="input-field inline" style="width: calc(100% - 250px);">
               <input type="time" id="stream-start-time" step="1800" {% if data.start %}value="{{ data.start|date('H:i') }}"{% endif %}>
             </div>
           </div>
           <div class="col s5">
-            <span style="position: relative; top: 5px;">End Time:</span>
-            <div class="input-field inline" style="width: calc(100% - 75px);">
+            <span style="position: relative; top: 5px;">End Time (To Nearest 30 Minutes):</span>
+            <div class="input-field inline" style="width: calc(100% - 240px);">
               <input type="time" id="stream-end-time" step="1800" {% if data.end %}value="{{ data.end|date('H:i') }}"{% endif %}>
             </div>
           </div>

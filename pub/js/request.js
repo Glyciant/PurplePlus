@@ -37,7 +37,7 @@ $(document).delegate("#request-comment-submit", "click", function() {
       Materialize.toast("The comment was submitted.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -79,7 +79,7 @@ $(document).delegate("#request-status-save", "click", function() {
       Materialize.toast("The status was updated.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -115,7 +115,7 @@ $(document).delegate("#request-withdraw, #request-reopen", "click", function() {
       Materialize.toast("The status was updated.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -143,7 +143,7 @@ $(document).delegate("#request-upvote", "click", function() {
       $("#request-downvote").removeClass("disabled");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -171,7 +171,7 @@ $(document).delegate("#request-downvote", "click", function() {
       $("#request-downvote").addClass("disabled");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");

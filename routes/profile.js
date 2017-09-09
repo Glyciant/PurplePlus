@@ -9,7 +9,14 @@ var express = require("express"),
 		   type: "markdown",
 		   match: /:(.+?):/g
 		}),
+    cron = require('node-cron'),
     router = express.Router();
+
+var task = cron.schedule('0 0 0 * * *', function() {
+  Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]);
+});
+
+Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]);
 
 router.get("/", function(req, res, next) {
   if (req.session.twitch) {
@@ -92,79 +99,77 @@ router.get("/", function(req, res, next) {
           }
         }
         if (data[0].profile) {
-          Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]).then(function() {
-            var existing = JSON.parse(JSON.stringify(data[0].profile));
-            data[0].profile.overview.about = parser.parse(data[0].profile.overview.about).replace(/\s\"\w*\"/, "");
-            data[0].profile.overview.background = parser.parse(data[0].profile.overview.background).replace(/\s\"\w*\"/, "");
-            if (data[0].profile.types.streamer_gaming) {
-              data[0].profile.types.streamer_gaming.goals = parser.parse(data[0].profile.types.streamer_gaming.goals).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_gaming.favourites = parser.parse(data[0].profile.types.streamer_gaming.favourites).replace(/\s\"\w*\"/, "");
-            }
-            if (data[0].profile.types.streamer_creative) {
-              data[0].profile.types.streamer_creative.goals = parser.parse(data[0].profile.types.streamer_creative.goals).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_creative.creations = parser.parse(data[0].profile.types.streamer_creative.creations).replace(/\s\"\w*\"/, "");
-            }
-            if (data[0].profile.types.streamer_socialeating) {
-              data[0].profile.types.streamer_socialeating.goals = parser.parse(data[0].profile.types.streamer_socialeating.goals).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_socialeating.meals = parser.parse(data[0].profile.types.streamer_socialeating.meals).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_socialeating.discussions = parser.parse(data[0].profile.types.streamer_socialeating.discussions).replace(/\s\"\w*\"/, "");
-            }
-            if (data[0].profile.types.streamer_irl) {
-              data[0].profile.types.streamer_irl.goals = parser.parse(data[0].profile.types.streamer_irl.goals).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_irl.activities = parser.parse(data[0].profile.types.streamer_irl.activities).replace(/\s\"\w*\"/, "");
-            }
-            if (data[0].profile.types.streamer_talkshow) {
-              data[0].profile.types.streamer_talkshow.goals = parser.parse(data[0].profile.types.streamer_talkshow.goals).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_talkshow.discussions = parser.parse(data[0].profile.types.streamer_talkshow.discussions).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_talkshow.guests = parser.parse(data[0].profile.types.streamer_talkshow.guests).replace(/\s\"\w*\"/, "");
-            }
-            if (data[0].profile.types.streamer_music) {
-              data[0].profile.types.streamer_music.goals = parser.parse(data[0].profile.types.streamer_music.goals).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.streamer_music.music = parser.parse(data[0].profile.types.streamer_music.music).replace(/\s\"\w*\"/, "");
-            }
-            if (data[0].profile.types.artist) {
-              data[0].profile.types.artist.examples = parser.parse(data[0].profile.types.artist.examples).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.artist.attraction = parser.parse(data[0].profile.types.artist.attraction).replace(/\s\"\w*\"/, "");
-              if (data[0].profile.types.artist.commissions) {
-                data[0].profile.types.artist.commissions.services = parser.parse(data[0].profile.types.artist.commissions.services).replace(/\s\"\w*\"/, "");
-                data[0].profile.types.artist.commissions.contact = parser.parse(data[0].profile.types.artist.commissions.contact).replace(/\s\"\w*\"/, "");
-                if (data[0].profile.types.artist.commissions.charge) {
-                  data[0].profile.types.artist.commissions.charge = parser.parse(data[0].profile.types.artist.commissions.charge).replace(/\s\"\w*\"/, "");
-                }
+          var existing = JSON.parse(JSON.stringify(data[0].profile));
+          data[0].profile.overview.about = parser.parse(data[0].profile.overview.about).replace(/\s\"\w*\"/, "");
+          data[0].profile.overview.background = parser.parse(data[0].profile.overview.background).replace(/\s\"\w*\"/, "");
+          if (data[0].profile.types.streamer_gaming) {
+            data[0].profile.types.streamer_gaming.goals = parser.parse(data[0].profile.types.streamer_gaming.goals).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_gaming.favourites = parser.parse(data[0].profile.types.streamer_gaming.favourites).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.streamer_creative) {
+            data[0].profile.types.streamer_creative.goals = parser.parse(data[0].profile.types.streamer_creative.goals).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_creative.creations = parser.parse(data[0].profile.types.streamer_creative.creations).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.streamer_socialeating) {
+            data[0].profile.types.streamer_socialeating.goals = parser.parse(data[0].profile.types.streamer_socialeating.goals).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_socialeating.meals = parser.parse(data[0].profile.types.streamer_socialeating.meals).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_socialeating.discussions = parser.parse(data[0].profile.types.streamer_socialeating.discussions).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.streamer_irl) {
+            data[0].profile.types.streamer_irl.goals = parser.parse(data[0].profile.types.streamer_irl.goals).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_irl.activities = parser.parse(data[0].profile.types.streamer_irl.activities).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.streamer_talkshow) {
+            data[0].profile.types.streamer_talkshow.goals = parser.parse(data[0].profile.types.streamer_talkshow.goals).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_talkshow.discussions = parser.parse(data[0].profile.types.streamer_talkshow.discussions).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_talkshow.guests = parser.parse(data[0].profile.types.streamer_talkshow.guests).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.streamer_music) {
+            data[0].profile.types.streamer_music.goals = parser.parse(data[0].profile.types.streamer_music.goals).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.streamer_music.music = parser.parse(data[0].profile.types.streamer_music.music).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.artist) {
+            data[0].profile.types.artist.examples = parser.parse(data[0].profile.types.artist.examples).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.artist.attraction = parser.parse(data[0].profile.types.artist.attraction).replace(/\s\"\w*\"/, "");
+            if (data[0].profile.types.artist.commissions) {
+              data[0].profile.types.artist.commissions.services = parser.parse(data[0].profile.types.artist.commissions.services).replace(/\s\"\w*\"/, "");
+              data[0].profile.types.artist.commissions.contact = parser.parse(data[0].profile.types.artist.commissions.contact).replace(/\s\"\w*\"/, "");
+              if (data[0].profile.types.artist.commissions.charge) {
+                data[0].profile.types.artist.commissions.charge = parser.parse(data[0].profile.types.artist.commissions.charge).replace(/\s\"\w*\"/, "");
               }
             }
-            if (data[0].profile.types.developer) {
-              data[0].profile.types.developer.examples = parser.parse(data[0].profile.types.developer.examples).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.developer.attraction = parser.parse(data[0].profile.types.developer.attraction).replace(/\s\"\w*\"/, "");
-              if (data[0].profile.types.developer.commissions) {
-                data[0].profile.types.developer.commissions.services = parser.parse(data[0].profile.types.developer.commissions.services).replace(/\s\"\w*\"/, "");
-                data[0].profile.types.developer.commissions.contact = parser.parse(data[0].profile.types.developer.commissions.contact).replace(/\s\"\w*\"/, "");
-                if (data[0].profile.types.developer.commissions.charge) {
-                  data[0].profile.types.developer.commissions.charge = parser.parse(data[0].profile.types.developer.commissions.charge).replace(/\s\"\w*\"/, "");
-                }
+          }
+          if (data[0].profile.types.developer) {
+            data[0].profile.types.developer.examples = parser.parse(data[0].profile.types.developer.examples).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.developer.attraction = parser.parse(data[0].profile.types.developer.attraction).replace(/\s\"\w*\"/, "");
+            if (data[0].profile.types.developer.commissions) {
+              data[0].profile.types.developer.commissions.services = parser.parse(data[0].profile.types.developer.commissions.services).replace(/\s\"\w*\"/, "");
+              data[0].profile.types.developer.commissions.contact = parser.parse(data[0].profile.types.developer.commissions.contact).replace(/\s\"\w*\"/, "");
+              if (data[0].profile.types.developer.commissions.charge) {
+                data[0].profile.types.developer.commissions.charge = parser.parse(data[0].profile.types.developer.commissions.charge).replace(/\s\"\w*\"/, "");
               }
             }
-            if (data[0].profile.types.communitymanager) {
-              data[0].profile.types.communitymanager.examples = parser.parse(data[0].profile.types.communitymanager.examples).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.communitymanager.attraction = parser.parse(data[0].profile.types.communitymanager.attraction).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.communitymanager) {
+            data[0].profile.types.communitymanager.examples = parser.parse(data[0].profile.types.communitymanager.examples).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.communitymanager.attraction = parser.parse(data[0].profile.types.communitymanager.attraction).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.moderator) {
+            data[0].profile.types.moderator.experience = parser.parse(data[0].profile.types.moderator.experience).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.moderator.attraction = parser.parse(data[0].profile.types.moderator.attraction).replace(/\s\"\w*\"/, "");
+            if (data[0].profile.types.moderator.requests) {
+              data[0].profile.types.moderator.requests.requirements = parser.parse(data[0].profile.types.moderator.requests.requirements).replace(/\s\"\w*\"/, "");
+              data[0].profile.types.moderator.requests.contact = parser.parse(data[0].profile.types.moderator.requests.contact).replace(/\s\"\w*\"/, "");
             }
-            if (data[0].profile.types.moderator) {
-              data[0].profile.types.moderator.experience = parser.parse(data[0].profile.types.moderator.experience).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.moderator.attraction = parser.parse(data[0].profile.types.moderator.attraction).replace(/\s\"\w*\"/, "");
-              if (data[0].profile.types.moderator.requests) {
-                data[0].profile.types.moderator.requests.requirements = parser.parse(data[0].profile.types.moderator.requests.requirements).replace(/\s\"\w*\"/, "");
-                data[0].profile.types.moderator.requests.contact = parser.parse(data[0].profile.types.moderator.requests.contact).replace(/\s\"\w*\"/, "");
-              }
-            }
-            if (data[0].profile.types.viewer) {
-              data[0].profile.types.viewer.experience = parser.parse(data[0].profile.types.viewer.experience).replace(/\s\"\w*\"/, "");
-              data[0].profile.types.viewer.streamers = parser.parse(data[0].profile.types.viewer.streamers).replace(/\s\"\w*\"/, "");
-            }
-            if (data[0].profile.types.other) {
-              data[0].profile.types.other = parser.parse(data[0].profile.types.other).replace(/\s\"\w*\"/, "");
-            }
-            res.render("profile", { title: "My Profile", data: data[0], existing: existing, api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, intro: data[7], streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
-          });
+          }
+          if (data[0].profile.types.viewer) {
+            data[0].profile.types.viewer.experience = parser.parse(data[0].profile.types.viewer.experience).replace(/\s\"\w*\"/, "");
+            data[0].profile.types.viewer.streamers = parser.parse(data[0].profile.types.viewer.streamers).replace(/\s\"\w*\"/, "");
+          }
+          if (data[0].profile.types.other) {
+            data[0].profile.types.other = parser.parse(data[0].profile.types.other).replace(/\s\"\w*\"/, "");
+          }
+          res.render("profile", { title: "My Profile", data: data[0], existing: existing, api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, intro: data[7], streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
         }
         else {
           res.render("profile", { title: "My Profile", data: data[0], api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, intro: data[7], streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });

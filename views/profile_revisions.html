@@ -20,7 +20,7 @@
             <p class="custom-text text-lighten-1">Profile Votes</p>
           </div>
           <div class="col m2 s4 center">
-            <a href="https://twitch.tv/{{ api.name }}" target="_blank" style="max-height: 75px; max-width: 75px; display: inline-block;"><img {% if api.logo %} src="{{ api.logo }}" {% else %} src="/img/twitch.png" {% endif %} class="circle z-depth-2 responsive-img" style="max-height: 75px;"></a>
+            <a href="https://twitch.tv/{{ api.name }}" target="_blank" style="max-height: 75px; max-width: 75px; display: inline-block;"><img {% if api.logo %} src="{{ api.logo }}" {% else %} src="/img/default_user.png" {% endif %} class="circle z-depth-2 responsive-img" style="max-height: 75px;"></a>
             <br />
             <h5 class="custom-text text-darken-1">{{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} Profile Revision History</h5>
             <br / />

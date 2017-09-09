@@ -33,7 +33,23 @@ $(document).ready(function() {
       })
     });
   }
-  
+  else {
+    noUiSlider.create(slider, {
+      start: [0, 1],
+      connect: true,
+      step: 1,
+      orientation: "horizontal",
+      tooltips: true,
+      range: {
+        'min': 0,
+        'max': 1
+      },
+      format: wNumb({
+       decimals: 0
+      })
+    });
+  }
+
   slider.noUiSlider.on('set', function() {
     var min = slider.noUiSlider.get()[0],
         max = slider.noUiSlider.get()[1],

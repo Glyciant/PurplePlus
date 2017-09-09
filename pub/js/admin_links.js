@@ -20,7 +20,7 @@ $(document).delegate("#edit-link", "click", function() {
       Materialize.updateTextFields();
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -37,7 +37,7 @@ $(document).delegate("#delete-link", "click", function() {
       location.reload();
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -94,7 +94,7 @@ $(document).delegate("#save-link", "click", function() {
           Materialize.toast("A short link with that URL already exists.", 4000, "rounded");
         }
         else if (data.message == "forbidden") {
-          Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+          Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
         }
         else {
           Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -114,7 +114,7 @@ $(document).delegate("#save-link", "click", function() {
           Materialize.toast("A short link with that URL already exists.", 4000, "rounded");
         }
         else if (data.message == "forbidden") {
-          Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+          Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
         }
         else {
           Materialize.toast("An unknown error occurred.", 4000, "rounded");

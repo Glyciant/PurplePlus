@@ -14,44 +14,51 @@ var task = cron.schedule('0 */5 * * * *', function() {
       results.forEach(function(user) {
         user = user.join(",");
   			Promise.all([helpers.twitch.getStreams(user), helpers.twitch.getHosting(user)]).then(function(streams) {
-          streams[0].streams.forEach(function(stream) {
-            db.cache.addStream(stream.channel._id, stream).then(function() {
-              var community = false;
-              for (var community of stream.community_ids) {
-                if (community == config.twitch.community) {
-                  community = true;
+          if (streams[0].streams && streams[0].streams[0]) {
+            streams[0].streams.forEach(function(stream) {
+              db.cache.addStream(stream.channel._id, stream).then(function() {
+                var community = false;
+                for (var community of stream.community_ids) {
+                  if (community == config.twitch.community) {
+                    community = true;
+                  }
                 }
-              }
-              if (community === true) {
-                if (stream.stream_type == "live") {
-                  db.users.getByTwitchId(stream.channel._id.toString()).then(function(user) {
-                    user.transactions.push({
-                      timestamp: Date.now(),
-                      title: "Streaming to the Community",
-                      type: "Streaming to the Community",
-                      old: parseFloat(user.balance),
-                      new: parseFloat((parseFloat(user.balance) + 0.05).toFixed(2)),
-                      difference: 0.05,
-                      description: null
+                if (community === true) {
+                  if (stream.stream_type == "live") {
+                    db.users.getByTwitchId(stream.channel._id.toString()).then(function(user) {
+                      if (!user.transactions) {
+                        user.transactions = [];
+                      }
+                      user.transactions.push({
+                        timestamp: Date.now(),
+                        title: "Streaming to the Community",
+                        type: "Streaming to the Community",
+                        old: parseFloat(user.balance),
+                        new: parseFloat((parseFloat(user.balance) + 0.05).toFixed(2)),
+                        difference: 0.05,
+                        description: null
+                      });
+                      user.balance = parseFloat((parseFloat(user.balance) + 0.05).toFixed(2));
+                      Promise.all([helpers.reddit.setFlair(user, null), helpers.discord.setRole(user)]).then(function(response) {
+                        db.users.editByTwitchId(user.twitch_id, user);
+                      });
                     });
-                    user.balance = parseFloat((parseFloat(user.balance) + 0.05).toFixed(2));
-                    Promise.all([helpers.reddit.setFlair(user, null), helpers.discord.setRole(user)]).then(function(response) {
-                      db.users.editByTwitchId(user.twitch_id, user);
-                    });
-                  });
+                  }
                 }
+              });
+            });
+          }
+          if (streams[1].hosts && streams[1].hosts[0]) {
+            streams[1].hosts.forEach(function(host) {
+              if (host.target_id) {
+                db.cache.addHost(host.host_id, {
+                  id: host.target_id,
+                  name: host.target_display_name,
+                  username: host.target_login
+                });
               }
             });
-          });
-          streams[1].hosts.forEach(function(host) {
-            if (host.target_id) {
-              db.cache.addHost(host.host_id, {
-                id: host.target_id,
-                name: host.target_display_name,
-                username: host.target_login
-              });
-            }
-          });
+          }
   			});
   		})
     });

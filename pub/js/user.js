@@ -25,7 +25,7 @@ $(document).delegate("#upvote-profile, #mobile-upvote-profile", "click", functio
       $('.tooltipped').tooltip({delay: 50});
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -48,7 +48,7 @@ $(document).delegate("#downvote-profile, #mobile-downvote-profile", "click", fun
       $('.tooltipped').tooltip({delay: 50});
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -71,7 +71,7 @@ $(document).delegate("#bookmark-profile, #mobile-bookmark-profile", "click", fun
       Materialize.toast("The bookmark was added successfully.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -94,7 +94,7 @@ $(document).delegate("#unbookmark-profile, #mobile-unbookmark-profile", "click",
       Materialize.toast("The bookmark was deleted successfully.", 4000, "rounded");
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
@@ -114,7 +114,7 @@ $(document).delegate("#profile-edit-note", "click", function() {
       location.reload();
     }
     else if (data.message == "forbidden") {
-      Materialize.toast("You do not have permission to do that.", 4000, "rounded");
+      Materialize.toast("You do not have permission to do that. If you think this is an error, please try again later.", 4000, "rounded");
     }
     else {
       Materialize.toast("An unknown error occurred.", 4000, "rounded");
