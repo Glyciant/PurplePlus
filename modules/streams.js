@@ -17,10 +17,10 @@ var task = cron.schedule('0 */5 * * * *', function() {
           if (streams[0].streams && streams[0].streams[0]) {
             streams[0].streams.forEach(function(stream) {
               db.cache.addStream(stream.channel._id, stream).then(function() {
-                var community = false;
+                var award = false;
                 for (var community of stream.community_ids) {
                   if (community == config.twitch.community) {
-                    community = true;
+                    award = true;
                   }
                 }
                 if (community === true) {

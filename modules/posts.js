@@ -6,6 +6,8 @@ var cron = require('node-cron'),
 	  stopword = require('stopword')
     db = require('../db');
 
+var processed = [];
+
 cron.schedule('*/3 * * * * *', function() {
   db.settings.get().then(function(data) {
     if (data.search === true) {
@@ -18,7 +20,7 @@ cron.schedule('*/3 * * * * *', function() {
           password: config.reddit.bot.password,
         }
       }).on("complete", function(auth) {
-        restler.get('https://reddit.com/' + config.app.subreddit + '/new.json?limit=1&after=t3_6qglzr').on("complete", function(data) {
+        restler.get('https://reddit.com/' + config.app.subreddit + '/new.json?limit=1').on("complete", function(data) {
           if (data.data && data.data.children && data.data.children[0] && data.data.children[0].data) {
             if (processed.indexOf(data.data.children[0].data.id) === -1) {
               processed.push(data.data.children[0].data.id);
@@ -35,7 +37,7 @@ cron.schedule('*/3 * * * * *', function() {
                     if (!user || (user.type == "user" && user.display.twitch == "user" && user.display.subreddit == "user")) {
                       var re = new RegExp(" ", "g"),
                           title = data.data.children[0].data.title.replace(re, "+");
-                      restler.get('https://www.reddit.com/' + config.app.subreddit + '/search.json?q=' + title + '&restrict_sr=on&limit=100&sort=new&t=all').on("complete", function(search) {
+                      restler.get('https://www.reddit.com/' + config.app.subreddit + '/search.json?q=' + stopword.removeStopwords(title.split("+")).join("+") + '&restrict_sr=on&limit=100&sort=new&t=all').on("complete", function(search) {
                         if (search && search.data && search.data.children) {
                           var results = search.data.children,
                               j = 0,
