@@ -1,4 +1,4 @@
-<div class="row valign-wrapper">
+<div class="row">
   {% for directory in data %}
     <div id="directory-thumbnail-{{ directory|url_encode|replace("%", "", "g")|replace("'", "", "g") }}" class="col l1 m2 s3 directory-thumbnail tooltipped" data-position="bottom" data-delay="50" data-tooltip="{{ directory }}" data-name="{{ directory }}" style="margin-left: 0;">
       <div class="card" style="margin-bottom: 0;">

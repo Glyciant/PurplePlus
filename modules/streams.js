@@ -23,7 +23,7 @@ var task = cron.schedule('0 */5 * * * *', function() {
                     award = true;
                   }
                 }
-                if (community === true) {
+                if (award === true) {
                   if (stream.stream_type == "live") {
                     db.users.getByTwitchId(stream.channel._id.toString()).then(function(user) {
                       if (!user.transactions) {

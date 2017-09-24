@@ -58,15 +58,18 @@ cron.schedule('*/3 * * * * *', function() {
                             posts.reverse();
                             posts.splice(5);
                             var comment = `Greetings ` + data.data.children[0].data.author + `,
-    As part of an attempt to cut back on the number of repetitive threads on /r/Twitch, we are trying to provide a short list of posts from Reddit's search function that may help you. The search found the following results for you:
-    `
+
+As part of an attempt to cut back on the number of repetitive threads on /r/Twitch, we are trying to provide a short list of posts from Reddit's search function that may help you. The search found the following results for you:
+
+`
                             for (var post of posts) {
                               comment = comment + `- [` + post.title + `](` + post.link + `) (` + Math.round(post.distance  * 100) +  `% Relevancy Chance)
-    `
+`
                             }
                             comment = comment + `
-    We hope these links will be helpful. If so, consider deleting your post to reduce spam on the subreddit. If the suggested links are irrelvant to your question, feel free to ignore this comment and continue as you were. You may want to also upvote or downvote this comment to give the subreddit moderators an indication of how well the bot is doing!
-    *I'm a bot and this action was performed automatically. [Also, we recommend looking at the /r/Twitch Wiki for answers to frequently asked questions.](https://www.reddit.com/r/Twitch/wiki/) If you have any questions or concerns, please contact the subreddit moderators via [modmail](https://www.reddit.com/message/compose?to=%2Fr%2FTwitch).*`
+We hope these links will be helpful. If so, consider deleting your post to reduce spam on the subreddit. If the suggested links are irrelvant to your question, feel free to ignore this comment and continue as you were. You may want to also upvote or downvote this comment to give the subreddit moderators an indication of how well the bot is doing!
+
+*I'm a bot and this action was performed automatically. [Also, we recommend looking at the /r/Twitch Wiki for answers to frequently asked questions.](https://www.reddit.com/r/Twitch/wiki/) If you have any questions or concerns, please contact the subreddit moderators via [modmail](https://www.reddit.com/message/compose?to=%2Fr%2FTwitch).*`
                             helpers.reddit.comment("t3_" + data.data.children[0].data.id, comment).then(function() {
                               restler.get('https://www.reddit.com/user/' + config.reddit.bot.username  + "/comments.json?limit=1&sort=new").on('complete', function(account) {
                                 helpers.reddit.distinguish("t1_" + account.data.children[0].data.id).then(function() {

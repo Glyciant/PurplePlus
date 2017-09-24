@@ -3,10 +3,10 @@
 <a id="back" class="white-text" style="z-index: 100; cursor: pointer; position: absolute; top: calc(50% - 45px); left: 0; opacity: 0.75;"><i class="material-icons large">chevron_left</i></a>
 <a id="next" class="white-text" style="z-index: 100; cursor: pointer; position: absolute; top: calc(50% - 45px); right: 0; opacity: 0.75;"><i class="material-icons large">chevron_right</i></a>
 
-<div class="row custom lighten-1" style="height: 100%; margin: 0;">
+<div class="row custom lighten-1" style="height: 100%; margin: 0; overflow: hidden;">
   <div class="col s12" style="height: 100%; padding: 0; display: none;">
-    <h2 class="custom lighten-1 white-text center" style="font-weight: 300; margin: 0; padding-top: 100px; padding-bottom: 75px;">Welcome to Purple+</h2>
-    <div id="carousel-wrapper" style="height: calc(100% - 310px);">
+    <h2 class="custom lighten-1 white-text center" style="font-weight: 300; margin: 0; padding-top: 6%; padding-bottom: 4%;">Welcome to Purple+</h2>
+    <div id="carousel-wrapper" style="height: calc(90% - 3.56rem - 100px);">
       <div class="carousel carousel-slider center" style="height: 100%;">
         <div class="carousel-item custom lighten-1 white-text" href="#!">
           <img class="responsive-img" src="/img/index/spotlight.png" style="max-width: 700px; margin-bottom: 25px;" />
@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-    <div class="center">
+    <div class="center" style="position: absolute; bottom: 15px; left: {% if twitch.id %}calc(50% - 73px){% else %}calc(50% - 105.5px){% endif %}">
       {% if twitch.id %}
         <a href="/browse/streams" class="btn btn-large waves-effect white custom-text text-darken-1">Enter Site</a>
       {% else %}

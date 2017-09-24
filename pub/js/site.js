@@ -5,6 +5,9 @@ $(document).ready(function(){
   $('.tooltipped').tooltip({delay: 50});
   $(".button-collapse").sideNav();
   $('.carousel.carousel-slider').carousel({full_width: true, indicators: true});
+  if ($(window).height() < 850) {
+    $(".carousel .indicators").remove();
+  }
   $('.scrollspy').scrollSpy();
   $('.datepicker').pickadate({
     selectMonths: true,

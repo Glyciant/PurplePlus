@@ -20,7 +20,7 @@ cron.schedule('*/3 * * * * *', function() {
                 url,
                 user;
   					restler.get(parent).on("complete", function(parent) {
-              if (data.data.children[0].data.parent_id.includes("t1_")) {
+              if (data.data.children[0].data.name.includes("t1_")) {
                 user = parent[1].data.children[0].data.author;
               }
               else {
@@ -29,7 +29,7 @@ cron.schedule('*/3 * * * * *', function() {
               db.users.getByRedditUsername(user.toLowerCase()).then(function(user) {
                 if (user && user.reddit_name) {
                   if (user.reddit_name !== data.data.children[0].data.author) {
-                    if (data.data.children[0].data.parent_id.includes("t1_")) {
+                    if (data.data.children[0].data.name.includes("t1_")) {
                       url = data.data.children[0].data.link_permalink + parent[1].data.children[0].data.id;
                     }
                     else {

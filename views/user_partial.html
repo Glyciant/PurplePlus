@@ -18,10 +18,10 @@
             <p class="custom-text text-lighten-1">Profile Votes</p>
           </div>
           <div class="col m2 s4 center">
-            <a href="https://twitch.tv/{{ api.name }}" {% if stream.stream_type == "live" %}class="img-pulse live"{% elseif stream.stream_type == "vodcast" %}class="img-pulse video"{% elseif data.hosting %}class="img-pulse host"{% endif %} target="_blank" style="max-height: 75px; max-width: 75px; display: inline-block;"><img {% if api.logo %} src="{{ api.logo }}" {% else %} src="/img/default_user.png" {% endif %} class="circle z-depth-2 responsive-img" style="max-height: 75px;"></a>
+            <a href="https://twitch.tv/{{ api.name }}" {% if stream.stream_type == "live" %}class="img-pulse live"{% elseif stream.stream_type == "watch_party" %}class="img-pulse video"{% elseif data.hosting %}class="img-pulse host"{% endif %} target="_blank" style="max-height: 75px; max-width: 75px; display: inline-block;"><img {% if api.logo %} src="{{ api.logo }}" {% else %} src="/img/default_user.png" {% endif %} class="circle z-depth-2 responsive-img" style="max-height: 75px;"></a>
             <br />
             <h5 class="custom-text text-darken-1">{{ api.display_name }}</h5>
-            <p class="truncate custom-text text-lighten-1" title="{{ api.display_name }}'s Current Twitch Status">{% if stream.stream_type == "live" %}LIVE NOW{% elseif stream.stream_type == "vodcast" %}RUNNING VODCAST{% elseif data.hosting %}HOSTING {{ data.hosting.username|upper }}{% else %}{{ api.status }}{% endif %}</p>
+            <p class="truncate custom-text text-lighten-1" title="{{ api.display_name }}'s Current Twitch Status">{% if stream.stream_type == "live" %}LIVE NOW{% elseif stream.stream_type == "watch_party" %}RUNNING VODCAST{% elseif data.hosting %}HOSTING {{ data.hosting.username|upper }}{% else %}{{ api.status }}{% endif %}</p>
             <br />
             {% if data.profile.communities.discord %}
               <a href="{{ data.profile.communities.discord }}" class="btn waves-effect waves-light center tooltipped custom lighten-1" data-position="bottom" data-delay="50" data-tooltip="Discord Server" target="_blank" style="padding: 0 8px; margin: 0 1px;"><img src="/img/discord-icon-white.png" style="position: relative; top: 6px; max-height: 24px;" /></a>
@@ -127,7 +127,7 @@
       </div>
     </div>
   </div>
-  {% if stream.stream_type == "live" || stream.stream_type == "vodcast" %}
+  {% if stream.stream_type == "live" || stream.stream_type == "watch_party" %}
     <div class="col s10 offset-s1">
       <ul class="collapsible" data-collapsible="accordion">
         <li>

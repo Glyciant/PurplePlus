@@ -36,6 +36,9 @@ router.post("/votes", function(req, res, next) {
 });
 
 router.post("/random", function(req, res, next) {
+  if (!req.body.ids) {
+    req.body.ids = "";
+  }
   db.cache.getByRandom(12, req.body.ids).then(function(data) {
     res.render("stream_partial", { data: data });
   });

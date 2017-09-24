@@ -312,3 +312,8 @@ body, .tap-target-wave::before, .tap-target-wave::after {
 #profile-body-wrapper ul ol li {
 	list-style-type: decimal;
 }
+
+/* Move Carousel Dots */
+.carousel .indicators {
+	bottom: 7%;
+}

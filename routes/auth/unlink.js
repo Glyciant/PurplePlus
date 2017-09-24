@@ -89,9 +89,6 @@ router.get("/discord/", function(req, res) {
             });
           }
         });
-        db.users.editByDiscordId(id, data).then(function() {
-          res.redirect("/profile/");
-        })
       }
       else {
         res.render("error", { title: "403 Error", code: "403", message: "You cannot unlink your Discord account unless your Reddit or Twitch account is linked." });

@@ -32,7 +32,7 @@ router.post("/search", function(req, res, next) {
           }
         }
         for (var bookmark of data) {
-          if (bookmark.stream && bookmark.stream.stream_type == "vodcast") {
+          if (bookmark.stream && bookmark.stream.stream_type == "watch_party") {
             bookmarks.push(bookmark);
           }
         }
