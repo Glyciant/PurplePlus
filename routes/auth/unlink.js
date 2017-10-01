@@ -17,27 +17,17 @@ router.get("/reddit/", function(req, res) {
         data.reddit_id = null;
         data.reddit_name = null;
         data.reddit_username = null;
-        helpers.legacy.getBalance(name).then(function(legacy) {
-          var balance;
-          if (legacy.status === 200) {
-            balance = legacy.balance;
-          }
-          else {
-            balance = 0;
-          }
-          data.transactions.push({
-            timestamp: Date.now(),
-            title: "Unlinked Reddit Account",
-            type: "Other",
-            old: parseFloat(data.balance),
-            new: parseFloat((parseFloat(data.balance) - balance).toFixed(2)),
-            difference: parseFloat((parseFloat(data.balance) - balance).toFixed(2)) - parseFloat(data.balance),
-            description: null
-          });
-          data.balance = parseFloat((parseFloat(data.balance) - balance).toFixed(2));
-          db.users.editByRedditId(id, data).then(function() {
-            res.redirect("/profile/");
-          });
+        data.transactions.push({
+          timestamp: Date.now(),
+          title: "Unlinked Reddit Account",
+          type: "Other",
+          old: parseFloat(data.balance),
+          new: parseFloat(data.balance),
+          difference: 0,
+          description: null
+        });
+        db.users.editByRedditId(id, data).then(function() {
+          res.redirect("/profile/");
         });
       }
       else {

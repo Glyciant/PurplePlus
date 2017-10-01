@@ -23,7 +23,6 @@
             <table class="highlight">
               <thead>
                 <th class="center">Date</th>
-                <th class="center">Legacy Status</th>
                 <th class="center">Twitch Username</th>
                 <th class="center">Reddit Username</th>
                 <th class="center">Profile</th>
@@ -33,17 +32,6 @@
                 {% for profile in data %}
                   <tr id="profile-{{ profile.twitch_id }}">
                     <td class="center">{{ profile.profile.updated|date('d/m/Y') }}</td>
-                    <td class="center">
-                      {% if profile.legacy_intro == "approved" %}
-                        <a class="btn-floating waves-light green darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Approved"></a>
-                      {% elseif profile.legacy_intro == "rejected" %}
-                        <a class="btn-floating waves-light red darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Rejected"></a>
-                      {% elseif profile.legacy_intro == "pending" %}
-                        <a class="btn-floating waves-light orange darken-2 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Pending"></a>
-                      {% else %}
-                        <a class="btn-floating waves-light black tooltipped" data-position="bottom" data-delay="50" data-tooltip="None"></a>
-                      {% endif %}
-                    </td>
                     <td class="center">{{ profile.twitch_name }}</td>
                     <td class="center">{{ profile.reddit_name }}</td>
                     <td class="center"><a href="/user/{{ profile.twitch_username }}/" class="btn waves-effect waves-light custom darken-1 white-text" target="_blank">View</a></td>

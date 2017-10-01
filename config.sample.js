@@ -5,7 +5,6 @@ config.reddit = {};
 config.twitch = {};
 config.discord = {};
 config.slack = {};
-config.legacy = {};
 
 config.app.port = 1000;
 config.app.base = "http://localhost:" + config.app.port;
@@ -83,8 +82,5 @@ config.discord.bot.roles = {
 } // Discord Role IDs
 
 config.slack.webhook = ""; // Slack Webhook URL
-
-config.legacy.requests = {};
-config.legacy.requests.token = ""; // /r/Twitch Advertisement Requests API Token
 
 module.exports = config;

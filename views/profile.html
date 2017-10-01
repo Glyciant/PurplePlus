@@ -125,13 +125,13 @@
                 <label for="profile-introduction">Introduction - A short bio to describe yourself.</label>
               </div>
               <div class="input-field col s12">
-                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if existing.overview.about.length %}{{ existing.overview.about.length }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_about.length %}{{ intro[0].intro_data.intro_about.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
-                <textarea id="profile-about" class="materialize-textarea count">{% if existing.overview.about %}{{ existing.overview.about }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_about %}{{ intro[0].intro_data.intro_about }}{% endif %}</textarea>
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if existing.overview.about.length %}{{ existing.overview.about.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
+                <textarea id="profile-about" class="materialize-textarea count">{% if existing.overview.about %}{{ existing.overview.about }}{% endif %}</textarea>
                 <label for="profile-about">About You - This is a brief summary of who you are and what you're about!</label>
               </div>
               <div class="input-field col s12">
-                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if existing.overview.background.length %}{{ existing.overview.background.length }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_background.length %}{{ intro[0].intro_data.intro_background.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
-                <textarea id="profile-background" class="materialize-textarea count">{% if existing.overview.background %}{{ existing.overview.background }}{% elseif intro[0] && intro[0].intro_data && intro[0].intro_data.intro_background %}{{ intro[0].intro_data.intro_background }}{% endif %}</textarea>
+                <span class="character-counter" style="float: right; font-size: 12px; height: 1px; position: relative; bottom: 5px;"><span class="total">{% if existing.overview.background.length %}{{ existing.overview.background.length }}{% else %}0{% endif %}</span> characters entered. 200 characters required.</span>
+                <textarea id="profile-background" class="materialize-textarea count">{% if existing.overview.background %}{{ existing.overview.background }}{% endif %}</textarea>
                 <label for="profile-background">Your Background - Tell us a little about yourself. What are your hobbies? What is your history?</label>
               </div>
             </div>

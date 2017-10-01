@@ -259,13 +259,27 @@ $(document).ready(function() {
   $(document).delegate("#directory-back", "click", function() {
     $(".directory-streams").slideUp(function() {
       $(".directory-thumbnail").parent().hide("slide", { direction: "right" }, 500, function() {
-        $("#directory-information").remove();
-        $("#directory-back").remove();
-        $(".directory-thumbnail").removeClass("active");
-        $(".directory-thumbnail").hide();
-        $("#directory-streams").html("");
-        $(".directory-thumbnail").parent().show(function() {
-          $(".directory-thumbnail").slideDown();
+        var order;
+        if ($("#directory-options-order").is(":checked")) {
+          order = "viewers";
+        }
+        else {
+          order = "az";
+        }
+        $.post("/browse/streams/directories", {
+          order: order
+        }, function(data) {
+          $('.collapsible').collapsible();
+          $('.tooltipped').tooltip({delay: 50});
+          $("#directory-wrapper").html(data);
+          $("#directory-information").remove();
+          $("#directory-back").remove();
+          $(".directory-thumbnail").removeClass("active");
+          $(".directory-thumbnail").hide();
+          $("#directory-streams").html("");
+          $(".directory-thumbnail").parent().show(function() {
+            $(".directory-thumbnail").slideDown();
+          });
         });
       });
     });
@@ -314,13 +328,27 @@ $(document).ready(function() {
   $(document).delegate("#community-back", "click", function() {
     $(".community-streams").slideUp(function() {
       $(".community-thumbnail").parent().hide("slide", { direction: "right" }, 500, function() {
-        $("#community-information").remove();
-        $("#community-back").remove();
-        $(".community-thumbnail").removeClass("active");
-        $(".community-thumbnail").hide();
-        $("#community-streams").html("");
-        $(".community-thumbnail").parent().show(function() {
-          $(".community-thumbnail").slideDown();
+        var order;
+        if ($("#community-options-order").is(":checked")) {
+          order = "viewers";
+        }
+        else {
+          order = "az";
+        }
+        $.post("/browse/streams/communities", {
+          order: order
+        }, function(data) {
+          $('.collapsible').collapsible();
+          $('.tooltipped').tooltip({delay: 50});
+          $("#community-wrapper").html(data);
+          $("#community-information").remove();
+          $("#community-back").remove();
+          $(".community-thumbnail").removeClass("active");
+          $(".community-thumbnail").hide();
+          $("#community-streams").html("");
+          $(".community-thumbnail").parent().show(function() {
+            $(".community-thumbnail").slideDown();
+          });
         });
       });
     });

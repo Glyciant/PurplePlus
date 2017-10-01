@@ -148,32 +148,6 @@ module.exports = function(client, bot) {
     }
   }
 
-  var legacy = {
-    getBalance: function(username) {
-      return new Promise(function(resolve, reject) {
-        restler.get('http://twoos.twitchdb.tv/api/balance/' + username).on('complete', function(data) {
-          resolve(data);
-        });
-      });
-    },
-    getRequests: function(id) {
-      return new Promise(function(resolve, reject) {
-        restler.get('https://requests.twitchdb.tv/api/requests/r/' + id + "?api_token=" + config.legacy.requests.token, {
-          "Accept": "application/json"
-        }).on('complete', function(data) {
-          resolve(data);
-        });
-      });
-    },
-    getIntro: function(id) {
-      return new Promise(function(resolve, reject) {
-        restler.get('http://twitchdb.tv/twoos?id=' + id).on('complete', function(data) {
-          resolve(data);
-        });
-      });
-    }
-  }
-
   var reddit = {
     setFlair: function(user, text) {
       return new Promise(function(resolve, reject) {
@@ -956,7 +930,6 @@ module.exports = function(client, bot) {
 
   module.exports = {
     twitch: twitch,
-    legacy: legacy,
     reddit: reddit,
     discord: discord,
     slack: slack

@@ -20,7 +20,7 @@ Promise.all([fetcher.fetchTwitchEmotes(), fetcher.fetchBTTVEmotes()]);
 
 router.get("/", function(req, res, next) {
   if (req.session.twitch) {
-    Promise.all([db.users.getByTwitchId(req.session.twitch.id), helpers.twitch.getChannelById(req.session.twitch.id), helpers.twitch.getChannelEventsById(req.session.twitch.id), helpers.twitch.getChannelTeamsById(req.session.twitch.id), helpers.twitch.getChannelVideosById(req.session.twitch.id), helpers.twitch.getStreamById(req.session.twitch.id), helpers.twitch.getModeratedChannels(req.session.twitch.username), helpers.legacy.getIntro(req.session.twitch.id)]).then(function(data) {
+    Promise.all([db.users.getByTwitchId(req.session.twitch.id), helpers.twitch.getChannelById(req.session.twitch.id), helpers.twitch.getChannelEventsById(req.session.twitch.id), helpers.twitch.getChannelTeamsById(req.session.twitch.id), helpers.twitch.getChannelVideosById(req.session.twitch.id), helpers.twitch.getStreamById(req.session.twitch.id), helpers.twitch.getModeratedChannels(req.session.twitch.username)]).then(function(data) {
       if (req.query.tutorial == "true") {
         var tutorial = true;
       }
@@ -169,10 +169,10 @@ router.get("/", function(req, res, next) {
           if (data[0].profile.types.other) {
             data[0].profile.types.other = parser.parse(data[0].profile.types.other).replace(/\s\"\w*\"/, "");
           }
-          res.render("profile", { title: "My Profile", data: data[0], existing: existing, api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, intro: data[7], streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
+          res.render("profile", { title: "My Profile", data: data[0], existing: existing, api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
         }
         else {
-          res.render("profile", { title: "My Profile", data: data[0], api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, intro: data[7], streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
+          res.render("profile", { title: "My Profile", data: data[0], api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
         }
       });
     });
@@ -186,162 +186,154 @@ router.get("/", function(req, res, next) {
 router.post("/submit", function(req, res, next) {
   if (req.session.twitch && req.session.twitch.id == req.body.id) {
     db.users.getByTwitchId(req.body.id).then(function(data) {
-      helpers.legacy.getIntro(req.body.id).then(function(legacy) {
-        if (data) {
-          if (!data.bans || data.bans.profile === false) {
-            req.body.profile.updated = parseInt(req.body.profile.date);
-            if (legacy[0]) {
-              data.legacy_intro = legacy[0].intro_status;
+      if (data) {
+        if (!data.bans || data.bans.profile === false) {
+          req.body.profile.updated = parseInt(req.body.profile.date);
+          if (data.profile) {
+            if (data.profile.created) {
+              var created = data.profile.created;
+            }
+            if (data.profile.social_media) {
+              var social_media = data.profile.social_media;
+            }
+            if (data.profile.communities) {
+              var communities = data.profile.communities;
+            }
+            if (data.profile.appearance) {
+              var appearance = data.profile.appearance;
+            }
+            if (data.profile.tags) {
+              var tags = data.profile.tags;
+            }
+            if (data.profile.views) {
+              var views = data.profile.views;
             }
             else {
-              data.legacy_intro = "none";
+              var views = [];
             }
-            if (data.profile) {
-              if (data.profile.created) {
-                var created = data.profile.created;
-              }
-              if (data.profile.social_media) {
-                var social_media = data.profile.social_media;
-              }
-              if (data.profile.communities) {
-                var communities = data.profile.communities;
-              }
-              if (data.profile.appearance) {
-                var appearance = data.profile.appearance;
-              }
-              if (data.profile.tags) {
-                var tags = data.profile.tags;
-              }
-              if (data.profile.views) {
-                var views = data.profile.views;
-              }
-              else {
-                var views = [];
-              }
-              if (data.profile.votes) {
-                var votes = data.profile.votes;
-              }
-              else {
-                var votes = [];
-              }
-              if (!data.profile_revisions) {
-                data.profile_revisions = [];
-              }
-              delete data.profile.notifications;
-              data.profile.balance = data.balance;
-              data.profile_revisions.push(data.profile);
+            if (data.profile.votes) {
+              var votes = data.profile.votes;
             }
             else {
-              req.body.profile.created = parseInt(req.body.profile.date);
-              var appearance = {
-                clip: "",
-                videos: true,
-                events: true,
-                teams: true
-              }
-              var tags = [];
               var votes = [];
             }
-            data.profile = req.body.profile;
-            if (data.profile.notifications) {
-              data.profile.notifications.twitch = (data.profile.notifications.twitch == "true");
-              data.profile.notifications.reddit = (data.profile.notifications.reddit == "true");
-              data.profile.notifications.discord = (data.profile.notifications.discord == "true");
+            if (!data.profile_revisions) {
+              data.profile_revisions = [];
             }
-            if (data.profile.types.streamer_gaming) {
-              data.profile.types.streamer_gaming.genres.action = (data.profile.types.streamer_gaming.genres.action == "true");
-              data.profile.types.streamer_gaming.genres.adventure = (data.profile.types.streamer_gaming.genres.adventure == "true");
-              data.profile.types.streamer_gaming.genres.horror = (data.profile.types.streamer_gaming.genres.horror == "true");
-              data.profile.types.streamer_gaming.genres.roleplaying = (data.profile.types.streamer_gaming.genres.roleplaying == "true");
-              data.profile.types.streamer_gaming.genres.simulation = (data.profile.types.streamer_gaming.genres.simulation == "true");
-              data.profile.types.streamer_gaming.genres.strategy = (data.profile.types.streamer_gaming.genres.strategy == "true");
-              data.profile.types.streamer_gaming.genres.survival = (data.profile.types.streamer_gaming.genres.survival == "true");
-              data.profile.types.streamer_gaming.genres.other = (data.profile.types.streamer_gaming.genres.other == "true");
-              data.profile.types.streamer_gaming.collaborations = (data.profile.types.streamer_gaming.collaborations == "true");
-              data.profile.types.streamer_gaming.charity = (data.profile.types.streamer_gaming.charity == "true");
-            }
-            if (data.profile.types.streamer_creative) {
-              data.profile.types.streamer_creative.activities.cooking = (data.profile.types.streamer_creative.activities.cooking == "true");
-              data.profile.types.streamer_creative.activities.drawing = (data.profile.types.streamer_creative.activities.drawing == "true");
-              data.profile.types.streamer_creative.activities.painting = (data.profile.types.streamer_creative.activities.painting == "true");
-              data.profile.types.streamer_creative.activities.programming = (data.profile.types.streamer_creative.activities.programming == "true");
-              data.profile.types.streamer_creative.activities.editing = (data.profile.types.streamer_creative.activities.editing == "true");
-              data.profile.types.streamer_creative.activities.other = (data.profile.types.streamer_creative.activities.other == "true");
-              data.profile.types.streamer_creative.collaborations = (data.profile.types.streamer_creative.collaborations == "true");
-              data.profile.types.streamer_creative.charity = (data.profile.types.streamer_creative.charity == "true");
-            }
-            if (data.profile.types.streamer_irl) {
-              data.profile.types.streamer_irl.collaborations = (data.profile.types.streamer_irl.collaborations == "true");
-              data.profile.types.streamer_irl.charity = (data.profile.types.streamer_irl.charity == "true");
-            }
-            if (data.profile.types.streamer_socialeating) {
-              data.profile.types.streamer_socialeating.collaborations = (data.profile.types.streamer_socialeating.collaborations == "true");
-              data.profile.types.streamer_socialeating.charity = (data.profile.types.streamer_socialeating.charity == "true");
-            }
-            if (data.profile.types.streamer_talkshow) {
-              data.profile.types.streamer_talkshow.collaborations = (data.profile.types.streamer_talkshow.collaborations == "true");
-              data.profile.types.streamer_talkshow.charity = (data.profile.types.streamer_talkshow.charity == "true");
-            }
-            if (data.profile.types.streamer_music) {
-              data.profile.types.streamer_music.collaborations = (data.profile.types.streamer_music.collaborations == "true");
-              data.profile.types.streamer_music.charity = (data.profile.types.streamer_music.charity == "true");
-            }
-            if (data.profile.types.artist && data.profile.types.artist.commissions) {
-              data.profile.types.artist.commissions.accepting = (data.profile.types.artist.commissions.accepting == "true");
-            }
-            if (data.profile.types.developer && data.profile.types.developer.commissions) {
-              data.profile.types.developer.commissions.accepting = (data.profile.types.developer.commissions.accepting == "true");
-            }
-            if (data.profile.types.viewer) {
-              data.profile.types.viewer.streams.action = (data.profile.types.viewer.streams.action == "true");
-              data.profile.types.viewer.streams.adventure = (data.profile.types.viewer.streams.adventure == "true");
-              data.profile.types.viewer.streams.roleplaying = (data.profile.types.viewer.streams.roleplaying == "true");
-              data.profile.types.viewer.streams.simulation = (data.profile.types.viewer.streams.simulation == "true");
-              data.profile.types.viewer.streams.strategy = (data.profile.types.viewer.streams.strategy == "true");
-              data.profile.types.viewer.streams.survival = (data.profile.types.viewer.streams.survival == "true");
-              data.profile.types.viewer.streams.horror = (data.profile.types.viewer.streams.horror == "true");
-              data.profile.types.viewer.streams.music = (data.profile.types.viewer.streams.music == "true");
-              data.profile.types.viewer.streams.cooking = (data.profile.types.viewer.streams.cooking == "true");
-              data.profile.types.viewer.streams.drawing = (data.profile.types.viewer.streams.drawing == "true");
-              data.profile.types.viewer.streams.painting = (data.profile.types.viewer.streams.painting == "true");
-              data.profile.types.viewer.streams.programming = (data.profile.types.viewer.streams.programming == "true");
-              data.profile.types.viewer.streams.editing = (data.profile.types.viewer.streams.editing == "true");
-              data.profile.types.viewer.streams.talkshow = (data.profile.types.viewer.streams.talkshow == "true");
-              data.profile.types.viewer.streams.irl = (data.profile.types.viewer.streams.irl == "true");
-              data.profile.types.viewer.streams.socialeating = (data.profile.types.viewer.streams.socialeating == "true");
-              data.profile.types.viewer.family = (data.profile.types.viewer.family == "true");
-            }
-            if (created) {
-              data.profile.created = created;
-            }
-            if (social_media) {
-              data.profile.social_media = social_media;
-            }
-            if (communities) {
-              data.profile.communities = communities;
-            }
-            data.profile.views = views;
-            data.profile.votes = votes;
-            data.profile.appearance = appearance;
-            if ((!data.profile.types.streamer_gaming && req.body.primary_type == "streamer_gaming") || (!data.profile.types.streamer_creative && req.body.primary_type == "streamer_creative") || (!data.profile.types.socialeating && req.body.primary_type == "streamer_socialeating") || (!data.profile.types.streamer_irl && req.body.primary_type == "streamer_irl") || (!data.profile.types.streamer_talkshow && req.body.primary_type == "streamer_talkshow") || (!data.profile.types.streamer_music && req.body.primary_type == "streamer_music") || (!data.profile.types.artist && req.body.primary_type == "artist") || (!data.profile.types.developer && req.body.primary_type == "developer") || (!data.profile.types.communitymanager && req.body.primary_type == "communitymanager") || (!data.profile.types.viewer && req.body.primary_type == "viewer") || (!data.profile.types.moderator && req.body.primary_type == "moderator") || (!data.profile.types.other && req.body.primary_type == "other")) {
-              res.send({ message: "forbidden" });
-            }
-            else {
-              data.display.profile = req.body.primary_type;
-              Promise.all([helpers.reddit.setFlair(data, null), helpers.discord.setRole(data)]);
-              db.users.editByTwitchId(data.twitch_id, data).then(function() {
-                res.send({ message: "success"});
-              });
-            }
+            delete data.profile.notifications;
+            data.profile.balance = data.balance;
+            data.profile_revisions.push(data.profile);
           }
           else {
+            req.body.profile.created = parseInt(req.body.profile.date);
+            var appearance = {
+              clip: "",
+              videos: true,
+              events: true,
+              teams: true
+            }
+            var tags = [];
+            var votes = [];
+          }
+          data.profile = req.body.profile;
+          if (data.profile.notifications) {
+            data.profile.notifications.twitch = (data.profile.notifications.twitch == "true");
+            data.profile.notifications.reddit = (data.profile.notifications.reddit == "true");
+            data.profile.notifications.discord = (data.profile.notifications.discord == "true");
+          }
+          if (data.profile.types.streamer_gaming) {
+            data.profile.types.streamer_gaming.genres.action = (data.profile.types.streamer_gaming.genres.action == "true");
+            data.profile.types.streamer_gaming.genres.adventure = (data.profile.types.streamer_gaming.genres.adventure == "true");
+            data.profile.types.streamer_gaming.genres.horror = (data.profile.types.streamer_gaming.genres.horror == "true");
+            data.profile.types.streamer_gaming.genres.roleplaying = (data.profile.types.streamer_gaming.genres.roleplaying == "true");
+            data.profile.types.streamer_gaming.genres.simulation = (data.profile.types.streamer_gaming.genres.simulation == "true");
+            data.profile.types.streamer_gaming.genres.strategy = (data.profile.types.streamer_gaming.genres.strategy == "true");
+            data.profile.types.streamer_gaming.genres.survival = (data.profile.types.streamer_gaming.genres.survival == "true");
+            data.profile.types.streamer_gaming.genres.other = (data.profile.types.streamer_gaming.genres.other == "true");
+            data.profile.types.streamer_gaming.collaborations = (data.profile.types.streamer_gaming.collaborations == "true");
+            data.profile.types.streamer_gaming.charity = (data.profile.types.streamer_gaming.charity == "true");
+          }
+          if (data.profile.types.streamer_creative) {
+            data.profile.types.streamer_creative.activities.cooking = (data.profile.types.streamer_creative.activities.cooking == "true");
+            data.profile.types.streamer_creative.activities.drawing = (data.profile.types.streamer_creative.activities.drawing == "true");
+            data.profile.types.streamer_creative.activities.painting = (data.profile.types.streamer_creative.activities.painting == "true");
+            data.profile.types.streamer_creative.activities.programming = (data.profile.types.streamer_creative.activities.programming == "true");
+            data.profile.types.streamer_creative.activities.editing = (data.profile.types.streamer_creative.activities.editing == "true");
+            data.profile.types.streamer_creative.activities.other = (data.profile.types.streamer_creative.activities.other == "true");
+            data.profile.types.streamer_creative.collaborations = (data.profile.types.streamer_creative.collaborations == "true");
+            data.profile.types.streamer_creative.charity = (data.profile.types.streamer_creative.charity == "true");
+          }
+          if (data.profile.types.streamer_irl) {
+            data.profile.types.streamer_irl.collaborations = (data.profile.types.streamer_irl.collaborations == "true");
+            data.profile.types.streamer_irl.charity = (data.profile.types.streamer_irl.charity == "true");
+          }
+          if (data.profile.types.streamer_socialeating) {
+            data.profile.types.streamer_socialeating.collaborations = (data.profile.types.streamer_socialeating.collaborations == "true");
+            data.profile.types.streamer_socialeating.charity = (data.profile.types.streamer_socialeating.charity == "true");
+          }
+          if (data.profile.types.streamer_talkshow) {
+            data.profile.types.streamer_talkshow.collaborations = (data.profile.types.streamer_talkshow.collaborations == "true");
+            data.profile.types.streamer_talkshow.charity = (data.profile.types.streamer_talkshow.charity == "true");
+          }
+          if (data.profile.types.streamer_music) {
+            data.profile.types.streamer_music.collaborations = (data.profile.types.streamer_music.collaborations == "true");
+            data.profile.types.streamer_music.charity = (data.profile.types.streamer_music.charity == "true");
+          }
+          if (data.profile.types.artist && data.profile.types.artist.commissions) {
+            data.profile.types.artist.commissions.accepting = (data.profile.types.artist.commissions.accepting == "true");
+          }
+          if (data.profile.types.developer && data.profile.types.developer.commissions) {
+            data.profile.types.developer.commissions.accepting = (data.profile.types.developer.commissions.accepting == "true");
+          }
+          if (data.profile.types.viewer) {
+            data.profile.types.viewer.streams.action = (data.profile.types.viewer.streams.action == "true");
+            data.profile.types.viewer.streams.adventure = (data.profile.types.viewer.streams.adventure == "true");
+            data.profile.types.viewer.streams.roleplaying = (data.profile.types.viewer.streams.roleplaying == "true");
+            data.profile.types.viewer.streams.simulation = (data.profile.types.viewer.streams.simulation == "true");
+            data.profile.types.viewer.streams.strategy = (data.profile.types.viewer.streams.strategy == "true");
+            data.profile.types.viewer.streams.survival = (data.profile.types.viewer.streams.survival == "true");
+            data.profile.types.viewer.streams.horror = (data.profile.types.viewer.streams.horror == "true");
+            data.profile.types.viewer.streams.music = (data.profile.types.viewer.streams.music == "true");
+            data.profile.types.viewer.streams.cooking = (data.profile.types.viewer.streams.cooking == "true");
+            data.profile.types.viewer.streams.drawing = (data.profile.types.viewer.streams.drawing == "true");
+            data.profile.types.viewer.streams.painting = (data.profile.types.viewer.streams.painting == "true");
+            data.profile.types.viewer.streams.programming = (data.profile.types.viewer.streams.programming == "true");
+            data.profile.types.viewer.streams.editing = (data.profile.types.viewer.streams.editing == "true");
+            data.profile.types.viewer.streams.talkshow = (data.profile.types.viewer.streams.talkshow == "true");
+            data.profile.types.viewer.streams.irl = (data.profile.types.viewer.streams.irl == "true");
+            data.profile.types.viewer.streams.socialeating = (data.profile.types.viewer.streams.socialeating == "true");
+            data.profile.types.viewer.family = (data.profile.types.viewer.family == "true");
+          }
+          if (created) {
+            data.profile.created = created;
+          }
+          if (social_media) {
+            data.profile.social_media = social_media;
+          }
+          if (communities) {
+            data.profile.communities = communities;
+          }
+          data.profile.views = views;
+          data.profile.votes = votes;
+          data.profile.appearance = appearance;
+          if ((!data.profile.types.streamer_gaming && req.body.primary_type == "streamer_gaming") || (!data.profile.types.streamer_creative && req.body.primary_type == "streamer_creative") || (!data.profile.types.socialeating && req.body.primary_type == "streamer_socialeating") || (!data.profile.types.streamer_irl && req.body.primary_type == "streamer_irl") || (!data.profile.types.streamer_talkshow && req.body.primary_type == "streamer_talkshow") || (!data.profile.types.streamer_music && req.body.primary_type == "streamer_music") || (!data.profile.types.artist && req.body.primary_type == "artist") || (!data.profile.types.developer && req.body.primary_type == "developer") || (!data.profile.types.communitymanager && req.body.primary_type == "communitymanager") || (!data.profile.types.viewer && req.body.primary_type == "viewer") || (!data.profile.types.moderator && req.body.primary_type == "moderator") || (!data.profile.types.other && req.body.primary_type == "other")) {
             res.send({ message: "forbidden" });
+          }
+          else {
+            data.display.profile = req.body.primary_type;
+            Promise.all([helpers.reddit.setFlair(data, null), helpers.discord.setRole(data)]);
+            db.users.editByTwitchId(data.twitch_id, data).then(function() {
+              res.send({ message: "success"});
+            });
           }
         }
         else {
-          res.send({ message: "unknown"});
+          res.send({ message: "forbidden" });
         }
-      });
+      }
+      else {
+        res.send({ message: "unknown"});
+      }
     });
   }
   else {
