@@ -1,30 +1,36 @@
 {
-  "name": "Purple+",
-  "version": "1.0.4",
+  "name": "purpleplus",
+  "version": "2.0.0",
   "description": "Purple+ is a promotion platform related to the /r/Twitch Subreddit. Its purpose is to give everyone a chance to be recognised for their uniqueness and achievements.",
   "main": "app.js",
   "dependencies": {
-    "assert": "^1.4.1",
     "body-parser": "^1.13.3",
     "cookie-parser": "^1.3.5",
-    "discord.js": "^11.1.0",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
-    "jaro-winkler": "^0.2.8",
-    "mongodb": "^2.2.27",
-    "node-cron": "^1.2.0",
-    "restler": "^3.4.0",
-    "stopword": "^0.1.6",
-    "swig": "^1.4.2",
-    "swig-marked": "0.0.1",
-    "tmi.js": "^1.2.1",
-    "twitch-emoticons": "^2.1.0",
-    "url": "^0.11.0"
+    "swig": "^1.4.2"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Glyciant/PurplePlus.git"
+  },
+  "keywords": [
+    "Twitch",
+    "Reddit",
+    "Discord",
+    "/r/Twitch",
+    "Purple+",
+    "PurplePlus",
+    "TwitchSubreddit"
+  ],
   "author": "Glyciant",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Glyciant/PurplePlus/issues"
+  },
+  "homepage": "https://github.com/Glyciant/PurplePlus#readme"
 }
