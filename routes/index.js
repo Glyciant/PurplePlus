@@ -1,3 +1,4 @@
+// Modules
 var express = require("express"),
     swig = require("swig"),
     config = require("../config"),
@@ -5,14 +6,10 @@ var express = require("express"),
     db = require("../db"),
     router = express.Router();
 
+// Handle Route: /
 router.get("/", function(req, res, next) {
-  if (req.session.visited && !req.query.show) {
-    res.redirect("/browse/streams");
-  }
-  else {
-    req.session.visited = true;
-    res.render("index", { hidenav: true });
-  }
+    // Response Placeholder
+    res.sendStatus(200);
 });
 
 module.exports = router;
