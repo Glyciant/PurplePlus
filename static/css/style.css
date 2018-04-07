@@ -1,0 +1,24 @@
+/* Custom Colours */
+.custom-text.text-lighten-1 {
+    color: #7D58C1 !important;
+}
+
+.custom-text.text-darken-1 {
+    color: #392D5D !important;
+}
+
+.custom.lighten-1:not(.disabled) {
+    background-color: #7D58C1 !important;
+}
+
+.custom.darken-1:not(.disabled) {
+    background-color: #392D5D !important;
+}
+
+body, .tap-target-wave::before, .tap-target-wave::after {
+    background-color: #EFEEF1;
+}
+
+.table-of-contents a:hover, .table-of-contents a.active {
+    border-color: #7D58C1;
+}

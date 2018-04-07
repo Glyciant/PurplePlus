@@ -9,6 +9,25 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     swig = require('swig');
 
+
+// Express Set Up
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', __dirname + '\\views\\partials');
+app.use(express.static(__dirname + '\\static'));
+app.use(cookieParser());
+app.use(session({
+  secret: "None",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.set('view cache', false);
+swig.setDefaults({
+    cache: false
+});
+
 // Handle All Routes
 require('./routes')(app);
 

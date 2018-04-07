@@ -9,7 +9,7 @@ var express = require("express"),
 // Handle Route: /
 router.get("/", function(req, res, next) {
     // Response Placeholder
-    res.sendStatus(200);
+    res.render("index");
 });
 
 module.exports = router;

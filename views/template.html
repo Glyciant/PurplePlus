@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+  <head>
+    <title>Purple+{% if title %} | {{title}}{% endif %}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/img/logo.png">
+  </head>
+  <body style="height: 100%;">
+    {% if navigation %}
+      <nav>
+        <div class="nav-wrapper custom darken-1">
+          {% if icons %}
+            <ul class="left hide-on-med-and-down">
+              <li><a href="/" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Welcome"><i class="material-icons">view_carousel</i></a></li>
+            </ul>
+          {% else %}
+            <ul class="left hide-on-med-and-down">
+              <li><a href="/">Home</a></li>
+            </ul>
+            <ul class="right hide-on-med-and-down">
+              <li><a href="/auth/redirect/twitch">Login via Twitch</a></li>
+            </ul>
+          {% endif %}
+          <ul class="left">
+            <a href="#" data-activates="mobile-nav" class="button-collapse"><i class="material-icons">menu</i></a>
+          </ul>
+          <ul class="side-nav" id="mobile-nav">
+            <li><a href="/">Home</a></li>
+          </ul>
+        </div>
+      </nav>
+    {% endif %}
+    {% block content %}
+      
+    {% endblock %}
+  </body>
+  {% block footer %}
+
+  {% endblock %}
+</html>
