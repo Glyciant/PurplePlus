@@ -22,3 +22,28 @@ body, .tap-target-wave::before, .tap-target-wave::after {
 .table-of-contents a:hover, .table-of-contents a.active {
     border-color: #7D58C1;
 }
+
+/* Edit Navbar and Dropdown Content */
+nav, nav .nav-wrapper i, nav a.button-collapse i {
+    height: 50px;
+    line-height: 50px;
+}
+
+.nav-wrapper .dropdown-content:not(.autocomplete-content) {
+    margin-top: 50px
+}
+
+#dropdown-about {
+    width: 180px !important;
+}
+
+.dropdown-content:not(.autocomplete-content) li, .dropdown-content:not(.autocomplete-content) li:hover, .dropdown-content:not(.autocomplete-content) li.active, .dropdown-content:not(.autocomplete-content) li.selected, .dropdown-content:not(.autocomplete-content) li.active.selected {
+    background-color: #392D5D;
+    min-height: 40px;
+    line-height: 40px;
+}
+
+.dropdown-content:not(.autocomplete-content) li a, .dropdown-content:not(.autocomplete-content) li span, .select-wrapper span.caret {
+  color: #fff;
+    padding: 9px 16px;
+}

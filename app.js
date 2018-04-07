@@ -31,6 +31,11 @@ swig.setDefaults({
 // Handle All Routes
 require('./routes')(app);
 
+// Handle 404 Errors
+app.get('*', function(req, res) {
+    res.render('error', { title: '404 Error', navigation: true, code: '404', message: 'That page was not found.' });
+});
+
 // Run Server
 var server = app.listen(config.app.port, function() {
     console.log('[SERVER] Listening on: ' + config.app.port);
