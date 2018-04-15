@@ -33,8 +33,12 @@ nav, nav .nav-wrapper i, nav a.button-collapse i {
     top: 50px !important;
 }
 
+#dropdown-user {
+    min-width: 130px !important;
+}
+
 #dropdown-about {
-    width: 180px !important;
+    min-width: 180px !important;
 }
 
 .dropdown-content:not(.autocomplete-content) li, .dropdown-content:not(.autocomplete-content) li:hover, .dropdown-content:not(.autocomplete-content) li.active, .dropdown-content:not(.autocomplete-content) li.selected, .dropdown-content:not(.autocomplete-content) li.active.selected {

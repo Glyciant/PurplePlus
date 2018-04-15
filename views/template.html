@@ -11,7 +11,7 @@
     <link rel="shortcut icon" href="/img/logo.png">
   </head>
   <body style="height: 100%;">
-    {% if navigation %}
+    {% if !hidenav %}
       <nav>
         <div class="nav-wrapper custom darken-1">
           <ul class="left hide-on-med-and-down">
@@ -21,6 +21,7 @@
             {% if loggedin %}
               <ul id="dropdown-user" class="dropdown-content">
                 <li><a href="/profile/">Profile</a></li>
+                <li><a href="/accounts/">Link Accounts</a></li>
                 <li><a href="/auth/logout/">Logout</a></li>
               </ul>
               <li><a class="dropdown-trigger" href="#!" data-target="dropdown-user">{{ loggedin.twitch_name }}<i class="material-icons right">arrow_drop_down</i></a></li>

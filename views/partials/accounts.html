@@ -1,0 +1,87 @@
+{% extends "../template.html" %}
+{% block content %}
+
+<div class="row" style="height: calc(100% - 64px); margin: 0; overflow: hidden;">
+  <div class="col s12" style="height: 100%; padding: 0;">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <div class="center">
+            <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Link Accounts</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m6 l4">
+      <ul class="collection with-header white container-shadow">
+        <li class="collection-header center"><h4>Twitch</h4><img src="/img/twitch.png" /></li>
+        <li class="collection-item">
+          <table>
+            <tbody>
+              <tr>
+                <td style="padding: 5px;"><strong>Twitch ID:</strong></td>
+                <td style="padding: 5px;">{{ user.twitch_id }}</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px;"><strong>Twitch Name:</strong></td>
+                <td style="padding: 5px;">{{ user.twitch_name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+    </div>
+    <div class="col s12 m6 l4">
+      <ul class="collection with-header white container-shadow">
+        <li class="collection-header center"><h4>Reddit</h4><img src="/img/reddit.png" /></li>
+        {% if user.reddit_id %}
+          <li class="collection-item">
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding: 5px;"><strong>Reddit ID:</strong></td>
+                  <td style="padding: 5px;">{{ user.reddit_id }}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px;"><strong>Reddit Name:</strong></td>
+                  <td style="padding: 5px;">{{ user.reddit_name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          {% if user.twitch_id %}
+            <li class="collection-item"><a href="/auth/unlink/reddit/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Unlink Account</a></li>
+          {% endif %}
+        {% else %}
+          <li class="collection-item"><a href="/auth/redirect/reddit/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Link Account</a></li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class="col s12 m6 offset-m3 l4">
+      <ul class="collection with-header white container-shadow">
+        <li class="collection-header center"><h4>Discord</h4><img src="/img/discord.png" /></li>
+        {% if user.discord_id %}
+          <li class="collection-item">
+            <table>
+              <tbody>
+                <tr>
+                  <td style="padding: 5px;"><strong>Discord ID:</strong></td>
+                  <td style="padding: 5px;">{{ user.discord_id }}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 5px;"><strong>Discord Name:</strong></td>
+                  <td style="padding: 5px;">{{ user.discord_name }} ({{ user.discord_discriminator }})</td>
+                </tr>
+              </tbody>
+            </table>
+          </li>
+          <li class="collection-item"><a href="/auth/unlink/discord/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Unlink Account</a></li>
+        {% else %}
+          <li class="collection-item"><a href="/auth/redirect/discord/" class="btn-large waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Link Account</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

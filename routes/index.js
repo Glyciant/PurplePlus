@@ -8,7 +8,7 @@ var express = require("express"),
 // Handle Route: /
 router.get("/", function(req, res, next) {
     // Response Placeholder
-    res.render("index");
+    res.render("index", { hidenav: true });
 });
 
 module.exports = router;

@@ -7,7 +7,7 @@ var express = require("express"),
 // Handle Route: /auth/logout
 router.get("/", function(req, res, next) {
     req.session.destroy();
-    res.redirect("/browse/streams");
+    res.redirect("/");
 });
 
 module.exports = router;

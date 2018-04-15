@@ -5,31 +5,19 @@ var express = require("express"),
     helpers = require("../helpers"),
     router = express.Router();
 
-// Handle Route: /profile/
+// Handle Route: /accounts/
 router.get("/", function(req, res, next) {
     // Check User is Logged In
     if (req.session.loggedin) {
         req.db.collection("users").findOne({
             "twitch_id": req.session.loggedin.twitch_id
         }, function(err, result) {
-            // Store Result for Later
-            var user = result;
             // Handle Database Connection Failure
             if (err) {
                 res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
             }
             else {
-                req.db.collection("profiles").findOne({
-                    "twitch_id": req.session.loggedin.twitch_id
-                }, function(err, result) {
-                    // Handle Database Connection Failure
-                    if (err) {
-                        res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
-                    }
-                    else {
-                        res.render("profile", { title: "My Profile", user: user, profile: result })
-                    }
-                });
+                res.render("accounts", { title: "Link Accounts", user: result })
             }
         })
     }
