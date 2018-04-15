@@ -30,7 +30,7 @@ nav, nav .nav-wrapper i, nav a.button-collapse i {
 }
 
 .nav-wrapper .dropdown-content:not(.autocomplete-content) {
-    margin-top: 50px
+    top: 50px !important;
 }
 
 #dropdown-about {

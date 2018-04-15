@@ -5,7 +5,7 @@ var express = require("express"),
     helpers = require("../helpers"),
     router = express.Router();
 
-// Handle Route: /
+// Handle Route: /profile/
 router.get("/", function(req, res, next) {
     // Response Placeholder
     res.render("index");

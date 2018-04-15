@@ -14,18 +14,20 @@
     {% if navigation %}
       <nav>
         <div class="nav-wrapper custom darken-1">
-          {% if icons %}
-            <ul class="left hide-on-med-and-down">
-              <li><a href="/" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Welcome"><i class="material-icons">view_carousel</i></a></li>
-            </ul>
-          {% else %}
-            <ul class="left hide-on-med-and-down">
-              <li><a href="/">Home</a></li>
-            </ul>
-            <ul class="right hide-on-med-and-down">
+          <ul class="left hide-on-med-and-down">
+            <li><a href="/">Home</a></li>
+          </ul>
+          <ul class="right hide-on-med-and-down">
+            {% if loggedin %}
+              <ul id="dropdown-user" class="dropdown-content">
+                <li><a href="/profile/">Profile</a></li>
+                <li><a href="/auth/logout/">Logout</a></li>
+              </ul>
+              <li><a class="dropdown-trigger" href="#!" data-target="dropdown-user">{{ loggedin.twitch_name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+            {% else %}
               <li><a href="/auth/redirect/twitch">Login via Twitch</a></li>
-            </ul>
-          {% endif %}
+            {% endif %}
+          </ul>
           <ul class="left">
             <a href="#" data-target="mobile-nav" class="button-collapse sidenav-trigger"><i class="material-icons">menu</i></a>
           </ul>
