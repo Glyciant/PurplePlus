@@ -16,6 +16,18 @@ var twitchHelix = {
                 resolve(api);
             });
         });
+    },
+    getClip: function(slug) {
+        return new Promise(function(resolve, reject) {
+            restler.get('https://api.twitch.tv/helix/clips/?id=' + slug, {
+                headers: {
+                    "User-Agent": "Purple+",
+                    "Client-ID": config.twitch.auth.id
+                }
+            }).on('complete', function(data) {
+                resolve(data);
+            });
+        });
     }
 };
 

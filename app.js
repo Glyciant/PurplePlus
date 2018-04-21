@@ -33,6 +33,7 @@ app.get("*", function(req, res, next) {
     if (req.session.loggedin) {
         res.locals.loggedin = req.session.loggedin;
     }
+    res.locals.creating = req.session.creating;
     next();
 });
 
@@ -41,7 +42,7 @@ require("./routes")(app);
 
 // Handle 404 Errors
 app.get("*", function(req, res) {
-    res.render("error", { title: "404 Error", code: "404", message: "That page was not found." });
+    res.status(404).render("error", { title: "404 Error", code: "404", message: "That page was not found." });
 });
 
 // Run Server

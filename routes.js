@@ -7,4 +7,5 @@ module.exports = function(app) {
   app.use('/auth/logout',  require('./routes/auth/logout'));
   app.use('/auth/unlink',  require('./routes/auth/unlink'));
   app.use('/profile',  require('./routes/profile'));
+  app.use('/user',  require('./routes/user'));
 }

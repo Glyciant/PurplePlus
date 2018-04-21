@@ -23,6 +23,63 @@ body, .tap-target-wave::before, .tap-target-wave::after {
     border-color: #7D58C1;
 }
 
+/* Input Colour Changes */
+.input-field label, label, ::placeholder {
+  color: #000;
+}
+
+input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+  color: #6441A4;
+}
+
+input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]), .chips.focus {
+    border-bottom: 1px solid #6441A4;
+    box-shadow: 0 1px 0 0 #6441A4;
+}
+
+[type="checkbox"].filled-in:checked+label:after, [type="radio"]:checked+label:after, .chips .chip:focus {
+    border: 2px solid #6441A4;
+    background-color: #6441A4;
+}
+
+.noUi-connect {
+  background: #6441A4;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+  background-color:  #7D58C1;
+}
+
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: #392D5D;
+}
+
+.picker__date-display, .picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected {
+  background-color: #7D58C1;
+}
+
+.clockpicker-canvas line, .clockpicker-canvas-bg, .clockpicker-canvas-bearing {
+  fill: #7D58C1;
+  stroke: #7D58C1;
+}
+
+button.picker__today:focus, button.picker__clear:focus, button.picker__close:focus, .picker__nav--prev:hover, .picker__nav--next:hover, .clockpicker-tick.active, .clockpicker-tick:hover {
+  background-color: #D3C7EA;
+}
+
+.picker__day.picker__day--today, .picker__close, .picker__today, .picker__clear {
+  color: #7D58C1;
+}
+
+/* Progress Bar Colours */
+.progress {
+  background-color: #D8C7F7;
+}
+
+.progress .determinate {
+  background-color: #7D58C1;
+}
+
 /* Edit Navbar and Dropdown Content */
 nav, nav .nav-wrapper i, nav a.button-collapse i {
     height: 50px;
@@ -81,4 +138,10 @@ nav, nav .nav-wrapper i, nav a.button-collapse i {
   #player-wrapper>div {
     margin-bottom: 20px;
   }
+}
+
+/* Invalid Fields */
+.invalid-wrapper {
+  background-color: #ffcdd2;
+  transition: background-color 0.5s ease;
 }

@@ -1,0 +1,77 @@
+{% extends "../../template.html" %}
+
+{% block content %}
+
+{% if creating %}
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content center">
+                    <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Create Profile<a class="btn-floating waves-effect waves-light custom darken-1 tooltipped right" id="next-step" data-page="overview" data-position="left" data-delay="50" data-tooltip="Next Step"><i class="material-icons">arrow_forward</i></a></p>
+                    <div class="progress">
+                        <div class="determinate" style="width: 8.5%"></div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col s2 hide-on-med-and-down">
+                            <!-- 8.5% -->
+                            <p class="custom-text text-darken-1"><strong>Overview</strong></p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <!-- 25% -->
+                            <p class="custom-text text-darken-1">Profile Body</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <!-- 41.5% -->
+                            <p class="custom-text text-darken-1">Social Media</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <!-- 58.5% -->
+                            <p class="custom-text text-darken-1">Communities</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <!-- 75% -->
+                            <p class="custom-text text-darken-1">Profile Features</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <!-- 92% -->
+                            <p class="custom-text text-darken-1">Confirmation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="profile-overview-introduction" class="materialize-textarea">{{ profile.overview.introduction }}</textarea>
+                        <label for="profile-overview-introduction">Introduction - This will appear on the overview of your profile. Tell us a little about yourself.</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="profile-overview-clip" type="text" value="{{ profile.overview.clip }}">
+                        <label for="profile-overview-clip">Featured Clip (Optional) - Here's a chance to show off your best content. Choose any clip from your channel!</label>
+                    </div>
+                    <div class="col s12">
+                        <div class="chips chips-initial chips-placeholder" id="profile-overview-tags" data-tags={{ profile.overview.tags }}>
+                            <input placeholder="Tags - This helps people discover your profile! You must press the enter key between each and enter between 3 and 15 tags." style="width: 100% !important;">
+                        </div>
+                    </div>
+                </div>
+                <p class="custom-text text-darken-1 center">Use the button in the header to move to the next step.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/profile-create.js"></script>
+
+{% endblock %}
