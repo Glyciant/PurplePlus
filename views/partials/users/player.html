@@ -1,0 +1,22 @@
+<div class="row" id="player-wrapper">
+    <div class="col l9 m12 s12" style="height: 100%;">
+        <iframe
+          src="https://player.twitch.tv/?channel='{{ user }}'"
+          height="100%"
+          width="100%"
+          frameborder="0"
+          scrolling="no"
+          allowfullscreen="true">
+      </iframe>
+    </div>
+    <div class="col l3 m12 s12" style="height: 100%;">
+        <iframe
+          frameborder="0"
+          scrolling="no"
+          id="{{ user }}"
+          src="https://www.twitch.tv/embed/{{ user }}/chat"
+          height="100%"
+          width="100%">
+        </iframe>
+    </div>
+</div>

@@ -27,7 +27,9 @@ router.get("/", function(req, res, next) {
                         res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
                     }
                     else {
-                        res.render("profile", { title: "My Profile", user: user, profile: result })
+                        helpers.twitchHelix.getUser(req.session.loggedin.twitch_id).then(function(api) {
+                            res.render("profile", { title: "My Profile", pagenav: true, user: user, profile: result, api: api.data[0] });
+                        });
                     }
                 });
             }
@@ -37,5 +39,23 @@ router.get("/", function(req, res, next) {
         res.redirect("/auth/redirect/twitch")
     }
 });
+
+// Handle Route: /profile/content/overview
+router.post("/content/overview", function(req, res) {
+    Promise.all([helpers.twitchHelix.getUser(req.session.loggedin.twitch_id), helpers.twitchKraken.getChannel(req.session.loggedin.twitch_id)]).then(function(api) {
+        res.render("users\\overview", { api: api });
+    });
+});
+
+// Handle Route: /profile/content/body
+router.post("/content/body", function(req, res) {
+    res.render("users\\body");
+});
+
+// Handle Route: /profile/content/player
+router.post("/content/player", function(req, res) {
+    res.render("users\\player", { user: req.session.loggedin.twitch_username });
+});
+
 
 module.exports = router;

@@ -33,7 +33,30 @@
             <a href="#" data-target="mobile-nav" class="button-collapse sidenav-trigger"><i class="material-icons">menu</i></a>
           </ul>
           <ul class="sidenav" id="mobile-nav">
-            <li><a href="/">Home</a></li>
+            <li class="no-padding">
+              <ul class="collapsible collapsible-accordion">
+                <li>
+                  <a class="collapsible-header">Site Navigation<i class="material-icons">arrow_drop_down</i></a>
+                  <div class="collapsible-body">
+                    <ul>
+                      <li><a href="/">Home</a></li>
+                    </ul>
+                  </div>
+                </li>
+                {% if pagenav %}
+                  <li>
+                    <a class="collapsible-header">Page Navigation<i class="material-icons">arrow_drop_down</i></a>
+                    <div class="collapsible-body">
+                      <ul>
+                        {% block navigation %}
+
+                        {% endblock %}
+                      </ul>
+                    </div>
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
           </ul>
         </div>
       </nav>

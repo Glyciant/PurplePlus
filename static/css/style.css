@@ -48,6 +48,37 @@ nav, nav .nav-wrapper i, nav a.button-collapse i {
 }
 
 .dropdown-content:not(.autocomplete-content) li a, .dropdown-content:not(.autocomplete-content) li span, .select-wrapper span.caret {
-  color: #fff;
+    color: #fff;
     padding: 9px 16px;
+}
+
+/* Stop Sidebars Overlapping Navigation */
+.sidenav-fixed {
+    top: 50px;
+    height: calc(100% + 10px);
+}
+
+/* Stop Page Content Clashing with Profile Sidebar */
+.avoid-sidenav {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+  .avoid-sidenav {
+    padding-left: 0;
+  }
+}
+
+/* Change Player/Chat Height for Mobile */
+#player-wrapper {
+    height: 100%;
+}
+
+@media only screen and (max-width : 992px) {
+  #player-wrapper {
+    height: calc(50% - 180px);
+  }
+  #player-wrapper>div {
+    margin-bottom: 20px;
+  }
 }

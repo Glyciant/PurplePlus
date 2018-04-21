@@ -25,7 +25,7 @@ router.get("/twitch", function(req, res, next) {
     req.session.twitch_state = state;
 
     // Redirect to Twitch Auth
-    res.redirect("https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=" + id + "&state=" + state + "&redirect_uri=" + redirect + "&scope=" + scopes + "&force_verify=true");
+    res.redirect("https://id.twitch.tv/oauth2/authorize?response_type=code&client_id=" + id + "&state=" + state + "&redirect_uri=" + redirect + "&scope=" + scopes);
 });
 
 // Handle Route: /auth/redirect/reddit

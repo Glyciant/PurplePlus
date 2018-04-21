@@ -1,6 +1,33 @@
 {% extends "../template.html" %}
+{% block navigation %}
+
+{% include "./users/navigation.html" %}
+
+{% endblock %}
+
 {% block content %}
 
+<ul class="sidenav sidenav-fixed no-autoinit" id="profile-nav">
+    {% include "./users/navigation.html" %}
+</ul>
 
+<div class="row avoid-sidenav" style="height: calc(100% - 180px);">
+    <div class="col s12" style="padding: 0;">
+        <div class="card" style="margin-top: 0">
+            <div class="card-content">
+                <h4 class="custom-text text-darken-1" style="margin: -10px 0 0 0;"><img class="responsive-img circle" src="{{ api.profile_image_url }}" style="max-height: 48px; margin-right: 10px; position: relative; top: 10px;">{{ api.display_name }}'{% if data.twitch_name.slice(-1) != "s" %}s{% endif %} Profile</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col s12" id="content-wrapper" data-twitch-id="{{ api.id }}" style="height: 100%;">
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/profile-layout.js"></script>
 
 {% endblock %}
