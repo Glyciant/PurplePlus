@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 275px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0";>
+                    <div class="center">
+                        <h5>Introduction</h5>
+                        <p>Tell us a little about yourself.</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="profile-overview-introduction" class="materialize-textarea" style="max-height: 145px;">{{ profile.overview.introduction }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 275px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0";>
+                    <div class="center">
+                        <h5>Featured Clip (Optional)</h5>
+                        <p>Here's a chance to show off your best content. Choose any clip from your channel!</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="profile-overview-clip" type="text" value="{{ profile.overview.clip }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 275px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0";>
+                    <div class="center">
+                        <h5>Tags</h5>
+                        <p> You must press the enter key between each and enter between 3 and 15 tags.</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <div class="chips chips-initial chips-placeholder" id="profile-overview-tags" style="bottom: 15px;" data-tags={{ profile.overview.tags }}>
+                            <input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if creating %}
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <p class="custom-text text-darken-1 center">Use the button in the header to move to the next step.</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col offset-l10 l2 offset-m8 m4 offset-s6 s6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12">
+                            <a class="btn waves-effect waves-light custom darken-1 right" id="profile-save-overview" style="width: 100%;">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

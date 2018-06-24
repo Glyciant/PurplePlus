@@ -1,33 +1,172 @@
 {% extends "../template.html" %}
 {% block navigation %}
 
-{% include "./users/navigation.html" %}
+{% include "./user/view/navigation.html" %}
 
 {% endblock %}
 
 {% block content %}
 
 <ul class="sidenav sidenav-fixed no-autoinit" id="profile-nav">
-    {% include "./users/navigation.html" %}
+    {% include "./user/view/navigation.html" %}
 </ul>
 
-<div class="row avoid-sidenav" style="height: calc(100% - 180px);">
+<div class="row avoid-sidenav" style="height: calc(100% - 156px); margin: 0;">
     <div class="col s12" style="padding: 0;">
-        <div class="card" style="margin-top: 0">
+        <div class="card" style="margin-top: 0;">
             <div class="card-content">
-                <h4 class="custom-text text-darken-1" style="margin: -10px 0 0 0;"><img class="responsive-img circle" src="{{ api.profile_image_url }}" style="max-height: 48px; margin-right: 10px; position: relative; top: 10px;">{{ api.display_name }}'{% if data.twitch_name.slice(-1) != "s" %}s{% endif %} Profile</h4>
+                <h4 class="custom-text text-darken-1" style="margin: -10px 0 5px 0;"><img class="responsive-img circle" src="{{ api.profile_image_url }}" style="max-height: 48px; margin-right: 10px; position: relative; top: 10px;" />{{ api.display_name }}'{% if data.twitch_name.slice(-1) != "s" %}s{% endif %} Profile</h4>
+                {% if profile.approval.status == "pending" && user.twitch_id == loggedin.twitch_id && !public %}
+                    <a class="btn-floating waves-effect waves-light orange darken-2 tooltipped right modal-trigger" href="#modal-status" id="profile-status" data-position="left" data-delay="50" data-tooltip="Profile Status: Pending" style="margin-top: -40px;"><i class="material-icons">access_time</i></a>
+                    <div id="modal-status" class="modal">
+                        <div class="modal-content">
+                            <h4>Profile Status</h4>
+                            <p>Your profile is <strong>pending</strong>. It will be moderated soon.</p>
+                            <br />
+                            <p>If you have any questions or concerns, please contact the subreddit moderators via <a class="custom-text text-lighten-1" href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch">modmail</a>.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                        </div>
+                    </div>
+                {% elseif profile.approval.status == "approved" && user.twitch_id == loggedin.twitch_id && !public %}
+                    <a class="btn-floating waves-effect waves-light green darken-2 tooltipped right modal-trigger" href="#modal-status" id="profile-status" data-position="left" data-delay="50" data-tooltip="Profile Status: Approved" style="margin-top: -40px;"><i class="material-icons">check</i></a>
+                    <div id="modal-status" class="modal">
+                        <div class="modal-content">
+                            <h4>Profile Status</h4>
+                            <p>Your profile has been <strong>approved</strong>. Thank you for using Purple+!</p>
+                            <br />
+                            <p>If you have any questions or concerns, please contact the subreddit moderators via <a class="custom-text text-lighten-1" href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch">modmail</a>.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                        </div>
+                    </div>
+                {% elseif profile.approval.status == "rejected" && user.twitch_id == loggedin.twitch_id && !public %}
+                    <a class="btn-floating waves-effect waves-light red darken-2 tooltipped right modal-trigger" href="#modal-status" id="profile-status" data-position="left" data-delay="50" data-tooltip="Profile Status: Rejected" style="margin-top: -40px;"><i class="material-icons">close</i></a>
+                    <div id="modal-status" class="modal">
+                        <div class="modal-content">
+                            <h4>Profile Status</h4>
+                            <p>Your profile has been <strong>rejected</strong> for the following reason: {{ profile.approval.reason }}.</p>
+                            <br />
+                            {% if profile.approval.comment %}
+                                <p>The following comment was added during moderation: {{ profile.approval.comment }}</p>
+                                <br />
+                            {% endif %}
+                            <p>If you have any questions or concerns, please contact the subreddit moderators via <a class="custom-text text-lighten-1" href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch">modmail</a>.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if note.note %}
+                    <p class="custom-text text-lighten-1" style="margin-left: 60px;">{{ note.note }}</p>
+                {% endif %}
             </div>
         </div>
     </div>
-    <div class="col s12" id="content-wrapper" data-twitch-id="{{ api.id }}" style="height: 100%;">
+    <div class="col s12" id="content-wrapper" data-twitch-id="{{ api.id }}" data-twitch-username="{{ api.login }}" data-page="{% if edit %}edit-{% endif %}{{ page }}" style="height: 100%; overflow: auto;">
         
     </div>
 </div>
+
+{% if loggedin && user.twitch_id != loggedin.twitch_id %}
+    <div id="modal-rate" class="modal">
+        <div class="modal-content">
+            <h4>Rate Profile</h4>
+            <hr />
+            <div class="row" style="margin: 0;">
+                <div class="col s6">
+                    <h6>General</h6>
+                    <div id="rate-general">
+                        <a href="#!" id="rate-general-1" class="{% if rating.general >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.general === 1 %} active {% endif %}" data-group="general" data-value="1"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-general-2" class="{% if rating.general >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.general === 2 %} active {% endif %}" data-group="general" data-value="2"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-general-3" class="{% if rating.general >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.general === 3 %} active {% endif %}" data-group="general" data-value="3"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-general-4" class="{% if rating.general >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.general === 4 %} active {% endif %}" data-group="general" data-value="4"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-general-5" class="{% if rating.general >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.general === 5 %} active {% endif %}" data-group="general" data-value="5"><i class="medium material-icons">grade</i></a>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <h6>Quality & Detail</h6>
+                    <div id="rate-quality">
+                        <a href="#!" id="rate-quality-1" class="{% if rating.quality >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.quality === 1 %} active {% endif %}" data-group="quality" data-value="1"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-quality-2" class="{% if rating.quality >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.quality === 2 %} active {% endif %}" data-group="quality" data-value="2"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-quality-3" class="{% if rating.quality >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.quality === 3 %} active {% endif %}" data-group="quality" data-value="3"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-quality-4" class="{% if rating.quality >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.quality === 4 %} active {% endif %}" data-group="quality" data-value="4"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-quality-5" class="{% if rating.quality >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.quality === 5 %} active {% endif %}" data-group="quality" data-value="5"><i class="medium material-icons">grade</i></a>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <h6>Humour</h6>
+                    <div id="rate-humour">
+                        <a href="#!" id="rate-humour-1" class="{% if rating.humour >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.humour === 1 %} active {% endif %}" data-group="humour" data-value="1"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-humour-2" class="{% if rating.humour >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.humour === 2 %} active {% endif %}" data-group="humour" data-value="2"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-humour-3" class="{% if rating.humour >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.humour === 3 %} active {% endif %}" data-group="humour" data-value="3"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-humour-4" class="{% if rating.humour >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.humour === 4 %} active {% endif %}" data-group="humour" data-value="4"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-humour-5" class="{% if rating.humour >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.humour === 5 %} active {% endif %}" data-group="humour" data-value="5"><i class="medium material-icons">grade</i></a>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <h6>Uniqueness</h6>
+                    <div id="rate-uniqueness">
+                        <a href="#!" id="rate-uniqueness-1" class="{% if rating.uniqueness >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.uniqueness === 1 %} active {% endif %}" data-group="uniqueness" data-value="1"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-uniqueness-2" class="{% if rating.uniqueness >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.uniqueness === 2 %} active {% endif %}" data-group="uniqueness" data-value="2"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-uniqueness-3" class="{% if rating.uniqueness >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.uniqueness === 3 %} active {% endif %}" data-group="uniqueness" data-value="3"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-uniqueness-4" class="{% if rating.uniqueness >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.uniqueness === 4 %} active {% endif %}" data-group="uniqueness" data-value="4"><i class="medium material-icons">grade</i></a>
+                        <a href="#!" id="rate-uniqueness-5" class="{% if rating.uniqueness >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2 {% if rating.uniqueness === 5 %} active {% endif %}" data-group="uniqueness" data-value="5"><i class="medium material-icons">grade</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
+            <a href="#!" id="rate-clear" class="waves-effect waves-light btn-flat">Clear</a>
+            <a href="#!" id="rate-submit" class="waves-effect waves-light btn-flat" data-id="{{ user.twitch_id }}">Submit</a>
+        </div>
+    </div>
+    <div id="modal-note" class="modal">
+        <div class="modal-content">
+            <h4>Edit Personal Note</h4>
+            <hr />
+            <div class="row" style="margin: 0;">
+                <div class="col s12 input-field">
+                    <input id="note" type="text" value="{{ note.note }}">
+                    <label for="note">Note</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn-flat">Cancel</a>
+            <a href="#!" id="note-clear" class="waves-effect waves-light btn-flat">Clear</a>
+            <a href="#!" id="note-submit" class="waves-effect waves-light btn-flat" data-id="{{ user.twitch_id }}">Submit</a>
+        </div>
+    </div>
+    <div id="modal-report" class="modal">
+        <div class="modal-content">
+            <h4>Report Profile</h4>
+            <hr />
+            <div class="collection">
+                <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ user.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ user.twitch_username }})%20because%20I%20think%20it%20contains%20a%20lack%20of%20content.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="collection-item modal-action modal-close custom-text text-lighten-1" target="_blank">Report {{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} profile for containing a lack of content.</a>
+                <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ user.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ user.twitch_username }})%20because%20I%20think%20it%20contains%20unsafe%20links.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="collection-item modal-action modal-close custom-text text-lighten-1" target="_blank">Report {{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} profile for containing unsafe links.</a>
+                <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ user.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ user.twitch_username }})%20because%20I%20think%20it%20contains%20offensive%20content.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="collection-item modal-action modal-close custom-text text-lighten-1" target="_blank">Report {{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} profile for containing offensive content.</a>
+                <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ user.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ user.twitch_username }})%20because%20I%20think%20it%20contains%20formatting%20errors.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="collection-item modal-action modal-close custom-text text-lighten-1" target="_blank">Report {{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} profile for containing formatting errors.</a>
+                <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ user.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ user.twitch_username }})%20because%20I%20think%20it%20contains%20invalid%20links.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="collection-item modal-action modal-close custom-text text-lighten-1" target="_blank">Report {{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} profile for containing invalid links.</a>
+                <a href="https://www.reddit.com/message/compose?to=%2Fr%2FTwitch&subject=Purple%2B%20Profile%20Report&message=Greetings%20Moderators%2C%0A%0AI%20would%20like%20to%20report%20%5B{{ user.twitch_name }}%27s%20profile%20on%20Purple%2B%5D(https%3A%2F%2Fpurple.plus%2Fuser%2F{{ user.twitch_username }})%20because%20%3C%3CREASON%3E%3E.%0A%0AThank%20you%20in%20advance%20for%20investigating%20this." class="collection-item modal-action modal-close custom-text text-lighten-1" target="_blank">Report {{ api.display_name }}'{% if api.display_name.slice(-1) != "s" %}s{% endif %} profile for another issue.</a>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+        </div>
+    </div>
+{% endif %}
 
 {% endblock %}
 
 {% block footer %}
 
+<script src="/js/profile-edit.js"></script>
 <script src="/js/user-layout.js"></script>
+<script src="/js/user-interactions.js"></script>
 
 {% endblock %}

@@ -10,7 +10,10 @@
     "express-mongo-db": "^2.0.4",
     "express-session": "^1.11.3",
     "restler": "^3.4.0",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "swig-marked": "0.0.1",
+    "twitch-emoticons": "^2.1.0",
+    "twitchemotes": "^2.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

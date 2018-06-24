@@ -1,0 +1,30 @@
+<div class="row" style="height: calc(100% - 64px); margin: 0; overflow: hidden;">
+  <div class="col s12" style="height: 100%; padding: 0;">
+    <div class="col l3 offset-l1 hide-on-med-and-down valign-wrapper" style="height: 100%;">
+      <div class="col s12">
+        <div class="card valign-wrapper" style="height: 300px;">
+          <div class="col s12 center">
+            <div class="card-content">
+              <img class="responsive-img" src="/img/error.png" style="margin: auto;" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col l7 s10 valign-wrapper" style="height: 100%;">
+      <div class="col s12 center">
+        <div class="card valign-wrapper" style="height: 300px;">
+          <div class="col s12 center">
+            <div class="card-content">
+              <h2>Error {{ code }}</h2>
+              {% if message %}
+                <br /><hr /><br />
+                <h6>{{ message }}</h6>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

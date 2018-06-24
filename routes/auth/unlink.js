@@ -17,6 +17,7 @@ router.get("/reddit/", function(req, res) {
                 res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
             }
             else {
+                // Update User's Account Record
                 req.db.collection("users").updateOne({ 
                     "twitch_id": req.session.loggedin.twitch_id
                 }, {
@@ -31,7 +32,8 @@ router.get("/reddit/", function(req, res) {
                         res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
                     }
                     else {
-                        res.redirect("/accounts/")
+                        // Redirect to Account Link Page
+                        res.redirect("/dashboard/account/link/");
                     }
                 });
             }
@@ -55,6 +57,7 @@ router.get("/discord/", function(req, res) {
                 res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
             }
             else {
+                // Update User's Account Record
                 req.db.collection("users").updateOne({ 
                     "twitch_id": req.session.loggedin.twitch_id
                 }, {
@@ -69,7 +72,8 @@ router.get("/discord/", function(req, res) {
                         res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
                     }
                     else {
-                        res.redirect("/accounts/")
+                        // Redirect to Account Link Page
+                        res.redirect("/dashboard/account/link/");
                     }
                 });
             }

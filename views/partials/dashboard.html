@@ -1,0 +1,27 @@
+{% extends "../template.html" %}
+{% block navigation %}
+
+{% include "./dashboard/navigation.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<ul class="sidenav sidenav-fixed no-autoinit" id="profile-nav">
+    {% include "./dashboard/navigation.html" %}
+</ul>
+
+<div class="row avoid-sidenav" style="height: calc(100% - 50px); margin: 0;">
+    <div class="col s12" id="content-wrapper" data-category="{{ category }}" data-page="{{ page }}" style="height: 100%; overflow: auto;">
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/dashboard-layout.js"></script>
+<script src="/js/dashboard-profiles.js"></script>
+
+{% endblock %}

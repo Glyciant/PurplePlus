@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <div class="center">
+          <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Pending Profiles</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <div class="col s12">
+            <table class="highlight">
+              <thead>
+                <th class="center">Timestamp (UTC)</th>
+                <th class="center">Twitch Username</th>
+                <th class="center">Reddit Username</th>
+                <th class="center">Discord Tag</th>
+                <th class="center">Profile</th>
+                <th class="center">Action</th>
+              </thead>
+              <tbody id="profiles-pending">
+                {% for profile in profiles %}
+                  <tr id="profile-{{ profile.user.twitch_id }}">
+                    <td class="center">{{ profile.profile.updated_at|date("d/m/Y H:i:s") }}</td>
+                    <td class="center">{{ profile.user.twitch_name }}</td>
+                    <td class="center">{{ profile.user.reddit_name }}</td>
+                    <td class="center">{% if profile.user.discord_id %} {{ profile.user.discord_name }}{{ profile.user.discord_discriminator }} {% endif %}</td>
+                    <td class="center"><a href="/user/{{ profile.user.twitch_username }}/" class="btn waves-effect waves-light custom darken-1 white-text" target="_blank">View</a></td>
+                    <td class="center">
+                      <a href="#!" id="approve" class="btn waves-effect waves-green green darken-2 white-text tooltipped" data-id="{{ profile.user.twitch_id }}" data-name="{{ profile.user.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Approve"><i class="material-icons">done</i></a>
+                      <a href="#!" id="hide" class="btn waves-effect waves-orange orange darken-2 white-text tooltipped" data-id="{{ profile.user.twitch_id }}" data-name="{{ profile.user.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Hide"><i class="material-icons">visibility_off</i></a>
+                      <a href="#!" id="reject-trigger" class="btn waves-effect waves-red red darken-2 white-text tooltipped" data-id="{{ profile.user.twitch_id }}" data-name="{{ profile.user.twitch_name }}" data-position="bottom" data-delay="50" data-tooltip="Reject"><i class="material-icons">not_interested</i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% if !profiles[0] %}
+            <div class="col s12" style="margin-top: 20px;">
+              <p class="center"><em>There are no pending profiles.</em></p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-reject" class="modal">
+  <div class="modal-content" style="min-height: 300px;">
+    <h4>Reject Profile: <span id="modal-reject-name"></span></h4>
+    <hr />
+    <div class="row" style="margin: 0;">
+      <div id="rejection-reason" class="input-field col s12">
+        <select>
+          <option value="" selected >Select a reason...</option>
+          <option value="Lack of Content">Lack of Content</option>
+          <option value="Potentially Unsafe Links">Potentially Unsafe Links</option>
+          <option value="Offensive Content">Offensive Content</option>
+          <option value="Formatting Errors">Formatting Errors</option>
+          <option value="Other">Other</option>
+        </select>
+        <label>Rejection Reason</label>
+      </div>
+      <div class="input-field col s12">
+        <input id="rejection-comment" type="text">
+        <label for="rejection-comment">Rejection Comment (Optional)</label>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancel</a>
+    <a href="#!" class="waves-effect waves-red btn-flat" id="reject">Reject</a>
+  </div>
+</div>

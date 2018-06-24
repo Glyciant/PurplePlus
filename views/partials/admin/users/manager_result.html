@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <div class="center">
+          <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Account Manager</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <div class="col s12">
+            <h4 class="center">Account Data for {{ user.twitch_name }}</h4>
+          </div>
+          <div class="col s12">
+            <table class="highlight">
+              <tbody>
+                <tr>
+                  <td><strong>Reddit ID</strong></td>
+                  <td>{{ user.reddit_id }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Reddit Username</strong></td>
+                  <td>{{ user.reddit_name }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Twitch ID</strong></td>
+                  <td>{{ user.twitch_id }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Twitch Username</strong></td>
+                  <td>{{ user.twitch_name }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Discord ID</strong></td>
+                  <td>{{ user.discord_id }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Discord Tag</strong></td>
+                  <td>{{ user.discord_name }}{{ user.discord_discriminator }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Last Login</strong></td>
+                  <td>{{ user.last_login|date("d/m/Y H:i:s") }} UTC</td>
+                </tr>
+                <tr>
+                  <td><strong>Twitch Account Type</strong></td>
+                  <td>{% if user.user_types.twitch == "global_mod" %}Global Moderator{% else %}{{ user.user_types.twitch|capitalize }}{% endif %}</td>
+                </tr>
+                <tr>
+                  <td><strong>Twitch Partnership Status</strong></td>
+                  <td>{{ user.user_types.partnership|capitalize }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <div class="input-field col s4" id="search-data-type-site">
+              <select>
+                <option value="user" {% if user.user_types.site == "user" %} selected {% endif %}>User</option>
+                <option value="moderator" {% if user.user_types.site == "moderator" %} selected {% endif %}>Moderator</option>
+                <option value="helper" {% if user.user_types.site == "helper" %} selected {% endif %}>Helper</option>
+              </select>
+              <label>Site Type</label>
+            </div>
+            <div class="input-field col s4" id="search-data-type-subreddit">
+              <select>
+                <option value="user" {% if user.user_types.subreddit == "user" %} selected {% endif %}>User</option>
+                <option value="wiki" {% if user.user_types.subreddit == "wiki" %} selected {% endif %}>Wiki Contributor</option>
+                <option value="contributor" {% if user.user_types.subreddit == "contributor" %} selected {% endif %}>Outstanding Contributor</option>
+                <option value="bot" {% if user.user_types.subreddit == "bot" %} selected {% endif %}>Bot</option>
+              </select>
+              <label>Subreddit Type</label>
+            </div>
+            <div class="input-field col s4">
+              <input id="search-data-twoos-balance" type="number" value="{{ user.balance }}">
+              <label for="search-data-twoos-balance">Twoos Balance</label>
+            </div>
+            <div class="input-field col s4">
+              <p>
+                <label>
+                  <input type="checkbox" class="filled-in" id="search-data-ama" {% if user.user_types.ama %} checked {% endif %} />
+                  <span>AMA Flair</span>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s4">
+              <p>
+                <label>
+                  <input type="checkbox" class="filled-in" id="search-data-admin" {% if !loggedin.user_types.admin %} disabled {% endif %} {% if user.user_types.admin %} checked {% endif %} />
+                  <span>Site Admin</span>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s4">
+              <p>
+                <label>
+                  <input type="checkbox" class="filled-in" id="search-data-beta" {% if user.user_types.beta %} checked {% endif %} />
+                  <span>Beta Tester</span>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s4">
+              <p>
+                <label>
+                  <input type="checkbox" class="filled-in" id="search-data-bans-profiles" {% if user.bans.profiles %} checked {% endif %} />
+                  <span>Ban from Creating Profiles</span>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s4">
+              <p>
+                <label>
+                  <input type="checkbox" class="filled-in" id="search-data-bans-twoos" {% if user.bans.twoos %} checked {% endif %} />
+                  <span>Ban from Earning Twoos</span>
+                </label>
+              </p>
+            </div>
+            <div class="input-field col s4">
+              <p>
+                <label>
+                  <input type="checkbox" class="filled-in" id="search-data-bans-requests" {% if user.bans.requests %} checked {% endif %} />
+                  <span>Ban from Making Requests</span>
+                </label>
+              </p>
+            </div>
+          </div>
+          <div class="col l2 m4 s6">
+            <a id="users-back" href="#!" class="btn waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Back</a>
+          </div>
+          <div class="col offset-l8 l2 offset-m4 m4 s6">
+            <a id="users-submit" href="#!" class="btn waves-effect waves-light custom darken-1 white-text" data-id="{{ user.twitch_id }}" style="width: 100%;">Submit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

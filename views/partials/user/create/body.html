@@ -1,0 +1,48 @@
+{% extends "../../../template.html" %}
+
+{% block content %}
+
+{% if creating %}
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content center">
+                    <a class="btn-floating waves-effect waves-light custom darken-1 tooltipped left" id="previous-step" data-page="body" data-position="right" data-delay="50" data-tooltip="Previous Step (Discards Data)"><i class="material-icons" style="position: relative; left: 7px;">arrow_backward</i></a><p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Create Profile<a class="btn-floating waves-effect waves-light custom darken-1 tooltipped right" id="next-step" data-page="body" data-position="left" data-delay="50" data-tooltip="Next Step (Saves Data)"><i class="material-icons">arrow_forward</i></a></p>
+                    <div class="progress">
+                        <div class="determinate" style="width: 25%"></div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+                        <div class="col s2 hide-on-med-and-down">
+                            <p class="custom-text text-darken-1">Overview</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <p class="custom-text text-darken-1"><strong>Profile Body</strong></p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <p class="custom-text text-darken-1">Social Media</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <p class="custom-text text-darken-1">Communities</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <p class="custom-text text-darken-1">Profile Features</p>
+                        </div>
+                        <div class="col s2 hide-on-med-and-down">
+                            <p class="custom-text text-darken-1">Confirmation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% include "../edit/body.html" %}
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/profile-create.js"></script>
+
+{% endblock %}

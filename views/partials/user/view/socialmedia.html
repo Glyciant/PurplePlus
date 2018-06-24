@@ -1,0 +1,286 @@
+<div class="row">
+    {% if features.reddit && user.reddit_id %}
+        <div class="col l3 m6 s12">
+            <div class="card" style="background-color: #FF4500;">
+                <div class="card-content">
+                    <a href="https://reddit.com/user/{{ user.reddit_username }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-reddit fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ user.reddit_name }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if features.discord && user.discord_id %}
+        <div class="col l3 m6 s12">
+            <div class="card" style="background-color: #7289DA;">
+                <div class="card-content">
+                    <div class="row white-text" style="margin: 0;">
+                        <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                            <span class="fab fa-discord fa-2x"></span>
+                        </div>
+                       <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                            <h5 style="margin: 0;">{{ user.discord_name }}{{ user.discord_discriminator }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.facebook && socialmedia.facebook_url %}
+        <div class="col l3 m6 s12">
+            <div class="card" style="background-color: #3B5998;">
+                <div class="card-content">
+                    <a href="{{ socialmedia.facebook_url }}" class="white-text">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <i class="fab fa-facebook fa-2x"></i>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                            <h5 style="margin: 0;">{{ socialmedia.facebook }}</h5>
+                        </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.twitter %}
+        <div class="col l3 m6 s12">
+            <div class="card" style="background-color: #1DA1F2;">
+                <div class="card-content">
+                    <a href="https://twitter.com/{{ socialmedia.twitter }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-twitter fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.twitter }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.instagram %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #833AB4;">
+                <div class="card-content">
+                    <a href="https://instagram.com/{{ socialmedia.instagram }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-instagram fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.instagram }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.youtube && socialmedia.youtube_url %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #FF0000;">
+                <div class="card-content">
+                    <a href="{{ socialmedia.youtube_url }}" class="white-text">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <i class="fab fa-youtube fa-2x"></i>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.youtube }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.snapchat %}
+        <div class="col l3 m6 s12">
+            <div class="card" style="background-color: #FFFC00;">
+                <div class="card-content">
+                    <div class="row" style="margin: 0;">
+                        <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                            <span class="fab fa-snapchat fa-2x"></span>
+                        </div>
+                       <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                            <h5 style="margin: 0;">{{ socialmedia.snapchat }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.steam %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #000000;">
+                <div class="card-content">
+                    <a href="https://steamcommunity.com/id/{{ socialmedia.steam }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-steam fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.steam }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.github %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #4078C0;">
+                <div class="card-content">
+                    <a href="https://github.com/{{ socialmedia.github }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-github fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.github }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.deviantart %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #05CC47;">
+                <div class="card-content">
+                    <a href="https://{{ socialmedia.deviantart }}.deviantart.com" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-deviantart fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.deviantart }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.soundcloud %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #FF8800;">
+                <div class="card-content">
+                    <a href="https://soundcloud.com/{{ socialmedia.soundcloud }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-soundcloud fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.soundcloud }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.googleplus %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #DD4B39;">
+                <div class="card-content">
+                    <a href="https://plus.google.com/{{ socialmedia.googleplus }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-google-plus fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.googleplus }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.linkedin %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #0077B5;">
+                <div class="card-content">
+                    <a href="https://linkedin.com/in/{{ socialmedia.linkedin }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-linkedin fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.linkedin }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.tumblr %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #35465C;">
+                <div class="card-content">
+                    <a href="https://{{ socialmedia.tumblr }}.tumblr.com" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-tumblr fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.tumblr }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.patreon %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #F96854;">
+                <div class="card-content">
+                    <a href="https://www.patreon.com/{{ socialmedia.patreon }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fab fa-patreon fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.patreon }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if socialmedia.askfm %}
+        <div class="col l3 m6 s12">
+            <div class="card white-text" style="background-color: #DB3552;">
+                <div class="card-content">
+                    <a href="https://ask.fm/{{ socialmedia.askfm }}" class="white-text" target="_blank">
+                        <div class="row" style="margin: 0;">
+                            <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                                <span class="fas fa-question-circle fa-2x"></span>
+                            </div>
+                            <div class="col l10 m8 s6 valign-wrapper" style="height: 54px;">
+                                <h5 style="margin: 0;">{{ socialmedia.askfm }}</h5>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

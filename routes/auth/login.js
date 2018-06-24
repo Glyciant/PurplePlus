@@ -67,30 +67,26 @@ router.get("/", function(req, res, next) {
                                             res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
                                         }
                                         else {
-                                            // Store Login in Session
-                                            req.session.loggedin = {
-                                                "twitch_id": user.id,
-                                                "twitch_name": user.display_name,
-                                                "twitch_username": user.login,
-                                                "reddit_id": null,
-                                                "reddit_name": null,
-                                                "reddit_username": null,
-                                                "discord_id": null,
-                                                "discord_name": null,
-                                                "discord_discriminator": null,
-                                                "user_types": {
-                                                    admin: false,
-                                                    site: "user"
+                                            req.db.collection("users").findOne({ 
+                                                "twitch_id": user.id 
+                                            }, function(err, result) {
+                                                // Handle Database Connection Failure
+                                                if (err) {
+                                                    res.render("error", { title: "500 Error", code: "500", message: "The server could not contact the database. Please try again." });
                                                 }
-                                            }
+                                                else {
+                                                    // Store Login in Session
+                                                    req.session.loggedin = result;
 
-                                            // Stop Redirect Loops & Returning to Index
-                                            if (req.session.return.indexOf("/auth/") > -1 || req.session.return == config.app.base + "/") {
-                                                req.session.return = "/profile/";
-                                            }
+                                                    // Stop Redirect Loops, Profile Creating Errors & Returning to Index
+                                                    if (req.session.return.indexOf("/auth/") > -1 || req.session.return.indexOf("/profile/") > -1 || req.session.return == config.app.base + "/") {
+                                                        req.session.return = "/profile/";
+                                                    }
 
-                                            // Redirect User
-                                            res.redirect(req.session.return);
+                                                    // Redirect User
+                                                    res.redirect(req.session.return);
+                                                }
+                                            });
                                         }
                                     });
                                 }
@@ -112,9 +108,16 @@ router.get("/", function(req, res, next) {
                                             admin: false,
                                             site: "user",
                                             twitch: user.type,
-                                            partership: user.broadcaster_type,
+                                            partnership: user.broadcaster_type,
                                             subreddit: "user",
                                             profile: "other",
+                                            ama: false,
+                                            beta: false
+                                        },
+                                        bans: {
+                                            profiles: false,
+                                            twoos: false,
+                                            requests: false
                                         }
                                     }, function(err, result) {
                                         // Handle Database Connection Failure
@@ -140,9 +143,9 @@ router.get("/", function(req, res, next) {
                                             }
 
                                             // Stop Redirect Loops & Returning to Index
-                                            if (req.session.return.indexOf("/auth/") > -1 || req.session.return == config.app.base + "/") {
-                                                req.session.return = "/profile/";
-                                            }
+                                            if (req.session.return.indexOf("/auth/") > -1 || req.session.return.indexOf("/profile/") > -1 || req.session.return == config.app.base + "/") {
+                                                        req.session.return = "/profile/";
+                                                    }
 
                                             // Redirect User
                                             res.redirect(req.session.return);

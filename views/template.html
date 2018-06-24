@@ -3,10 +3,11 @@
   <head>
     <title>Purple+{% if title %} | {{title}}{% endif %}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="shortcut icon" href="/img/logo.png">
   </head>
@@ -15,19 +16,58 @@
       <nav>
         <div class="nav-wrapper custom darken-1">
           <ul class="left hide-on-med-and-down">
-            <li><a href="/">Home</a></li>
+            <ul id="dropdown-about" class="dropdown-content">
+              <li><a href="/">Landing Page</a></li>
+              <li><a href="/help/">Help Documentation</a></li></li>
+              <li><a href="/about/statistics/">Site Statistics</a></li>
+              <li><a href="/about/subreddit"/>About /r/Twitch</a></li>
+              <li><a href="/about/admins/">About Site Admins</a></li>
+              <li><a href="/about/beta/">About Beta Testers</a></li>
+              <li><a href="/about/features/">Feature Previews</a></li>
+              <li><a href="/about/discord/">Discord Commands</a></li>
+              <li><a href="/about/terms/">Terms of Use</a></li>
+              <li><a href="/about/privacy/">Privacy Policy</a></li>
+              <li><a href="https://github.com/Glyciant/PurplePlus">GitHub</a></li>
+            </ul>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-about">About Purple+<i class="material-icons right">arrow_drop_down</i></a></li>
+            <ul id="dropdown-beta" class="dropdown-content">
+              <li><a href="/beta/changelog/">Changelog</a></li>
+              <li><a href="/beta/twoos/">Twoos Scale</a></li>
+              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeZERtAvOpTXczQllf8iEaMrSyNKZ6a3HhTgF7-CALuyC33mg/viewform" target="_blank">Triaging</a></li>
+              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScCzWwXK5bC0EJtwspAZ5Y9OtGOvR32OpJi4kLucf94bVjv4w/viewform" target="_blank">Bug Report</a></li>
+            </ul>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-beta">Beta Review<i class="material-icons right">arrow_drop_down</i></a></li>
+            <ul id="dropdown-browse" class="dropdown-content">
+              <li><a href="/browse/home/">Home</a></li>
+              <li><a href="/browse/streams/">Streams</a></li>
+              <li><a href="/browse/surf/">Surf</a></li>
+              <li><a href="/browse/schedule/">Schedule</a></li>
+              <li><a href="/browse/spotlight/">Spotlight</a></li>
+              <li><a href="/browse/search/">Search</a></li>
+              <li><a href="/browse/query/">Query</a></li>
+              <li><a href="/browse/leaderboards/">Leaderboards</a></li>
+            </ul>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-browse">Browse Users<i class="material-icons right">arrow_drop_down</i></a></li>
+            <ul id="dropdown-resources" class="dropdown-content">
+              <li><a>Coming Soon</a></li>
+            </ul>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown-resources">Browse Resources<i class="material-icons right">arrow_drop_down</i></a></li>
           </ul>
           <ul class="right hide-on-med-and-down">
             {% if loggedin %}
+              {% if loggedin.user_types.site == "moderator" || loggedin.user_types.site == "helper" %}
+                <li><a href="/admin">Admin</a></li>
+              {% endif %}
               <ul id="dropdown-user" class="dropdown-content">
+                <li><a href="/dashboard/">Dashboard</a></li>
                 <li><a href="/profile/">Profile</a></li>
-                <li><a href="/accounts/">Link Accounts</a></li>
                 <li><a href="/auth/logout/">Logout</a></li>
               </ul>
               <li><a class="dropdown-trigger" href="#!" data-target="dropdown-user">{{ loggedin.twitch_name }}<i class="material-icons right">arrow_drop_down</i></a></li>
             {% else %}
               <li><a href="/auth/redirect/twitch">Login via Twitch</a></li>
             {% endif %}
+            <li><a href="/messages/"><i class="material-icons">mail</i></a></li>
           </ul>
           <ul class="left">
             <a href="#" data-target="mobile-nav" class="button-collapse sidenav-trigger"><i class="material-icons">menu</i></a>
@@ -38,8 +78,58 @@
                 <li>
                   <a class="collapsible-header">Site Navigation<i class="material-icons">arrow_drop_down</i></a>
                   <div class="collapsible-body">
-                    <ul>
-                      <li><a href="/">Home</a></li>
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a class="collapsible-header">About Purple+<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li><a href="/">Landing Page</a></li>
+                            <li><a href="/help/">Help Documentation</a></li></li>
+                            <li><a href="/about/statistics/">Site Statistics</a></li>
+                            <li><a href="/about/subreddit"/>About /r/Twitch</a></li>
+                            <li><a href="/about/admins/">About Site Admins</a></li>
+                            <li><a href="/about/beta/">About Beta Testers</a></li>
+                            <li><a href="/about/features/">Feature Previews</a></li>
+                            <li><a href="/about/discord/">Discord Commands</a></li>
+                            <li><a href="/about/terms/">Terms of Use</a></li>
+                            <li><a href="/about/privacy/">Privacy Policy</a></li>
+                            <li><a href="https://github.com/Glyciant/PurplePlus">GitHub</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        <a class="collapsible-header">Beta Review+<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li><a href="/beta/changelog/">Changelog</a></li>
+                            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeZERtAvOpTXczQllf8iEaMrSyNKZ6a3HhTgF7-CALuyC33mg/viewform" target="_blank">Triaging</a></li>
+                            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLScCzWwXK5bC0EJtwspAZ5Y9OtGOvR32OpJi4kLucf94bVjv4w/viewform" target="_blank">Bug Report</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        <a class="collapsible-header">Browse Users<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li><a href="/browse/home/">Home</a></li>
+                            <li><a href="/browse/streams/">Streams</a></li>
+                            <li><a href="/browse/surf/">Surf</a></li>
+                            <li><a href="/browse/schedule/">Schedule</a></li>
+                            <li><a href="/browse/spotlight/">Spotlight</a></li>
+                            <li><a href="/browse/search/">Search</a></li>
+                            <li><a href="/browse/query/">Query</a></li>
+                            <li><a href="/browse/leaderboards/">Leaderboards</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                      <li>
+                        <a class="collapsible-header">Browse Resources<i class="material-icons">arrow_drop_down</i></a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li><a>Coming Soon</a></li>
+                          </ul>
+                        </div>
+                      </li>
                     </ul>
                   </div>
                 </li>

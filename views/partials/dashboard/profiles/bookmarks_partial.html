@@ -1,0 +1,18 @@
+{% for bookmark in bookmarks %}
+    <div class="col l4 m6 s12">
+        <div class="card">
+            <a href="/user/{{ bookmark.api.login }}/overview" target="_blank">
+                <div class="card-content">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s3 right-align">
+                            <img class="responsive-img circle" src="{{ bookmark.api.profile_image_url }}" style="max-height: 48px; margin-right: 10px;" />
+                        </div>
+                        <div class="col s9">
+                            <h4 class="custom-text text-darken-1 truncate" style="margin-top: 5px; margin-bottom: 0; height: 48px;">{{ bookmark.api.display_name }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endfor %}

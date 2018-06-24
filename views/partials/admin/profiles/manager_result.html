@@ -1,0 +1,126 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <div class="center">
+          <p class="custom-text text-darken-1" style="font-size: 2.5rem; font-weight: 500;">Profile Manager</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <div class="row">
+          <div class="col s12">
+            <h4 class="center">Profile Data for {{ user.twitch_name }}</h4>
+          </div>
+          <div class="col s12">
+            <table class="highlight">
+              <tbody>
+                <tr>
+                  <td><strong>Creation Timestamp</strong></td>
+                  <td>{{ profile.created_at|date("d/m/Y H:i:s") }} UTC</td>
+                </tr>
+                <tr>
+                  <td><strong>Update Timestamp</strong></td>
+                  <td>{{ profile.updated_at|date("d/m/Y H:i:s") }} UTC</td>
+                </tr>
+                <tr>
+                  <td><strong>Twitch Notifications Enabled</strong></td>
+                  <td>
+                    {% if profile.notifications.twitch %}
+                      Yes
+                    {% else %}
+                      No
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Reddit Notifications Enabled</strong></td>
+                  <td>
+                    {% if profile.notifications.reddit %}
+                      Yes
+                    {% else %}
+                      No
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Discord Notifications Enabled</strong></td>
+                  <td>
+                    {% if profile.notifications.discord %}
+                      Yes
+                    {% else %}
+                      No
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Moderator</strong></td>
+                  <td>
+                    {% if moderator %}
+                      {{ moderator.twitch_name }}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Moderation Timestamp</strong></td>
+                  <td>
+                    {% if profile.approval.timestamp %}
+                      {{ profile.approval.timestamp|date("d/m/Y H:i:s") }} UTC
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Revisions</strong></td>
+                  <td>
+                    {% if profile.revisions %}
+                      {{ profile.revisions.length }}
+                    {% else %}
+                      0
+                    {% endif %}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <div class="input-field col s4" id="search-data-status">
+              <select>
+                <option value="pending" {% if profile.approval.status == "pending" %} selected {% endif %}>Pending</option>
+                <option value="approved" {% if profile.approval.status == "approved" %} selected {% endif %}>Approved</option>
+                <option value="rejected" {% if profile.approval.status == "rejected" %} selected {% endif %}>Rejected</option>
+              </select>
+              <label>Approval Status</label>
+            </div>
+            <div class="input-field col s4" id="search-data-reason">
+              <select {% if profile.approval.status != "rejected" %} disabled {% endif %}>
+                <option value="" {% if !profile.approval.reason %} selected {% endif %}>Select a reason...</option>
+                <option value="Lack of Content" {% if profile.approval.reason == "Lack of Content" %} selected {% endif %}>Lack of Content</option>
+                <option value="Potentially Unsafe Links" {% if profile.approval.reason == "Potentially Unsafe Links" %} selected {% endif %}>Potentially Unsafe Links</option>
+                <option value="Offensive Content" {% if profile.approval.reason == "Offensive Content" %} selected {% endif %}>Offensive Content</option>
+                <option value="Formatting Errors" {% if profile.approval.reason == "Formatting Errors" %} selected {% endif %}>Formatting Errors</option>
+                <option value="Other" {% if profile.approval.reason == "Other" %} selected {% endif %}>Other</option>
+              </select>
+              <label>Rejection Reason</label>
+            </div>
+            <div class="input-field col s4">
+              <input id="search-data-comment" type="text" value="{{ profile.approval.comment }}" {% if profile.approval.status != "rejected" %} disabled {% endif %}>
+              <label for="search-data-comment">Comment (Optional)</label>
+            </div>
+          </div>
+          <div class="col l2 m4 s6">
+            <a id="profiles-back" href="#!" class="btn waves-effect waves-light custom darken-1 white-text" style="width: 100%;">Back</a>
+          </div>
+          <div class="col offset-l8 l2 offset-m4 m4 s6">
+            <a id="profiles-submit" href="#!" class="btn waves-effect waves-light custom darken-1 white-text" data-id="{{ user.twitch_id }}" style="width: 100%;">Submit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

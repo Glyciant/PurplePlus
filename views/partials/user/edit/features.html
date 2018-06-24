@@ -1,0 +1,160 @@
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-trophies" {% if profile.features.trophies %} checked {% endif %} />
+                                <span>Show Trophies</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-player" {% if profile.features.player %} checked {% endif %} />
+                                <span>Show Link to Twitch Player & Chat</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-videos" {% if profile.features.videos %} checked {% endif %} />
+                                <span>Show My Videos</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-requests" {% if profile.features.requests %} checked {% endif %} />
+                                <span>Show Advertisement Requests</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-reddit" {% if profile.features.reddit %} checked {% endif %} />
+                                <span>Show Reddit Username</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-discord" {% if profile.features.discord %} checked {% endif %} />
+                                <span>Show Discord Tag</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-socialmedia" {% if profile.features.social_media %} checked {% endif %} />
+                                <span>Show Social Media</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-communities" {% if profile.features.communities %} checked {% endif %} />
+                                <span>Show Communities</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-teams" {% if profile.features.teams %} checked {% endif %} />
+                                <span>Show My Purple+ Teams</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-profiles" {% if profile.features.profiles %} checked {% endif %} />
+                                <span>Show Featured Profiles</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-discussions" {% if profile.features.discussions %} checked {% endif %} />
+                                <span>Show a Discussion Forum</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l3 m6 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-features-contact" {% if profile.features.contact %} checked {% endif %} />
+                                <span>Show Contact Form</span>
+                            </label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l4 m12 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-notifications-twitch" {% if profile.notifications.twitch %} checked {% endif %} />
+                                <span>Send a Twitch Whisper when this profile is moderated.</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l4 m12 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-notifications-reddit" {% if profile.notifications.reddit %} checked {% endif %} />
+                                <span>Send a Reddit Message when this profile is moderated.</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="col l4 m12 s12">
+                        <p>
+                            <label>
+                                <input type="checkbox" class="filled-in" id="profile-notifications-discord" {% if profile.notifications.discord %} checked {% endif %} />
+                                <span>Send a Discord Message when this profile is moderated.</span>
+                            </label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if creating %}
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <p class="custom-text text-darken-1 center">Use the button in the header to move to the next step.</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col offset-l10 l2 offset-m8 m4 offset-s6 s6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12">
+                            <a class="btn waves-effect waves-light custom darken-1 right" id="profile-save-features" style="width: 100%;">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

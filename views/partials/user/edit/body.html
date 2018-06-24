@@ -1,0 +1,185 @@
+<div class="row">
+    <div class="col l4 m6 s12">
+        <div class="card" id="profile-body-categories" style="transition: all 500ms;">
+            <div class="card-content">
+                <div class="center">
+                    <h5>Your Categories</h5>
+                </div>
+                <div class="row" style="margin: 0;">
+                    <div class="col s6">
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-gaming" {% if profile.body.categories.gaming %} checked {% endif %} />
+                            <span>Gaming Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-creative" {% if profile.body.categories.creative %} checked {% endif %} />
+                            <span>Creative Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-socialeating" {% if profile.body.categories.socialeating %} checked {% endif %} />
+                            <span>Social Eating Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-irl" {% if profile.body.categories.irl %} checked {% endif %} />
+                            <span>IRL Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-talkshow" {% if profile.body.categories.talkshow %} checked {% endif %} />
+                            <span>Talk Show Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-music" {% if profile.body.categories.music %} checked {% endif %} />
+                            <span>Music Streamer</span>
+                          </label>
+                        </p>
+                    </div>
+                    <div class="col s6">
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-artist" {% if profile.body.categories.artist %} checked {% endif %} />
+                            <span>Artist</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-communitymanager" {% if profile.body.categories.communitymanager %} checked {% endif %} />
+                            <span>Community Manager</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-developer" {% if profile.body.categories.developer %} checked {% endif %} />
+                            <span>Developer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-editor" {% if profile.body.categories.editor %} checked {% endif %} />
+                            <span>Editor</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-moderator" {% if profile.body.categories.moderator %} checked {% endif %} />
+                            <span>Moderator</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-viewer" {% if profile.body.categories.viewer %} checked {% endif %} />
+                            <span>Viewer</span>
+                          </label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 252px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0px;">
+                    <div class="center">
+                        <h5>About You</h5>
+                        <p>Tell us a little more about yourself.</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="profile-body-about" class="materialize-textarea" style="max-height: 105px;">{{ profile.body.about }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 252px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0";>
+                    <div class="center">
+                        <h5>Your Goals</h5>
+                        <p>What do you hope to achieve on Twitch?</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="profile-body-goals" class="materialize-textarea" style="max-height: 105px;">{{ profile.body.goals }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 252px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0";>
+                    <div class="center">
+                        <h5>Your Experiences</h5>
+                        <p>Tell us about your best moments on Twitch!</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="profile-body-experiences" class="materialize-textarea" style="max-height: 105px;">{{ profile.body.experiences }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 252px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0";>
+                    <div class="center">
+                        <h5>Your Background</h5>
+                        <p>How did you start out? What do you enjoy outside of Twitch?</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="profile-body-background" class="materialize-textarea" style="max-height: 105px;">{{ profile.body.background }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 252px;">
+            <div class="card-content">
+                <div class="row" style="margin: 0";>
+                    <div class="center">
+                        <h5>Other Information (Optional)</h5>
+                        <p>If there's anything else you'd like to share, please do so here!</p>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="profile-body-other" class="materialize-textarea" style="max-height: 105px;">{{ profile.body.other }}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if creating %}
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <p class="custom-text text-darken-1 center">Use the button in the header to move to the next step.</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col offset-l10 l2 offset-m8 m4 offset-s6 s6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12">
+                            <a class="btn waves-effect waves-light custom darken-1 right" id="profile-save-body" style="width: 100%;">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

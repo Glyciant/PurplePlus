@@ -1,0 +1,26 @@
+{% for record in records %}
+  <tr id="log-{{ record.log.timestamp }}">
+    <td class="center">{{ record.log.timestamp|date("d/m/Y H:i:s") }}</td>
+    <td class="center">
+      {% if record.log.action == "user_view" %}
+        <i class="material-icons">person</i>
+        <i class="material-icons">visibility</i>
+      {% elseif record.log.action == "user_edit" %}
+        <i class="material-icons">person</i>
+        <i class="material-icons">edit</i>
+      {% elseif record.log.action == "profile_approve" %}
+        <i class="material-icons">description</i>
+        <i class="material-icons">done</i>
+      {% elseif record.log.action == "profile_reject" %}
+        <i class="material-icons">description</i>
+        <i class="material-icons">not_interested</i>
+      {% elseif record.log.action == "profile_view" %}
+        <i class="material-icons">description</i>
+        <i class="material-icons">visibility</i>
+      {% endif %}
+    </td>
+    <td class="center">{{ record.moderator.twitch_name }}</td>
+    <td class="center">{{ record.user.twitch_name }}</td>
+    <td class="center">{{ record.log.description }}</td>
+  </tr>
+{% endfor %}

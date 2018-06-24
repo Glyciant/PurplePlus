@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col l4 m6 s12">
+        <div class="card white-text" style="background-color: #6441A4;">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                        <i class="fab fa-twitch fa-2x"></i>
+                    </div>
+                    <div class="col l10 m8 s6 input-field social-media" style="margin: 0;">
+                        <input id="profile-communities-twitch-desktop" type="text" value="{{ profile.communities.twitch_desktop }}" style="color: #FFFFFF;">
+                        <label for="profile-communities-twitch-desktop">Twitch Desktop Server Invite</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card white-text" style="background-color: #6441A4;">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                        <i class="fab fa-twitch fa-2x"></i>
+                    </div>
+                    <div class="col l10 m8 s6 input-field social-media" style="margin: 0;">
+                        <input id="profile-communities-twitch-community" type="text" value="{{ profile.communities.twitch_community }}" style="color: #FFFFFF;">
+                        <label for="profile-communities-twitch-community">Twitch Community</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card white-text" style="background-color: #FF4500;">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                        <i class="fab fa-reddit fa-2x"></i>
+                    </div>
+                    <div class="col l10 m8 s6 input-field social-media" style="margin: 0;">
+                        <input id="profile-communities-subreddit" type="text" value="{{ profile.communities.subreddit }}" style="color: #FFFFFF;">
+                        <label for="profile-communities-subreddit">Subreddit</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card white-text" style="background-color: #7289DA;">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                        <i class="fab fa-discord fa-2x"></i>
+                    </div>
+                    <div class="col l10 m8 s6 input-field social-media" style="margin: 0;">
+                        <input id="profile-communities-discord" type="text" value="{{ profile.communities.discord }}" style="color: #FFFFFF;">
+                        <label for="profile-communities-discord">Discord Server Invite</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card white-text" style="background-color: #3EB991;">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                        <i class="fab fa-slack fa-2x"></i>
+                    </div>
+                    <div class="col l10 m8 s6 input-field social-media" style="margin: 0;">
+                        <input id="profile-communities-slack" type="text" value="{{ profile.communities.slack }}" style="color: #FFFFFF;">
+                        <label for="profile-communities-slack">Slack Server Invite</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card white-text" style="background-color: #000000;">
+            <div class="card-content">
+                <div class="row" style="margin: 0;">
+                    <div class="col l2 m4 s6 valign-wrapper" style="height: 54px;">
+                        <i class="fab fa-steam fa-2x"></i>
+                    </div>
+                    <div class="col l10 m8 s6 input-field social-media" style="margin: 0;">
+                        <input id="profile-communities-steam" type="text" value="{{ profile.communities.steam }}" style="color: #FFFFFF;">
+                        <label for="profile-communities-steam">Steam Group Invite</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if creating %}
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content">
+                    <p class="custom-text text-darken-1 center">None of these fields are required.</p>
+                    <p class="custom-text text-darken-1 center">Use the button in the header to move to the next step.</p>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col offset-l10 l2 offset-m8 m4 offset-s6 s6">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s12">
+                            <a class="btn waves-effect waves-light custom darken-1 right" id="profile-save-communities" style="width: 100%;">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

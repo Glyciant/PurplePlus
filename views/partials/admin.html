@@ -1,0 +1,29 @@
+{% extends "../template.html" %}
+{% block navigation %}
+
+{% include "./admin/navigation.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<ul class="sidenav sidenav-fixed no-autoinit" id="profile-nav">
+    {% include "./admin/navigation.html" %}
+</ul>
+
+<div class="row avoid-sidenav" style="height: calc(100% - 50px); margin: 0;">
+    <div class="col s12" id="content-wrapper" data-category="{{ category }}" data-page="{{ page }}" style="height: 100%; overflow: auto;">
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+<script src="/js/admin-layout.js"></script>
+<script src="/js/admin-administration.js"></script>
+<script src="/js/admin-profiles.js"></script>
+<script src="/js/admin-users.js"></script>
+
+{% endblock %}

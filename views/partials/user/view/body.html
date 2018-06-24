@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col l4 m6 s12">
+        <div class="card">
+            <div class="card-content">
+                <h5 class="center" style="margin: 0 0 10px 0;">My Categories</h5>
+                <div class="row" style="margin: 0;">
+                    <div class="col s6">
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-gaming" {% if body.categories.gaming %} checked {% endif %} disabled />
+                            <span>Gaming Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-creative" {% if body.categories.creative %} checked {% endif %} disabled />
+                            <span>Creative Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-socialeating" {% if body.categories.socialeating %} checked {% endif %} disabled />
+                            <span>Social Eating Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-irl" {% if body.categories.socialeating %} checked {% endif %} disabled />
+                            <span>IRL Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-talkshow" {% if body.categories.talkshow %} checked {% endif %} disabled />
+                            <span>Talk Show Streamer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-music" {% if body.categories.music %} checked {% endif %} disabled />
+                            <span>Music Streamer</span>
+                          </label>
+                        </p>
+                    </div>
+                    <div class="col s6">
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-artist" {% if body.categories.artist %} checked {% endif %} disabled />
+                            <span>Artist</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-communitymanager" {% if body.categories.communitymanager %} checked {% endif %} disabled />
+                            <span>Community Manager</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-developer" {% if body.categories.developer %} checked {% endif %} disabled />
+                            <span>Developer</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-editor" {% if body.categories.editor %} checked {% endif %} disabled />
+                            <span>Editor</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-moderator" {% if body.categories.moderator %} checked {% endif %} disabled />
+                            <span>Moderator</span>
+                          </label>
+                        </p>
+                        <p>
+                          <label>
+                            <input type="checkbox" class="filled-in" id="profile-body-categories-viewer" {% if body.categories.viewer %} checked {% endif %} disabled />
+                            <span>Viewer</span>
+                          </label>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 235px; overflow: auto;">
+            <div class="card-content markdown">
+                <h5 class="center" style="margin: 0 0 10px 0;">About Me</h5>
+                <p>{% marked %}{{ body.about }}{% endmarked %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 235px; overflow: auto;">
+            <div class="card-content markdown">
+                <h5 class="center" style="margin: 0 0 10px 0;">My Goals</h5>
+                <p>{% marked %}{{ body.goals }}{% endmarked %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 235px; overflow: auto;">
+            <div class="card-content markdown">
+                <h5 class="center" style="margin: 0 0 10px 0;">My Experiences</h5>
+                <p>{% marked %}{{ body.experiences }}{% endmarked %}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 s12">
+        <div class="card" style="height: 235px; overflow: auto;">
+            <div class="card-content markdown">
+                <h5 class="center" style="margin: 0 0 10px 0;">My Background</h5>
+                <p>{% marked %}{{ body.background }}{% endmarked %}</p>
+            </div>
+        </div>
+    </div>
+    {% if body.other %}
+        <div class="col l4 m6 s12">
+            <div class="card" style="height: 235px; overflow: auto;">
+                <div class="card-content markdown">
+                    <h5 class="center" style="margin: 0 0 10px 0;">Other Information</h5>
+                    <p>{% marked %}{{ body.other }}{% endmarked %}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

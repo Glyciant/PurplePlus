@@ -17,6 +17,7 @@ router.get("/twitch", function(req, res, next) {
             req.session.return = req.headers.referer;
         }
         else {
+            // Set Default Redirect URL
             req.session.return = "/profile/";
         }
     }
@@ -42,6 +43,7 @@ router.get("/reddit", function(req, res, next) {
             req.session.return = req.headers.referer;
         }
         else {
+            // Set Default Redirect URL
             req.session.return = "/profile/";
         }
     }
@@ -67,6 +69,7 @@ router.get("/discord", function(req, res, next) {
             req.session.return = req.headers.referer;
         }
         else {
+            // Set Default Redirect URL
             req.session.return = "/profile/";
         }
     }

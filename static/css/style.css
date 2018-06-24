@@ -1,26 +1,26 @@
 /* Custom Colours */
-.custom-text.text-lighten-1 {
-    color: #7D58C1 !important;
+.custom-text.text-lighten-1, .markdown a {
+  color: #7D58C1 !important;
 }
 
 .custom-text.text-darken-1 {
-    color: #392D5D !important;
+  color: #392D5D !important;
 }
 
 .custom.lighten-1:not(.disabled) {
-    background-color: #7D58C1 !important;
+  background-color: #7D58C1 !important;
 }
 
 .custom.darken-1:not(.disabled) {
-    background-color: #392D5D !important;
+  background-color: #392D5D !important;
 }
 
 body, .tap-target-wave::before, .tap-target-wave::after {
-    background-color: #EFEEF1;
+  background-color: #EFEEF1;
 }
 
 .table-of-contents a:hover, .table-of-contents a.active {
-    border-color: #7D58C1;
+  border-color: #7D58C1;
 }
 
 /* Input Colour Changes */
@@ -32,14 +32,14 @@ input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-def
   color: #6441A4;
 }
 
-input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]), .chips.focus {
-    border-bottom: 1px solid #6441A4;
-    box-shadow: 0 1px 0 0 #6441A4;
+input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]), .chips.focus, .select-wrapper input.select-dropdown:focus {
+  border-bottom: 1px solid #6441A4;
+  box-shadow: 0 1px 0 0 #6441A4;
 }
 
-[type="checkbox"].filled-in:checked+label:after, [type="radio"]:checked+label:after, .chips .chip:focus {
-    border: 2px solid #6441A4;
-    background-color: #6441A4;
+[type="checkbox"].filled-in:checked+span:not(.lever):after, [type="radio"]:checked+label:after, .chips .chip:focus {
+  border: 2px solid #6441A4;
+  background-color: #6441A4;
 }
 
 .noUi-connect {
@@ -69,6 +69,16 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .picker__day.picker__day--today, .picker__close, .picker__today, .picker__clear {
   color: #7D58C1;
+}
+
+/* Social Media Input Colour Changes */
+.social-media input[type=text]:not(.browser-default):focus:not([readonly]) {
+  border-bottom: 1px solid #FFFFFF !important;
+  box-shadow: 0 1px 0 0 #FFFFFF !important;
+}
+
+.social-media label {
+  color: #FFFFFF !important;
 }
 
 /* Progress Bar Colours */

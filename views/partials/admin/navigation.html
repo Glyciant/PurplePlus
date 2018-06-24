@@ -1,0 +1,29 @@
+{% if loggedin.user_types.site == "moderator" %}
+    <li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">person</i>Users</a></li>
+    <li><a href="#!" id="admin-users-manager">Show Account Manager</a></li>
+    <li><a href="#!" id="admin-users-query">Show Account Query Builder</a></li>
+{% endif %}
+<li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">description</i>Profiles</a></li>
+<li><a href="#!" id="admin-profiles-pending">Show Pending Profiles</a></li>
+<li><a href="#!" id="admin-profiles-manager">Show Profile Manager</a></li>
+<li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">grade</i>Twoos</a></li>
+<li><a href="#!" id="admin-twoos-nominations">Show Pending Nominations</a></li>
+<li><a href="#!" id="admin-twoos-query">Show Nominations Query Builder</a></li>
+<li><a href="#!" id="admin-twoos-transactions">Show Transactions Query Builder</a></li>
+<li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">comment</i>Requests</a></li>
+<li><a href="#!" id="admin-requests-pending">Show Pending Requests</a></li>
+<li><a href="#!" id="admin-requests-query">Show Requests Query Builder</a></li>
+<li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">send</i>Discord</a></li>
+<li><a href="#!" id="admin-discord-commands">Show Commands Management</a></li>
+<li><a href="#!" id="admin-discord-blacklist">Show Blacklist Management</a></li>
+{% if loggedin.user_types.site == "moderator" || loggedin.user_types.admin %}
+    <li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">settings</i>Administration</a></li>
+    {% if loggedin.user_types.site == "moderator" %}
+        <li><a href="/admin/pusher" target="_blank">Open Pusher <i class="material-icons tiny right" style="margin-right: -30px;">open_in_new</i></a></li>
+        <li><a href="#!" id="admin-administration-links">Show Short Links Management</a></li>
+        <li><a href="#!" id="admin-administration-log">Show Moderation Log</a></li>
+    {% endif %}
+    {% if loggedin.user_types.admin %}
+        <li><a href="#!" id="admin-administration-settings">Show Site Settings</a></li>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,53 @@
+{% for rating in ratings %}
+    <div class="col l4 m6 s12">
+        <div class="card">
+            <a href="/user/{{ rating.api.login }}/overview" target="_blank">
+                <div class="card-content">
+                    <div class="row" style="margin: 0;">
+                        <div class="col s3 right-align">
+                            <img class="responsive-img circle" src="{{ rating.api.profile_image_url }}" style="max-height: 48px; margin-right: 10px;" />
+                        </div>
+                        <div class="col s9">
+                            <h4 class="custom-text text-darken-1 truncate" style="margin-top: 5px; margin-bottom: 0; height: 48px;">{{ rating.api.display_name }}</h4>
+                        </div>
+                        <div class="col s12">
+                            <hr style="color: #EFEEF1;" />
+                            <div class="col s6 center">
+                                <h6 class="custom-text text-darken-1">General</h6>
+                                <p class="{% if rating.ratings.general >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.general >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.general >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.general >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.general >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                            </div>
+                            <div class="col s6 center">
+                                <h6 class="custom-text text-darken-1">Quality & Detail</h6>
+                                <p class="{% if rating.ratings.quality >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.quality >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.quality >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.quality >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.quality >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                            </div>
+                            <div class="col s6 center">
+                                <h6 class="custom-text text-darken-1">Humour</h6>
+                                <p class="{% if rating.ratings.humour >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.humour >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.humour >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.humour >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.humour >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                            </div>
+                            <div class="col s6 center">
+                                <h6 class="custom-text text-darken-1">Uniqueness</h6>
+                                <p class="{% if rating.ratings.uniqueness >= 1 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.uniqueness >= 2 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.uniqueness >= 3 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.uniqueness >= 4 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                                <p class="{% if rating.ratings.uniqueness >= 5 %} yellow-text {% else %} grey-text {% endif %} text-darken-2" style="display: inline;"><i class="material-icons">grade</i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endfor %}

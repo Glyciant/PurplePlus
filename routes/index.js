@@ -7,7 +7,7 @@ var express = require("express"),
 
 // Handle Route: /
 router.get("/", function(req, res, next) {
-    // Response Placeholder
+    // Send Static Page
     res.render("index", { hidenav: true });
 });
 

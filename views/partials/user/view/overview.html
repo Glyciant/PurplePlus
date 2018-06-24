@@ -1,28 +1,34 @@
 <div class="row">
-    <div class="col l9 m6 s6">
+    {% if overview.clip %}
+        <div class="col l9 m6 s6">
+    {% else %}
+        <div class="col s12">
+    {% endif %}
         <div class="card custom lighten-1">
-            <div class="card-content valign-wrapper" style="height: 203px;">
-                <div class="row" style="margin: 0;">
-                    <h5 class="white-text center" style="margin: 0 0 10px 0;">Introduction</h5>
-                    <p class="white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ligula lectus, sagittis id dapibus a, tristique nec lorem. Curabitur malesuada ante id erat feugiat, sed tempus ex aliquet. Fusce molestie et diam eget pulvinar. Pellentesque eu dapibus est. Proin vitae nisl nulla. Maecenas cursus eu ex ut sollicitudin. Nam fringilla enim sed tellus suscipit lobortis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi orci elit, hendrerit in egestas vel, ornare a ante.</p>
+            <div class="card-content valign-wrapper" {% if overview.clip %} style="height: 203px;" {% endif %}>
+                <div class="row white-text markdown" style="margin: 0;">
+                    <h5 class="center" style="margin: 0 0 10px 0;">Introduction</h5>
+                    <p>{% marked %}{{ overview.introduction }}{% endmarked %}</p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col l3 m6 s6">
-        <div class="card custom lighten-1">
-            <div class="card-content">
-                <iframe 
-                    src="https://clips.twitch.tv/embed?clip=JollyBlushingNostrilVoHiYo&autoplay=false&tt_medium=clips_embed"
-                    width="100%"
-                    height="100%"
-                    frameborder="0"
-                    scrolling="no"
-                    allowfullscreen="true">
-                </iframe>
+    {% if overview.clip %}
+        <div class="col l3 m6 s6">
+            <div class="card custom lighten-1">
+                <div class="card-content">
+                    <iframe 
+                        src="{{ overview.clip }}"
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        scrolling="no"
+                        allowfullscreen="true">
+                    </iframe>
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 </div>
 <div class="row">
     <div class="col l3 m6 s12">

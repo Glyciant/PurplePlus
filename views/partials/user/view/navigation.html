@@ -1,0 +1,73 @@
+<li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">person</i>Change Profile View</a></li>
+{% if profile.overview.introduction %}
+    <li><a href="#!" id="user-view-overview">Show Overview</a></li>
+{% endif %}
+{% if profile.body.about %}
+    <li><a href="#!" id="user-view-body">Show Profile Body</a></li>
+{% endif %}
+{% if profile.features.trophies %}
+    <li><a href="#!" id="user-view-trophies">Show Trophies</a></li>
+{% endif %}
+{% if profile.social_media.facebook || profile.social_media.twitter || profile.social_media.instagram || profile.social_media.snapchat || profile.social_media.youtube || profile.social_media.steam || profile.social_media.github || profile.social_media.deviantart || profile.social_media.soundcloud || profile.social_media.googleplus || profile.social_media.linkedin || profile.social_media.tumblr || profile.social_media.patreon || profile.social_media.askfm %}
+    {% if profile.features.social_media %}
+        <li><a href="#!" id="user-view-socialmedia">Show Social Media</a></li>
+    {% elseif profile.features.reddit && user.reddit_id %}
+        <li><a href="#!" id="user-view-socialmedia">Show Social Media</a></li>
+    {% elseif profile.features.discord && user.discord_id %}
+        <li><a href="#!" id="user-view-socialmedia">Show Social Media</a></li>
+    {% endif %}
+{% elseif profile.features.reddit && user.reddit_id %}
+    <li><a href="#!" id="user-view-socialmedia">Show Social Media</a></li>
+{% elseif profile.features.discord && user.discord_id %}
+    <li><a href="#!" id="user-view-socialmedia">Show Social Media</a></li>
+{% endif %}
+{% if profile.communities.discord || profile.communities.subreddit || profile.communities.twitch_desktop || profile.communities.twitch_community || profile.communities.steam || profile.communities.slack %}
+    {% if profile.features.communities %}
+        <li><a href="#!" id="user-view-communities">Show Communities</a></li>
+    {% endif %}
+{% endif %}
+<!-- TODO: Hide Scheduled Streams if Not Needed -->
+<li><a href="#!" id="user-view-streams">Show Scheduled Streams</a></li>
+{% if profile.features.videos %}
+    <li><a href="#!" id="user-view-videos">Show Videos</a></li>
+{% endif %}
+{% if profile.features.profiles %}
+    <li><a href="#!" id="user-view-profiles">Show Featured Profiles</a></li>
+{% endif %}
+{% if profile.features.teams %}
+    <li><a href="#!" id="user-view-teams">Show Purple+ Teams</a></li>
+{% endif %}
+{% if profile.features.requests %}
+    <li><a href="#!" id="user-view-requests">Show Ad Requests</a></li>
+{% endif %}
+{% if profile.features.contact %}
+    <li><a href="#!" id="user-view-form">Show Contact Form</a></li>
+{% endif %}
+{% if profile.features.player %}
+    <li><a href="/watch/{{ user.twitch_username }}" target="_blank">Open Twitch Player & Chat <i class="material-icons tiny right" style="margin-right: -30px;">open_in_new</i></a></li>
+{% endif %}
+{% if loggedin && user.twitch_id != loggedin.twitch_id %}
+    <li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">comment</i>Profile Actions</a></li>
+    <li><a href="#modal-rate" class="modal-trigger">Rate Profile</a></li>
+    <li><a href="#!" id="bookmark" data-id="{{ user.twitch_id }}">Add/Remove Bookmark</a></li>
+    <li><a href="#modal-note" class="modal-trigger">Edit Personal Note</a></li>
+    <li><a href="#modal-report" class="modal-trigger">Report Profile</a></li>
+{% endif %}
+{% if loggedin.user_types.site == "mod" || loggedin.user_types.site == "helper" %}
+    <li><a href="#!">View Profile Revisions</a></li>
+{% endif %}
+{% if user.twitch_id == loggedin.twitch_id %}
+    <li><a class="subheader custom-text text-darken-1 center"><i class="material-icons left">edit</i>Edit Profile</a></li>
+    {% if profile.approval.status == "incomplete" %}
+        <li><a href="#!" id="/profile/overview">Continue Profile Creation</a></li>
+    {% endif %}
+    <li><a href="#!" id="user-edit-features">Edit Profile Features</a></li>
+    <li><a href="#!" id="user-edit-overview">Edit Overview</a></li>
+    <li><a href="#!" id="user-edit-body">Edit Profile Body</a></li>
+    <li><a href="#!" id="user-edit-socialmedia">Edit Social Media</a></li>
+    <li><a href="#!" id="user-edit-communities">Edit Communities</a></li>
+    <li><a href="#!" id="user-edit-streams">Edit Scheduled Streams</a></li>
+    <li><a href="#!" id="user-edit-profiles">Edit Featured Profiles</a></li>
+    <li><a href="#!" id="user-edit-teams">Edit Purple+ Teams</a></li>
+    <li><a href="#!">View Profile as Public</a></li>
+{% endif %}
