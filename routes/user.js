@@ -162,7 +162,7 @@ router.post("/content/overview", function(req, res) {
                 // Add Twitch & BTTV Emotes
                 result.overview.introduction = parser.parse(emotes(result.overview.introduction)).replace(/\s\"\w*\"/, "").replace(/<img src="/, "![](").replace(/" class="twitchemote" alt="(.*)" \/>/, ")");
                 // Send Result
-                res.render("user\\view\\overview", { overview: result.overview, api: api });
+                res.render("user\/view\/overview", { overview: result.overview, api: api });
             }
         });
     });
@@ -188,7 +188,7 @@ router.post("/content/body", function(req, res) {
                 result.body.other = parser.parse(emotes(result.body.other)).replace(/\s\"\w*\"/, "").replace(/<img src="/, "![](").replace(/" class="twitchemote" alt="(.*)" \/>/, ")");
             }
             // Send Result
-            res.render("user\\view\\body", { body: result.body });
+            res.render("user\/view\/body", { body: result.body });
         }
     });
 });
@@ -219,7 +219,7 @@ router.post("/content/socialmedia", function(req, res) {
                 }
                 else {
                     // Send Result
-                    res.render("user\\view\\socialmedia", { socialmedia: result.social_media, features: result.features, user: user });
+                    res.render("user\/view\/socialmedia", { socialmedia: result.social_media, features: result.features, user: user });
                 }
             });
         }
@@ -238,7 +238,7 @@ router.post("/content/communities", function(req, res) {
         }
         else {
             // Send Result
-            res.render("user\\view\\communities", { communities: result.communities });
+            res.render("user\/view\/communities", { communities: result.communities });
         }
     });
 });
@@ -285,7 +285,7 @@ router.post("/edit/features", function(req, res) {
         }
         else {
             // Send Result
-            res.render("user\\edit\\features", { profile: result });
+            res.render("user\/edit\/features", { profile: result });
         }
     });
 });
@@ -302,7 +302,7 @@ router.post("/edit/overview", function(req, res) {
         }
         else {
             // Send Result
-            res.render("user\\edit\\overview", { profile: result });
+            res.render("user\/edit\/overview", { profile: result });
         }
     });
 });
@@ -319,7 +319,7 @@ router.post("/edit/body", function(req, res) {
         }
         else {
             // Send Result
-            res.render("user\\edit\\body", { profile: result });
+            res.render("user\/edit\/body", { profile: result });
         }
     });
 });
@@ -336,7 +336,7 @@ router.post("/edit/socialmedia", function(req, res) {
         }
         else {
             // Send Result
-            res.render("user\\edit\\socialmedia", { profile: result });
+            res.render("user\/edit\/socialmedia", { profile: result });
         }
     });
 });
@@ -353,7 +353,7 @@ router.post("/edit/communities", function(req, res) {
         }
         else {
             // Send Result
-            res.render("user\\edit\\communities", { profile: result });
+            res.render("user\/edit\/communities", { profile: result });
         }
     });
 });

@@ -68,7 +68,7 @@ router.post("/content/users/manager", function(req, res) {
     if (req.session.loggedin) {
         // Check That User is Authorised
         if (req.session.loggedin.user_types.site == "moderator") {
-            res.render("admin\\users\\manager");
+            res.render("admin\/users\/manager");
         }
         else {
             res.render("error_partial", { code: "401", message: "You are not permitted to access this page." });
@@ -115,7 +115,7 @@ router.post("/get/users/manager", function(req, res) {
                                 }
                                 else {
                                     // Send Result
-                                    res.render("admin\\users\\manager_result", { user: user });
+                                    res.render("admin\/users\/manager_result", { user: user });
                                 }
                             });
                         }
@@ -194,7 +194,7 @@ router.post("/submit/users/manager", function(req, res) {
                                             }
                                             else {
                                                 // Return User to Search Page
-                                                res.render("admin\\users\\manager");
+                                                res.render("admin\/users\/manager");
                                             }
                                         });
                                     }
@@ -279,7 +279,7 @@ router.post("/content/profiles/pending", function(req, res) {
                                         });
                                     }
                                     // Send Result
-                                    res.render("admin\\profiles\\pending", { profiles: data });
+                                    res.render("admin\/profiles\/pending", { profiles: data });
                                 });
                             }
                         });
@@ -442,7 +442,7 @@ router.post("/content/profiles/manager", function(req, res) {
     if (req.session.loggedin) {
         // Check That User is Authorised
         if (req.session.loggedin.user_types.site == "moderator" || req.session.loggedin.user_types.site == "helper") {
-            res.render("admin\\profiles\\manager");
+            res.render("admin\/profiles\/manager");
         }
         else {
             res.render("error_partial", { code: "401", message: "You are not permitted to access this page." });
@@ -512,7 +512,7 @@ router.post("/get/profiles/manager", function(req, res) {
                                                     }
                                                     else {
                                                         // Send Result
-                                                        res.render("admin\\profiles\\manager_result", { user: user, profile: profile, moderator: moderator });
+                                                        res.render("admin\/profiles\/manager_result", { user: user, profile: profile, moderator: moderator });
                                                     }
                                                 });
                                             }
@@ -601,7 +601,7 @@ router.post("/submit/profiles/manager", function(req, res) {
                                         }
                                         else {
                                             // Send Result
-                                            res.render("admin\\profiles\\manager");
+                                            res.render("admin\/profiles\/manager");
                                         }
                                     });
                                 }
@@ -768,7 +768,7 @@ router.post("/content/administration/log", function(req, res) {
     if (req.session.loggedin) {
         // Check That is Authorised
         if (req.session.loggedin.user_types.site == "moderator") {
-            res.render("admin\\administration\\log");
+            res.render("admin\/administration\/log");
         }
         else {
             res.render("error_partial", { code: "401", message: "You are not permitted to access this page." });
@@ -815,7 +815,7 @@ router.post("/get/administration/log", function(req, res) {
                                     });
                                 }
                                 // Send Result
-                                res.render("admin\\administration\\log_partial", { records: data });
+                                res.render("admin\/administration\/log_partial", { records: data });
                             });
                         });
                     });

@@ -31,7 +31,7 @@ router.get("/", function(req, res, next) {
                     // Show as Creating Profile
                     req.session.creating = true;
                     // Send Result
-                    res.render("user\\create\\introduction", { title: "Create Profile" });
+                    res.render("user\/create\/introduction", { title: "Create Profile" });
                 }
             }
         });
@@ -58,7 +58,7 @@ router.get("/overview", function(req, res, next) {
                 // Show as Creating Profile
                 req.session.creating = true;
                 // Send Result
-                res.render("user\\create\\overview", { title: "Profile Overview", profile: result });
+                res.render("user\/create\/overview", { title: "Profile Overview", profile: result });
             }
         });
     }
@@ -84,7 +84,7 @@ router.get("/body", function(req, res, next) {
                 // Show as Creating Profile
                 req.session.creating = true;
                 // Send Result
-                res.render("user\\create\\body", { title: "Profile Body", profile: result });
+                res.render("user\/create\/body", { title: "Profile Body", profile: result });
             }
         });
     }
@@ -110,7 +110,7 @@ router.get("/social", function(req, res, next) {
                 // Show as Creating Profile
                 req.session.creating = true;
                 // Send Result
-                res.render("user\\create\\socialmedia", { title: "Social Media", profile: result });
+                res.render("user\/create\/socialmedia", { title: "Social Media", profile: result });
             }
         });
     }
@@ -136,7 +136,7 @@ router.get("/communities", function(req, res, next) {
                 // Show as Creating Profile
                 req.session.creating = true;
                 // Send Result
-                res.render("user\\create\\communities", { title: "Communities", profile: result });
+                res.render("user\/create\/communities", { title: "Communities", profile: result });
             }
         });
     }
@@ -162,7 +162,7 @@ router.get("/features", function(req, res, next) {
                 // Show as Creating Profile
                 req.session.creating = true;
                 // Send Result
-                res.render("user\\create\\features", { title: "Profile Features", profile: result });
+                res.render("user\/create\/features", { title: "Profile Features", profile: result });
             }
         });
     }
@@ -186,7 +186,7 @@ router.get("/confirmation", function(req, res, next) {
             }
             else {
                 // Send Result
-                res.render("user\\create\\confirmation", { title: "Confirmation", profile: result });
+                res.render("user\/create\/confirmation", { title: "Confirmation", profile: result });
             }
         });
     }

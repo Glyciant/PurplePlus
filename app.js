@@ -13,8 +13,8 @@ var express = require("express"),
 // Express & Swig Set Up
 app.engine("html", swig.renderFile);
 app.set("view engine", "html");
-app.set("views", __dirname + "\\views\\partials");
-app.use(express.static(__dirname + "\\static"));
+app.set("views", __dirname + "\/views\/partials");
+app.use(express.static(__dirname + "\/static"));
 app.use(expressMongoDB(config.app.db));
 app.use(cookieParser());
 app.use(session({

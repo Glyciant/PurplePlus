@@ -56,7 +56,7 @@ router.post("/content/account/link", function(req, res) {
             }
             else {
                 // Send Result
-                res.render("dashboard\\account\\link", { user: result });
+                res.render("dashboard\/account\/link", { user: result });
             }
         });
     }
@@ -91,7 +91,7 @@ router.post("/content/account/preferences", function(req, res) {
 router.post("/content/profiles/bookmarks", function(req, res) {
     // Check That User is Logged In
     if (req.session.loggedin) {
-        res.render("dashboard\\profiles\\bookmarks");
+        res.render("dashboard\/profiles\/bookmarks");
     }
     else {
         res.render("error_partial", { code: "403", message: "You do not appear to be logged in." });
@@ -102,7 +102,7 @@ router.post("/content/profiles/bookmarks", function(req, res) {
 router.post("/content/profiles/ratings", function(req, res) {
     // Check That User is Logged In
     if (req.session.loggedin) {
-        res.render("dashboard\\profiles\\ratings");
+        res.render("dashboard\/profiles\/ratings");
     }
     else {
         res.render("error_partial", { code: "403", message: "You do not appear to be logged in." });
@@ -155,10 +155,10 @@ router.post("/get/profiles", function(req, res) {
                                 }
                                 // Send Result
                                 if (req.body.type == "bookmarks") {
-                                    res.render("dashboard\\profiles\\bookmarks_partial", { bookmarks: data });
+                                    res.render("dashboard\/profiles\/bookmarks_partial", { bookmarks: data });
                                 }
                                 else {
-                                    res.render("dashboard\\profiles\\ratings_partial", { ratings: data });
+                                    res.render("dashboard\/profiles\/ratings_partial", { ratings: data });
                                 }
                             });
                         });
