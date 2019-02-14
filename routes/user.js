@@ -135,7 +135,7 @@ router.get("/:name", function(req, res, next) {
                 if (data.profile.types.other) {
                   data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
                 }
-                res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
+                res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].total, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
               });
             });
           }
@@ -209,7 +209,7 @@ router.get("/:name", function(req, res, next) {
             if (data.profile.types.other) {
               data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
             }
-            res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
+            res.render("user", { title: data.twitch_name + possession + " Profile", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].total, streams: streams, voted: voted, bookmarked: bookmarked, note: note });
           }
         });
       }
@@ -289,7 +289,7 @@ router.get("/:name/revisions", function(req, res, next) {
             else {
               var possession = "'s";
             }
-            res.render("profile_revisions", { title: data.twitch_name + possession + " Profile Revisions", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count });
+            res.render("profile_revisions", { title: data.twitch_name + possession + " Profile Revisions", data: data, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].total });
           });
         }
         else {
@@ -398,7 +398,7 @@ router.get("/:name/revisions/:id", function(req, res, next) {
             if (data.profile.types.other) {
               data.profile.types.other = parser.parse(data.profile.types.other).replace(/\s\"\w*\"/, "");
             }
-            res.render("profile_revision", { title: data.twitch_name + possession + " Profile", data: profile, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].count, status: true });
+            res.render("profile_revision", { title: data.twitch_name + possession + " Profile", data: profile, api: api[0], events: api[1].events, teams: api[2].teams, videos: api[3].videos, stream: api[4].stream, moderated: api[5].total, status: true });
           }
           else {
             res.render("error", { title: "404 Error", code: "404", message: "The profile revision you have requested to view does not exist." });

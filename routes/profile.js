@@ -169,10 +169,10 @@ router.get("/", function(req, res, next) {
           if (data[0].profile.types.other) {
             data[0].profile.types.other = parser.parse(data[0].profile.types.other).replace(/\s\"\w*\"/, "");
           }
-          res.render("profile", { title: "My Profile", data: data[0], existing: existing, api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
+          res.render("profile", { title: "My Profile", data: data[0], existing: existing, api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].total, streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
         }
         else {
-          res.render("profile", { title: "My Profile", data: data[0], api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].count, streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
+          res.render("profile", { title: "My Profile", data: data[0], api: data[1], events: data[2].events, teams: data[3].teams, videos: data[4].videos, stream: data[5].stream, moderated: data[6].total, streams: streams, flair: flair, twoos: twoos, transactions: transactions, status: true, tutorial: tutorial });
         }
       });
     });
