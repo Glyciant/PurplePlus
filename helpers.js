@@ -127,7 +127,7 @@ module.exports = function(client, bot) {
     },
     getModeratedChannels: function(username) {
       return new Promise(function(resolve, reject) {
-        restler.get('https://twitchstuff.3v.fi/modlookup/api/user/' + username + '?limit=1').on('complete', function(data) {
+        restler.get('https://modlookup.3v.fi/api/user-totals/' + username).on('complete', function(data) {
           resolve(data);
         });
       });
